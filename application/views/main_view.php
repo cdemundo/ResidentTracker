@@ -1,15 +1,4 @@
 <!DOCTYPE html>
-<!--
-<div>
-			<?php 
-				echo form_open('main/logout'); 
-
-				echo form_submit('logoutBtn', 'Logout'); 
-
-				echo form_close(); 
-			?>
-		</div>
--->
 <html>
 	<head>
 		<title>Stryker Resident Engagement</title>
@@ -21,9 +10,48 @@
 		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
 	</head>
 	<body>
+		<!-- top nav -->
+		<nav class="navbar navbar-blue navbar-fixed-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">Stryker Trauma and Extremities</a>
+	        </div>
+	        <div id="navbar" class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="#">Home</a></li>
+	            <li><a href="#about">About</a></li>
+	            <li><a href="#contact">Contact</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li><a href="#">Action</a></li>
+	                <li><a href="#">Another action</a></li>
+	                <li><a href="#">Something else here</a></li>
+	                <li class="divider"></li>
+	                <li class="dropdown-header">Nav header</li>
+	                <li><a href="#">Separated link</a></li>
+	                <li><a href="#">One more separated link</a></li>
+	              </ul>
+	            </li>
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+	            <li><a href="<?php echo base_url()?>main/logout/">Logout</a></li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </nav>
+
 		<div class="wrapper">
     		<div class="box">
+
         		<div class="row row-offcanvas row-offcanvas-left">
+
 		            <!-- sidebar -->
 		            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
 		              
@@ -33,13 +61,13 @@
 		               
 		                <ul class="nav hidden-xs" id="lg-menu">
 		                    <li class="active"><a href="#featured"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-		                    <li><a href="#stories"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+                    		<li><a href="#stories"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
 		                </ul>
 		                		              
 		              	<!-- tiny only nav-->
 		              <ul class="nav visible-xs" id="xs-menu">
 		                  	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-		                    <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+                    		<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
 		                </ul>
 		              
 		            </div>
@@ -47,189 +75,41 @@
 		          
 		            <!-- main right col -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
-		                
-		                <!-- top nav -->
-		              	<div class="navbar navbar-blue navbar-static-top">  
-		                    <div class="navbar-header">
-		                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-		                        <span class="sr-only">Toggle</span>
-		                        <span class="icon-bar"></span>
-		          				<span class="icon-bar"></span>
-		          				<span class="icon-bar"></span>
-		                      </button>
-		                      <a href="/" class="navbar-brand logo">b</a>
-		                  	</div>
-		                  	<nav class="collapse navbar-collapse" role="navigation">
-		                    <form class="navbar-form navbar-left">
-		                        <div class="input-group input-group-sm" style="max-width:360px;">
-		                          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-		                          <div class="input-group-btn">
-		                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-		                          </div>
-		                        </div>
-		                    </form>
-		                    <ul class="nav navbar-nav">
-		                      <li>
-		                        <a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
-		                      </li>
-		                      <li>
-		                        <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
-		                      </li>
-		                      <li>
-		                        <a href="#"><span class="badge">badge</span></a>
-		                      </li>
-		                    </ul>
-		                    <ul class="nav navbar-nav navbar-right">
-		                      <li class="dropdown">
-		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
-		                        <ul class="dropdown-menu">
-		                          <li><a href="">More</a></li>
-		                          <li><a href="">More</a></li>
-		                          <li><a href="">More</a></li>
-		                          <li><a href="">More</a></li>
-		                          <li><a href="">More</a></li>
-		                        </ul>
-		                      </li>
-		                    </ul>
-		                  	</nav>
-		                </div>
-		                <!-- /top nav -->
+		                	                
 		              
 		                <div class="padding">
 		                    <div class="full col-sm-9">
 		                      
 		                        <!-- content -->                      
 		                      	<div class="row">
+		                      		<!-- Header in top of content section -->
+		                        	<div class = "col-sm-12">
+		                        		<div class="panel panel-default">
+			                                <div class="panel-body">
+			                                	<p class="lead no-bottom">Residency Locator</p>
+			                                </div>
+		                              	</div>
+		                        	</div>
+
+		                        	<!-- US MAP DIV -->
+		                        	<div class = "col-sm-12">
+		                        		<div class="panel panel-default">
+			                                <div class="panel-body" id = "map">
+
+			                                </div>
+		                              	</div>
+		                        	</div>
+
+		                        	<!-- RESIDENCY PROGRAM INFO GOES HERE -->
+		                        	<div class = "col-sm-12">
+		                        		<div class="panel panel-default">
+			                                <div class="panel-body" id = "residencyinfo">
+
+			                                </div>
+		                              	</div>
+		                        	</div>
+		                        
 		                          
-		                         <!-- main col left --> 
-		                         <div class="col-sm-5">
-		                           
-		                              <div class="panel panel-default">
-		                                <div class="panel-thumbnail"><img src="/assets/example/bg_5.jpg" class="img-responsive"></div>
-		                                <div class="panel-body">
-		                                  <p class="lead">Urbanization</p>
-		                                  <p>45 Followers, 13 Posts</p>
-		                                  
-		                                  <p>
-		                                    <img src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s28" width="28px" height="28px">
-		                                  </p>
-		                                </div>
-		                              </div>
-
-		                           
-		                              <div class="panel panel-default">
-		                                <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootstrap Examples</h4></div>
-		                                  <div class="panel-body">
-		                                    <div class="list-group">
-		                                      <a href="http://bootply.com/tagged/modal" class="list-group-item">Modal / Dialog</a>
-		                                      <a href="http://bootply.com/tagged/datetime" class="list-group-item">Datetime Examples</a>
-		                                      <a href="http://bootply.com/tagged/datatable" class="list-group-item">Data Grids</a>
-		                                    </div>
-		                                  </div>
-		                              </div>
-		                           
-		                              <div class="well"> 
-		                                   <form class="form-horizontal" role="form">
-		                                    <h4>What's New</h4>
-		                                     <div class="form-group" style="padding:14px;">
-		                                      <textarea class="form-control" placeholder="Update your status"></textarea>
-		                                    </div>
-		                                    <button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-		                                  </form>
-		                              </div>
-		                           
-		                              <div class="panel panel-default">
-		                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>More Templates</h4></div>
-		                                  <div class="panel-body">
-		                                    <img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Free @Bootply</a>
-		                                    <div class="clearfix"></div>
-		                                    There a load of new free Bootstrap 3 ready templates at Bootply. All of these templates are free and don't require extensive customization to the Bootstrap baseline.
-		                                    <hr>
-		                                    <ul class="list-unstyled"><li><a href="http://www.bootply.com/templates">Dashboard</a></li><li><a href="http://www.bootply.com/templates">Darkside</a></li><li><a href="http://www.bootply.com/templates">Greenfield</a></li></ul>
-		                                  </div>
-		                              </div>
-		                           
-		                              <div class="panel panel-default">
-		                                <div class="panel-heading"><h4>What Is Bootstrap?</h4></div>
-		                               	<div class="panel-body">
-		                                	Bootstrap is front end frameworkto build custom web applications that are fast, responsive &amp; intuitive. It consist of CSS and HTML for typography, forms, buttons, tables, grids, and navigation along with custom-built jQuery plug-ins and support for responsive layouts. With dozens of reusable components for navigation, pagination, labels, alerts etc..                          </div>
-		                              </div>
-
-		                           		
-		                           
-		                          </div>
-		                          
-		                          <!-- main col right -->
-		                          <div class="col-sm-7">
-		                               
-		                                <div class="well"> 
-		                                   <form class="form">
-		                                    <h4>Sign-up</h4>
-		                                    <div class="input-group text-center">
-		                                    <input type="text" class="form-control input-lg" placeholder="Enter your email address">
-		                                      <span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button">OK</button></span>
-		                                    </div>
-		                                  </form>
-		                                </div>
-		                      
-		                               <div class="panel panel-default">
-		                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootply Editor &amp; Code Library</h4></div>
-		                                  <div class="panel-body">
-		                                    <p><img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">The Bootstrap Playground</a></p>
-		                                    <div class="clearfix"></div>
-		                                    <hr>
-		                                    Design, build, test, and prototype using Bootstrap in real-time from your Web browser. Bootply combines the power of hand-coded HTML, CSS and JavaScript with the benefits of responsive design using Bootstrap. Find and showcase Bootstrap-ready snippets in the 100% free Bootply.com code repository.
-		                                  </div>
-		                               </div>
-		                            
-		                               <div class="panel panel-default">
-		                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Stackoverflow</h4></div>
-		                                  <div class="panel-body">
-		                                    <img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Keyword: Bootstrap</a>
-		                                    <div class="clearfix"></div>
-		                                    <hr>
-		                                    
-		                                    <p>If you're looking for help with Bootstrap code, the <code>twitter-bootstrap</code> tag at <a href="http://stackoverflow.com/questions/tagged/twitter-bootstrap">Stackoverflow</a> is a good place to find answers.</p>
-		                                    
-		                                    <hr>
-		                                    <form>
-		                                    <div class="input-group">
-		                                      <div class="input-group-btn">
-		                                      <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-		                                      </div>
-		                                      <input type="text" class="form-control" placeholder="Add a comment..">
-		                                    </div>
-		                                    </form>
-		                                    
-		                                  </div>
-		                               </div>
-
-		                               <div class="panel panel-default">
-		                                 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Portlet Heading</h4></div>
-		                                  <div class="panel-body">
-		                                    <ul class="list-group">
-		                                    <li class="list-group-item">Modals</li>
-		                                    <li class="list-group-item">Sliders / Carousel</li>
-		                                    <li class="list-group-item">Thumbnails</li>
-		                                    </ul>
-		                                  </div>
-		                               </div>
-		                            
-		                               <div class="panel panel-default">
-		                                <div class="panel-thumbnail"><img src="/assets/example/bg_4.jpg" class="img-responsive"></div>
-		                                <div class="panel-body">
-		                                  <p class="lead">Social Good</p>
-		                                  <p>1,200 Followers, 83 Posts</p>
-		                                  
-		                                  <p>
-		                                    <img src="https://lh6.googleusercontent.com/-5cTTMHjjnzs/AAAAAAAAAAI/AAAAAAAAAFk/vgza68M4p2s/s28-c-k-no/photo.jpg" width="28px" height="28px">
-		                                    <img src="https://lh4.googleusercontent.com/-6aFMDiaLg5M/AAAAAAAAAAI/AAAAAAAABdM/XjnG8z60Ug0/s28-c-k-no/photo.jpg" width="28px" height="28px">
-		                                    <img src="https://lh4.googleusercontent.com/-9Yw2jNffJlE/AAAAAAAAAAI/AAAAAAAAAAA/u3WcFXvK-g8/s28-c-k-no/photo.jpg" width="28px" height="28px">
-		                                  </p>
-		                                </div>
-		                              </div>
-		                            
-		                          </div>
 		                       </div><!--/row-->
 		                      
 		                        <div class="row">
@@ -244,7 +124,7 @@
 		                          </div>
 		                          <div class="col-sm-6">
 		                            <p>
-		                            <a href="#" class="pull-right">©Copyright 2013</a>
+		                            <a href="#" class="pull-right">©Copyright 2014</a>
 		                            </p>
 		                          </div>
 		                        </div>
@@ -252,7 +132,7 @@
 		                      <hr>
 		                      
 		                      <h4 class="text-center">
-		                      <a href="http://bootply.com/96266" target="ext">Download this Template @Bootply</a>
+		                      <p>This website courtesy of Stryker Medical Education</p>
 		                      </h4>
 		                        
 		                      <hr>
@@ -294,8 +174,40 @@
 	</div>
 
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>		
+
+	<!-- JS INCLUDES FOR US MAP -->
+	<script src="<?=base_url()?>assets/js/us-map-1.0.1/lib/raphael.js"></script>
+  	<script src="<?=base_url()?>assets/js/us-map-1.0.1/jquery.usmap.js"></script>
+
+
+  	<!-- SCRIPT FOR OFF CANVAS LEFT SIDEBAR -->
+	<script>
+		$('[data-toggle=offcanvas]').click(function() {
+		  	$(this).toggleClass('visible-xs text-center');
+		    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+		    $('.row-offcanvas').toggleClass('active');
+		    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+		    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+		    $('#btnShow').toggle();
+		});
+	</script>
+
+	<!-- SCRIPT FOR US MAP -->
+	<script>
+		$(document).ready(function() {
+    		$('#map').usmap({
+    			showLabels: true,
+    			click: function(event, data) {
+				    $('#residencyinfo')
+				      .text('You clicked: '+data.name)
+				      .parent().effect('highlight', {color: '#C7F464'}, 2000);
+				}
+    		});
+  		});
+	</script>
+		
 
 	</body>
 </html>
