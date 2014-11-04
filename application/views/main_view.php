@@ -92,20 +92,28 @@
 		                        	</div>
 
 		                        	<!-- US MAP DIV -->
-		                        	<div class = "col-sm-12">
+		                        	<!-- HIDE MAP ON PHONES -->
+		                        	<div class = "col-sm-12 hidden-xs">
 		                        		<div class="panel panel-default">
-			                                <div class="panel-body" id = "map">
+			                                <div class="panel-body" id = "map" width="768">
 
+			                                </div>
+		                              	</div>
+		                        	</div>
+
+		                        	<!--VISIBLE ON PHONES -->
+		                        	<div class = "col-sm-12 visible-xs">
+		                        		<div class="panel panel-default">
+			                                <div class="panel-body" id = "map" width="768">
+			                                	<p> Interactive map is not available on small screen sizes.  Please scroll through all programs. </p>
 			                                </div>
 		                              	</div>
 		                        	</div>
 
 		                        	<!-- RESIDENCY PROGRAM INFO GOES HERE -->
 		                        	<div class = "col-sm-12">
-		                        		<div class="panel panel-default">
-			                                <div class="panel-body" id = "residencyinfo">
-
-			                                </div>
+		                        		<div id = "residencyinfo">
+		                        			<!-- ajax goes here -->
 		                              	</div>
 		                        	</div>
 		                        
@@ -195,15 +203,17 @@
 	</script>
 
 	<!-- SCRIPT FOR US MAP -->
+	<!-- When user clicks a state, ajax request to residencyprogram/getStateInfo
+		 Queries db for all residency programs in that state and then fills the residencyinfo div with that -->
 	<script>
 		$(document).ready(function() {
     		$('#map').usmap({
     			showLabels: true,
-    			click: function(event, data) {
+    				click: function(event, data) {
     				var base_url = '<?php echo site_url();?>'; 
 					$.ajax({
 					  type: "POST",
-					  url: base_url + 'stateinfo' + '/getStateInfo',
+					  url: base_url + 'residencyprogram' + '/getStateInfo',
 					  dataType: "html",
 					  data: { 'state' : data.name },
 					  success: function(data) {
