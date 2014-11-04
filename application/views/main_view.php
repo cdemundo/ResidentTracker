@@ -200,10 +200,17 @@
     		$('#map').usmap({
     			showLabels: true,
     			click: function(event, data) {
-				    $('#residencyinfo')
-				      .text('You clicked: '+data.name)
-				      .parent().effect('highlight', {color: '#C7F464'}, 2000);
-				}
+    				var base_url = '<?php echo site_url();?>'; 
+					$.ajax({
+					  type: "POST",
+					  url: base_url + 'stateinfo' + '/getStateInfo',
+					  dataType: "html",
+					  data: { 'state' : data.name },
+					  success: function(data) {
+							$('#residencyinfo').html(data);
+							}
+						})
+					}
     		});
   		});
 	</script>
