@@ -295,3 +295,25 @@ small.text-muted {
 .no-bottom{
   margin-bottom: 0px; 
 }
+
+.top-spacer{
+  margin-top: 10px;
+}
+
+.big-top-spacer{
+  margin-top: 50px;
+}
+
+.bottom-spacer{
+  margin-bottom: 20px;
+}
+
+.demo{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    background-color:#efefef;
+}
+
+#equalheight {
+    overflow: hidden; 
+}
