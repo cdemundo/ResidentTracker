@@ -17,6 +17,12 @@ class Welcome extends CI_Controller
 		} else {
 			$data['user_id']	= $this->tank_auth->get_user_id();
 			$data['username']	= $this->tank_auth->get_username();
+
+			//initialize a list of all residency programs below the map
+			$this->load->model('residencyprogram_model'); 
+
+			//each index in data is a row of program_name, state, director
+			$data['residencyProgram'] = $this->residencyprogram_model->getAllResidencyPrograms();
 			$this->load->view('main_view', $data);
 		}
 	}

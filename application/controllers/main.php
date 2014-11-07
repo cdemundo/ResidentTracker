@@ -17,7 +17,15 @@ class Main extends CI_Controller
 	{
 		if($this->tank_auth->is_logged_in())
 		{
-			$this->load->view('main_view');
+			//initialize a list of all residency programs below the map
+			$this->load->model('residencyprogram_model'); 
+
+			$data = array();
+
+			//each index in data is a row of program_name, state, director
+			$data['residencyProgram'] = $this->residencyprogram_model->getAllResidencyPrograms();
+
+			$this->load->view('main_view', $data);
 		}
 		else
 		{
