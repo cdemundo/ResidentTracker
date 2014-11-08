@@ -41,7 +41,7 @@
 	            </li>
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right"
-	            <li><a href="<?php echo base_url()?>main/logout/">Logout</a></li>
+	            <li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary top-spacer">Logout</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
@@ -53,20 +53,20 @@
         		<div class="row row-offcanvas row-offcanvas-left">
 
 		            <!-- sidebar -->
-		            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+		            <div class="column col-sm-1 col-xs-1 sidebar-offcanvas" id="sidebar">
 		              
 		              	<ul class="nav">
 		          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
 		            	</ul>
 		               
 		                <ul class="nav hidden-xs" id="lg-menu">
-		                    <li class="active"><a href="#featured"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
+		                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
                     		<li><a href="#stories"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
 		                </ul>
 		                		              
 		              	<!-- tiny only nav-->
 		              <ul class="nav visible-xs" id="xs-menu">
-		                  	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+		                  	<li><a href="<?php echo base_url()?>main" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
                     		<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
 		                </ul>
 		              
@@ -74,15 +74,14 @@
 		            <!-- /sidebar -->
 		          
 		            <!-- main content -->
-		            <div class="column col-sm-10 col-xs-11" id="main">
+		            <div class="column col-sm-11 col-xs-11" id="main">
 	
 		                <div class="padding">
-		                    <div class="full col-sm-9">
-		                      
+		                    <div class="full col-sm-10">
 		                        <!-- content -->                      
 		                      	<div class="row">
 		                      		<!-- Header in top of content section -->
-		                        	<div class = "col-sm-12">
+		                        	<div class = "col-sm-12 hidden-xs">
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
@@ -90,8 +89,20 @@
 		                              	</div>
 		                        	</div>
 
-		                        	<!-- CONTACT INFO HERE -->
-		                        	<div class = "col-sm-6">
+		                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
+		                        	<div class = "col-sm-12 visible-xs">
+		                        		<div class="panel panel-default big-top-spacer">
+			                                <div class="panel-body">
+			                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
+			                                </div>
+		                              	</div>
+		                        	</div>
+
+		                        	<!-- LEFT COLUMN -->
+
+		                        	<div class ="col-sm-6">
+
+			                        	<!-- CONTACT INFO HERE -->
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                <p class="lead"> Contact Information  </p>	
@@ -103,10 +114,9 @@
 			                                <p> Contact Email: <?php echo $residencyProgram[0]->contact_email ?> </p>
 			                                </div>
 		                              	</div>
-		                        	</div>
 
-		                        	<!-- DIRECTOR INFO GOES HERE -->
-		                        	<div class = "col-sm-6">
+
+			                        	<!-- DIRECTOR INFO GOES HERE -->
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                <p class="lead"> Director and Faculty </p>
@@ -114,32 +124,28 @@
 			                                <p> Email: <?php echo $residencyProgram[0]->director_email ?> </p>
 			                                </div>
 		                              	</div>
-		                        	</div>
 
-
-		                        	<!-- Alumni content -->
-		                        	<div class = "col-sm-6">
-		                        		<div class="panel panel-default">
-		                        		<div class="panel-body">
-			                        		<p class="lead"> Program Alumni</p>
-			                        		<p class="top-spacer"> 2014 </p>
-			                        		<p> 2013 </p>
-			                        		<p> 2012 </p>
-		                        		</div>
-		                        		</div>
-		                        	</div>
-		                        	
-
-		                        	<!-- SOEMTHING GOES HERE -->
-		                        	<div class = "col-sm-6">
+			                        	<!-- SOEMTHING GOES HERE -->
 		                        		<div class="panel panel-default">
 			                        		<div class="panel-body">
+			                        			<p class="lead"> Notes: </p>
 			                        			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt commodo urna ac bibendum. Mauris a interdum leo. Proin ultricies ut felis non interdum. Nulla consectetur placerat rhoncus. Maecenas sed ultrices velit. Vivamus augue sapien, scelerisque eu turpis ac, eleifend semper orci. In malesuada, mauris quis porta viverra, ex mi pulvinar urna, a rutrum ante dui quis leo. </p> 
 			                              	</div>
 		                              	</div>
-		                        	</div>
-		                        
-		                          
+			                       </div> <!--col-sm-6 left col-->
+
+			                       <!-- RIGHT COLUMN --> 
+			                       <div class="col-sm-6">
+			                       		<!-- Alumni content -->
+		                        		<div class="panel panel-default">
+			                        		<div class="panel-body">
+				                        		<p class="lead"> Program Alumni</p>
+				                        		<p class="top-spacer"> 2014 </p>
+				                        		<p> 2013 </p>
+				                        		<p> 2012 </p>
+			                        		</div>
+		                        		</div>
+			                       </div><!--col-sm-6 right col -->
 		                       </div><!--/row-->
 		                      
 		                        <div class="row">
