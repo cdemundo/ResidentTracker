@@ -304,16 +304,15 @@ small.text-muted {
   margin-top: 50px;
 }
 
+.med-top-spacer{
+  margin-top: 25px;
+}
+
 .bottom-spacer{
   margin-bottom: 20px;
 }
 
-.demo{
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
-    background-color:#efefef;
+.right-spacer{
+  padding-left: 50px;
 }
 
-#equalheight {
-    overflow: hidden; 
-}
