@@ -140,9 +140,37 @@
 		                        		<div class="panel panel-default">
 			                        		<div class="panel-body">
 				                        		<p class="lead"> Program Alumni</p>
-				                        		<p class="top-spacer"> 2014 </p>
-				                        		<p> 2013 </p>
-				                        		<p> 2012 </p>
+				                        		<?php for ($i = 0; $i <= 4; $i++)
+				                        		{ 
+				                        			echo '<h4>' . (date('Y') - $i) . '</h4>';
+				                        			for($i = 0; $i < count($residents[date('Y') - $i]); $i++)
+				                        			{
+				                        				if(isset($residents[date('Y') - $i][$i]))
+				                        				{
+				                        					echo '<p>' . $residents[date('Y') - $i][$i] . '</p>';
+				                        				}
+				                        			}
+				                        		} ?>
+				                        		<div class="list-group">
+				                        			<h4 class="list-group-item-heading">2014</h4>
+				                        			<a href="#" class="list-group-item">
+						                        		<p class="list-group-item-text"> Test Resident </p>
+						                        	</a>
+						                        	<a href="#" class="list-group-item">
+						                        		<p class="list-group-item-text"> Test Resident2 </p>
+						                        	</a>
+						                        	<h4 class="list-group-item-heading">2013</h4>
+						                        	<a href="#" class="list-group-item">
+						                        		
+						                        			<p class="list-group-item-text"> Test Resident </p>
+							                        		<p class="list-group-item-text"> Test Resident2 </p>
+						                        	</a>
+					                        		<a href="#" class="list-group-item">
+						                        		<h4 class="list-group-item-heading">2012</h4>
+						                        			<p class="list-group-item-text"> Test Resident </p>
+							                        		<p class="list-group-item-text"> Test Resident2 </p>
+						                        	</a>
+				                        		</div>
 			                        		</div>
 		                        		</div>
 			                       </div><!--col-sm-6 right col -->

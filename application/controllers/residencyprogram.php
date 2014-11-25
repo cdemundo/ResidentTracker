@@ -35,6 +35,9 @@ class Residencyprogram extends CI_Controller
 		}
 	}
 
+	/*****
+	*Loads a page that represents a specific residency program
+	*****/
 	function getProgram($programName)
 	{
 		//pass data to model
@@ -42,8 +45,32 @@ class Residencyprogram extends CI_Controller
 
 		$data = array();
 
-		//each index in data is a row of program_name, state, director
+		//each index in data is a row of address, city+state, telephone, fax, contact, contact-email
+		//director, director email and alumni
 		$data['residencyProgram'] = $this->residencyprogram_model->getSpecificProgram(urldecode($programName));
+
+		//this is to get alumni data
+		$residents = $this->residencyprogram_model->getAlumni(urldecode($programName));
+
+		//get the current year and the 4 previous
+		for ($i = 0; $i <= 4; $i++)
+		{
+			//$years is an array of arrays
+			//$years[currentYear][0] = residentName, and so on
+			$years[date('Y') - $i] = array(); 
+
+			//foreach resident, check if the start year matches the current year in the loop
+			foreach($residents as $resident)
+			{
+				 if($resident->program_start_year == (date('Y') - $i))
+				 {
+				 	$years[date('Y') - $i][] = $resident->name;
+				 }
+			}
+		}
+	
+
+		$data['residents'] = $years; 
 
 		$this->load->view('residencyprogram_view', $data);
 	}
