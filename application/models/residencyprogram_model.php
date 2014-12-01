@@ -44,4 +44,17 @@ class Residencyprogram_model extends CI_Model
 			return $query->result();
 		}
 	}
+
+	/*****
+	* This would be used with getSpecificProgram, list of residents that go with the specific program
+	******/
+	function getAlumni($programName)
+	{
+		$query = $this->db->get_where('resident', array('program_name' => $programName)); 
+
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+	}
 }
