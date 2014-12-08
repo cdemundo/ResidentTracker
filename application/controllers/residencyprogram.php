@@ -55,23 +55,55 @@ class Residencyprogram extends CI_Controller
 		//get the current year and the 4 previous
 		for ($i = 0; $i <= 4; $i++)
 		{
-			//$years is an array of arrays
-			//$years[currentYear][0] = residentName, and so on
-			$years[date('Y') - $i] = array(); 
-
-			//foreach resident, check if the start year matches the current year in the loop
-			foreach($residents as $resident)
+			//$years will be an array of arrays
+			//$years[currentYear][residentName] = residentID, and so on
+			$years[date('Y') - $i] = array();
+			
+			if(!empty($residents))
 			{
-				 if($resident->program_start_year == (date('Y') - $i))
-				 {
-				 	$years[date('Y') - $i][] = $resident->name;
-				 }
+				//foreach resident, check if the start year matches the current year in the loop
+				foreach($residents as $resident)
+				{
+					 if($resident->program_start_year == (date('Y') - $i))
+					 {
+					 	$years[date('Y') - $i][$resident->name] = $resident->id;
+					 }
+				}
 			}
 		}
-	
 
 		$data['residents'] = $years; 
 
 		$this->load->view('residencyprogram_view', $data);
+	}
+
+	/*******
+	*Loads a page that represents a specific resident
+	*******/
+	function getResident($residentID)
+	{
+		//pass data to model
+		$this->load->model('residencyprogram_model');
+
+		//array to pass to view 
+		$data = array(); 
+
+		$data['resident'] = $this->residencyprogram_model->resident(urldecode($residentID));
+
+		//convert program start year to just PGY year or "not current" if over 5
+		$yearsSinceStart = date('Y') - $data['resident']->program_start_year; 
+		if($yearsSinceStart < 5)
+		{
+			$data['resident']->program_start_year = "PGY " . (date('Y') - $data['resident']->program_start_year + 1); 
+		}
+		else
+		{
+			$data['resident']->program_start_year = "Graduated"; 
+		}
+
+		//an array of courses attended - array[courseName] = date
+		$data['coursesAttended'] = $this->residencyprogram_model->getCourses($residentID); 
+
+		$this->load->view('resident_view.php', $data);
 	}
 }

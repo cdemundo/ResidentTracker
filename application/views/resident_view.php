@@ -69,10 +69,9 @@
 		              	</ul>	              
 		            </div><!--col-sm-2-->
 		            <!-- /sidebar -->
-	          
+		          
 		            <!-- main content -->
 		            <div class="column col-sm-11 col-xs-11" id="main">
-	
 		                <div class="padding">
 		                    <div class="full col-sm-10">
 		                        <!-- content -->                      
@@ -81,7 +80,11 @@
 		                        	<div class = "col-sm-12 hidden-xs">
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
-			                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
+			                                	<p class="lead no-bottom">
+			                                		<?php echo $resident->name . " - " . $resident->program_start_year?>
+			                                		<!-- This is a link to the Program page for the residents Residency program -->
+			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->program_name ?></a></span>
+			                                	</p>
 			                                </div>
 		                              	</div>
 		                        	</div>
@@ -90,7 +93,9 @@
 		                        	<div class = "col-sm-12 visible-xs">
 		                        		<div class="panel panel-default big-top-spacer">
 			                                <div class="panel-body">
-			                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
+			                                	<p class="lead no-bottom"><?php echo $resident->name?>
+			                                		<span class="pull-right"><?php echo $resident->program_name?></span>
+			                                	</p>
 			                                </div>
 		                              	</div>
 		                        	</div>
@@ -103,22 +108,8 @@
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                <p class="lead"> Contact Information  </p>	
-			                                <p class="top-spacer"> Address: <?php echo $residencyProgram[0]->address ?> </p>
-			                                <p> City + State: <?php echo $residencyProgram[0]->city . "," . $residencyProgram[0]->state ?></p>
-			                                <p> Telephone: <?php echo $residencyProgram[0]->telephone ?> </p>
-			                                <p> Fax: <?php echo $residencyProgram[0]->fax ?> </p>
-			                                <p> Contact: <?php echo $residencyProgram[0]->contact_name ?> </p>
-			                                <p> Contact Email: <?php echo $residencyProgram[0]->contact_email ?> </p>
-			                                </div>
-		                              	</div>
-
-
-			                        	<!-- DIRECTOR INFO GOES HERE -->
-		                        		<div class="panel panel-default">
-			                                <div class="panel-body">
-			                                <p class="lead"> Director and Faculty </p>
-			                                <p class="top-spacer"> Director: <?php echo $residencyProgram[0]->director ?> </p>	
-			                                <p> Email: <?php echo $residencyProgram[0]->director_email ?> </p>
+			                                <p class="top-spacer"> Email: <?php echo $resident->email ?> </p>
+			                                <p> Telephone: <?php echo $resident->telephone ?> </p>
 			                                </div>
 		                              	</div>
 
@@ -133,34 +124,26 @@
 
 			                       <!-- RIGHT COLUMN --> 
 			                       <div class="col-sm-6">
-			                       		<!-- Alumni content -->
+			                       		<!-- Courses Attended -->
 		                        		<div class="panel panel-default">
 			                        		<div class="panel-body">
-				                        		<p class="lead"> Program Alumni</p>
+				                        		<p class="lead"> Courses Attended</p>
 				                        		<div id="listdiv">
-					                        		<?php for ($i = 0; $i <= 4; $i++)
-					                        		{ 
-					                        			//date('Y') - $1 in the first iteration is the current 0.. current date - 0
-					                        			//then it goes back, -1, -2, -3, -4 to get the last 5 years
-					                        			echo '<h4>' . (date('Y') - $i) . '</h4>';
-					                        			echo '<ul>';
-					                        			//if there are any residents in a given year
-					                        			if(!empty($residents[date('Y') - $i]))
+					                        		<?php 
+					                        			//resident may not have gone to any courses or had any recorded
+					                        			if(!empty($coursesAttended))
 					                        			{
-					                        				//print out each one of those residents, key is resident name, value is resident id
-					                        				foreach($residents[date('Y') - $i] as $key => $value)
-					                        				{
-					                        					//url link is to the specific residents page, based on ID
-					                        					//display is the residents name
-					                          					echo '<p><a href="' . base_url() . 'residencyprogram/getResident/' . $value .'">' . $key . '</a></p>';
-					                        				}
+					                        				//key is name, value is date
+						                        			foreach($coursesAttended as $key => $value)
+						                        			{
+						                        				echo "<p><b>" . $value . "</b>: " . $key . "</p>"; 
+						                        			}
 					                        			}
 					                        			else
 					                        			{
-					                        				echo '<p> No residents found in this year </p>';
-					                        			}
-					                        			echo '</ul>';
-					                        		}?>
+					                        				echo "<p> No courses recorded. </p>";  
+					                        			} 
+					                        		?>
 				                        		</div><!--list div -->
 			                        		</div><!-- panel body -->
 		                        		</div><!-- panel -->
@@ -180,6 +163,32 @@
 		        </div><!--row row-offcanvas row-offcanvas-left-->
 		    </div><!--box-->
 		</div><!--wrapper-->
+
+
+	<!--post modal-->
+	<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	  <div class="modal-content">
+	      <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				Update Status
+	      </div>
+	      <div class="modal-body">
+	          <form class="form center-block">
+	            <div class="form-group">
+	              <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+	            </div>
+	          </form>
+	      </div>
+	      <div class="modal-footer">
+	          <div>
+	          <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+	            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+			  </div>	
+	      </div>
+	  </div>
+	  </div>
+	</div>
 
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	

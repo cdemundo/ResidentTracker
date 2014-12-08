@@ -8,7 +8,7 @@ if(isset($residencyProgram))
 	
 	<div class="col-sm-4">
 		<div class = "panel panel-default">
-			<div class="panel-body">
+			<div class="panel-body" style="height: 200px;">
 				<a href='<?php echo site_url();?>residencyprogram/getProgram/<?php echo $program->program_name ?>' class="lead bottom-spacer"> <?php echo $program->program_name ?> </a>
 				<p class="top-spacer"> State: <?php echo $program->state ?> </p>
 				<p> Director: <?php echo $program->director ?> </p>
