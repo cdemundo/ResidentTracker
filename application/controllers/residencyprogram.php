@@ -66,7 +66,7 @@ class Residencyprogram extends CI_Controller
 				{
 					 if($resident->program_start_year == (date('Y') - $i))
 					 {
-					 	$years[date('Y') - $i][$resident->name] = $resident->id;
+					 	$years[date('Y') - $i][$resident->firstname . " " . $resident->lastname] = $resident->id;
 					 }
 				}
 			}
@@ -82,28 +82,14 @@ class Residencyprogram extends CI_Controller
 	*******/
 	function getResident($residentID)
 	{
-		//pass data to model
-		$this->load->model('residencyprogram_model');
+		$this->load->model('resident_model'); 
 
-		//array to pass to view 
-		$data = array(); 
-
-		$data['resident'] = $this->residencyprogram_model->resident(urldecode($residentID));
-
-		//convert program start year to just PGY year or "not current" if over 5
-		$yearsSinceStart = date('Y') - $data['resident']->program_start_year; 
-		if($yearsSinceStart < 5)
-		{
-			$data['resident']->program_start_year = "PGY " . (date('Y') - $data['resident']->program_start_year + 1); 
-		}
-		else
-		{
-			$data['resident']->program_start_year = "Graduated"; 
-		}
+		$theResident = $this->resident_model->loadByID($residentID); 
 
 		//an array of courses attended - array[courseName] = date
-		$data['coursesAttended'] = $this->residencyprogram_model->getCourses($residentID); 
+		$data['coursesAttended'] = $theResident->getCourses(); 
 
+		$data['resident'] = $theResident; 
 		$this->load->view('resident_view.php', $data);
 	}
 }

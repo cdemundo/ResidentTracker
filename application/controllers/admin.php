@@ -26,4 +26,19 @@ class Admin extends CI_Controller
 		$this->load->view('adminselect_view', $data);
 	}
 
+	function addResident()
+	{
+		$this->load->model('resident_model'); 
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(isset($_POST['lastName']))
+			{
+				$newResident = $this->resident_model->byLastName($_POST['lastName']); 
+				print_r($newResident);
+				exit; 
+			}
+		}
+	}
+
 }
