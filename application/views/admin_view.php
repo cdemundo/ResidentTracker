@@ -110,18 +110,37 @@
 															<form id="addResidentForm">
 																<h4 class="bottom-spacer"> Add A Resident </h4>
 															    <div class="form-group">
-															        <label for="resName">Name</label>
-															        <input type="text" class="form-control" id="resName" placeholder="Name">
+															        <label for="resName">First Name</label>
+															        <input type="text" class="form-control" name="firstName" placeholder="First Name">
+															    </div>
+															    <div class="form-group">
+															        <label for="resName">Last Name</label>
+															        <input type="text" class="form-control" name="lastName" placeholder="Last Name">
 															    </div>
 															    <div class="form-group">
 															        <label for="resEmail">Email</label>
-															        <input type="text" class="form-control" id="resEmail" placeholder="Email">
+															        <input type="text" class="form-control" name="resEmail" placeholder="Email">
 															    </div>
-															    <div class="form-group" id="programSelect">
+															    <div class="form-group">
+															        <label for="startYear">Post-Graduate Year</label>
+															        <select class="form-control text-center" name="startYear">
+															        	<?php 
+															        		for ($i = 1; $i<6; $i++)
+															        		{
+															        			echo '<option value ="' . $i . '">' . $i . '</option>';
+															        		}
+															        	?>
+															        </select>
+															    </div>
+															    <div class="form-group">
+															        <label for="resPhone">Phone</label>
+															        <input type="text" class="form-control" name="resPhone" placeholder="Phone">
+															    </div>
+															    <div class="form-group" id="programSelect" name="program">
 															        <!-- ajax goes here -->
 															    </div>
 
-															    <button type="submit" class="btn btn-primary">Add Resident</button>
+															    <button type="" class="btn btn-primary" id="addResBtn">Add Resident</button>
 															</form>
 
 															<!-- submits via jquery and ajax, no action or method -->
@@ -130,7 +149,7 @@
 																<h4 class="bottom-spacer"> Remove A Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">Name</label>
-															        <input type="text" class="form-control" id="resName" placeholder="Name">
+															        <input type="text" class="form-control" name="resName" placeholder="Name">
 															    </div>
 
 															    <button type="submit" class="btn btn-primary">Remove Resident</button>
@@ -142,7 +161,7 @@
 																<h4 class="bottom-spacer"> Update A Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">Name</label>
-															        <input type="text" class="form-control" id="resName" placeholder="Name">
+															        <input type="text" class="form-control" name="resName" placeholder="Name">
 															    </div>
 															    
 															    <button type="submit" class="btn btn-primary">Update Resident</button>
@@ -214,6 +233,7 @@
 
 			$("form").hide(); //hide form on page load
 
+			//these are for the links under "admin controls"
 			//Add resident click
   			$('#addResLink').click(function() {
   				//hide all other forms open 
@@ -252,6 +272,20 @@
   				$('#updateProgramForm').show(); 
   				//load select dropdown via ajax
   				getPrograms(); 
+  			})
+  			//******* end of links ********************
+
+
+  			//******* submit buttons ******************
+  			$('#addResBtn').click(function() {
+  				$.ajax({
+				  type: "POST",
+				  url: base_url + 'admin' + '/addResident',
+				  dataType: "html",
+				  success: function(data) {
+				  			console.log("suggest"); 
+						}
+					})
   			})
   		});
 	</script>

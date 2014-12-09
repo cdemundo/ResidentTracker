@@ -81,9 +81,9 @@
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                	<p class="lead no-bottom">
-			                                		<?php echo $resident->name . " - " . $resident->program_start_year?>
+			                                		<?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy;?>
 			                                		<!-- This is a link to the Program page for the residents Residency program -->
-			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->program_name ?></a></span>
+			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
 			                                	</p>
 			                                </div>
 		                              	</div>
@@ -93,8 +93,8 @@
 		                        	<div class = "col-sm-12 visible-xs">
 		                        		<div class="panel panel-default big-top-spacer">
 			                                <div class="panel-body">
-			                                	<p class="lead no-bottom"><?php echo $resident->name?>
-			                                		<span class="pull-right"><?php echo $resident->program_name?></span>
+			                                	<p class="lead no-bottom"><?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy; ?>
+			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
 			                                	</p>
 			                                </div>
 		                              	</div>
