@@ -25,6 +25,13 @@ class Resident_model extends CI_Model
 		parent::__construct(); 
 	}
 
+	/*
+	*Getter for $_id
+	*/
+	public function getID() {
+        return $this->_id;
+    }
+
 	/***
 	*Get resident from DB by id
 	***/ 
@@ -61,17 +68,18 @@ class Resident_model extends CI_Model
 	}
 
 	/***
-	*Get resident from DB by last name
+	*Create a new resident object with only last name populated
 		***/ 
 
 	public function byLastName($lastName) 
 	{
-    	$this->$lastName = "$lastName"; 
+    	$this->lastName = $lastName;
     	return $this; 
     }
 
     /**
-    *Insert a resident to the database
+    *Commit a resident object to the database
+    *@return boolean
     **/
     public function addResident()
     {
@@ -81,15 +89,50 @@ class Resident_model extends CI_Model
     	$programStartYear = $programStartYear . "-07-15"; 
 
     	$data = array(
-    			'firstname' = $this->firstName, 
-    			'lastname' = $this->lastName, 
-    			'program_name' = $this->programName, 
-    			'program_start_year' = $programStartYear, 
-    			'email' = $this->email, 
-    			'telephone' = $this->telephone
-    		)
+    			'firstname' => $this->firstName, 
+    			'lastname' => $this->lastName, 
+    			'program_name' => $this->programName, 
+    			'program_start_year' => $programStartYear, 
+    			'email' => $this->email, 
+    			'telephone' => $this->telephone
+    		);
 
     	$this->db->insert('resident', $data); 
+
+    	return $this->db->affected_rows() > 0;
+    }
+
+    /**
+    *Checks if a resident exists in the database, by last name
+    */
+
+    public function checkExistResident()
+    {
+    	$query = $this->db->get_where('resident', array('lastname' => $this->lastName)); 
+
+    	if($query->num_rows() > 0)
+    	{
+    		return $query->row()->id; 
+    	}
+    	else
+    	{
+    		return false; 
+    	}
+    }
+
+    /**
+    *Remove a resident from the database
+    *@return boolean
+    **/
+
+    public function remove()
+    {
+    	//foreign key between the two, have to delete any courses first
+    	$this->db->delete('courses_attended', array('resident_id' => $this->_id));
+
+    	$this->db->delete('resident', array('id' => $this->_id));
+
+    	return $this->db->affected_rows() > 0; 
     }
 
 

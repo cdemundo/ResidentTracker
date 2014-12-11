@@ -57,17 +57,4 @@ class Residencyprogram_model extends CI_Model
 			return $query->result();
 		}
 	}
-
-	/*******
-	*From resident table, get info about a specific resident 
-	********/
-	function resident($residentID)
-	{
-		$query = $this->db->get_where('resident', array('id' => $residentID)); 
-
-		if($query->num_rows() > 0)
-		{
-			return $query->row();
-		}
-	}
 }

@@ -31,7 +31,7 @@ class Residencyprogram extends CI_Controller
 			$data['residencyProgram'] = $this->residencyprogram_model->residencyProgramsByState($state);
 
 			//pass to view
-			$this->load->view("resprogramsbystate_view", $data);
+			$this->load->view("residency_program/resprogramsbystate_view", $data);
 		}
 	}
 
@@ -74,7 +74,7 @@ class Residencyprogram extends CI_Controller
 
 		$data['residents'] = $years; 
 
-		$this->load->view('residencyprogram_view', $data);
+		$this->load->view('residency_program/residencyprogram_view', $data);
 	}
 
 	/*******
