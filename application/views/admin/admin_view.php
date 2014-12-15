@@ -72,6 +72,59 @@
 		              
 		            </div>
 		            <!-- /sidebar -->
+
+		            <!-- confirmation modal -->
+		            <!-- Modal -->
+					<!-- Modal HTML -->
+					<div id="confirmModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Are you sure?</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="ajaxModal">
+								                	<p>Loading...</p>
+								                	<!-- ajax forms here will be called 'modalForm' -->
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-danger" data-dismiss="modal">OK</button>
+						                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+						            </div>
+					        </div>
+					    </div>
+					</div>
+
+					<div id="successModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Submitted</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="ajaxModal">
+								                	<p>Loading...</p>
+								                	<!-- ajax forms here will be called 'modalForm' -->
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div>
+					    </div>
+					</div>
 		          
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
@@ -143,14 +196,14 @@
 															</form>
 
 															<!-- Remove Resident Form -->
-															<form id="removeResidentForm" action="<?php echo base_url()?>admin/checkRemoveResident" method="post">
+															<form id="removeResidentForm">
 																<h4 class="bottom-spacer"> Remove A Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">Last Name</label>
-															        <input type="text" class="form-control" name="resLastName" placeholder="Last Name">
+															        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name">
 															    </div>
 
-															    <button type="submit" class="btn btn-primary">Remove Resident</button>
+															    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Remove Resident</button>
 															</form>
 
 															<!-- Update Resident Form -->
@@ -272,6 +325,50 @@
   			})
   			//******* end of links ********************
   		});
+	</script>
+
+	<script> 
+		$('#removeResidentForm').submit(function( event ) {
+			event.preventDefault(); 
+
+			$("#confirmModal").modal('show');
+			
+			var base_url = '<?php echo site_url();?>'; 
+			
+			$.ajax({
+			  type: "POST",
+			  url: base_url + 'admin' + '/checkRemoveResident',
+			  data: {resLastName : $('#resLastName').val() },
+			  dataType: "html",
+			  success: function(data) {
+					$('#ajaxModal').html(data);
+					}
+				})
+		})
+	</script>
+
+	<!-- handle the modal form submissions -->
+	<script>
+		$('#modalOK').click(function() {
+			console.log("clicked");
+			$('#modalForm').submit(function( event ){
+				event.preventDefault(); 
+
+				$("#successModal").modal('show');
+				
+				var base_url = '<?php echo site_url();?>'; 
+				
+				$.ajax({
+				  type: "POST",
+				  url: base_url + 'admin' + '/removeResident',
+				  data: { residentID : $('#residentID').val() },
+				  dataType: "html",
+				  success: function(data) {
+						$('#ajaxModal').html(data);
+						}
+					})
+			})
+		});
 	</script>
 
 	<!-- Jquery function, ajax to get all residency programs info 

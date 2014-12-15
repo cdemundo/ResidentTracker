@@ -88,13 +88,18 @@ class Admin extends CI_Controller
 				if($id > 0)
 				{
 					$data['residentToRemove'] = $this->resident_model->loadByID($id); 
-					$this->load->view('admin/removeResidentCheck_view.php', $data); 
+					$this->load->view('admin/removeResidentModalContent_view.php', $data); 
 				}
 				else
 				{
 					$data['errorState'] = "error";
 					$this->load->view("admin/adminform_success", $data);
 				}
+			}
+			else
+			{
+				echo "Please enter a resident to search for.";
+				echo "Full error message: No value via POST";  
 			}
 		}
 	}
@@ -111,14 +116,15 @@ class Admin extends CI_Controller
 
 				if($residentToRemove->remove())
 				{
-					$data['errorState'] = "success"; 
+					$data['successMessage'] = $residentToRemove->firstName . " " . $residentToRemove->lastName . " was successfully removed"; 
 				}
 				else
 				{
-					$data['errorState'] = "error"; 
+					$data['errorHeading'] = "Resident not removed.";
+					$this->load->view("error/error", $data); 
 				} 
 
-				$this->load->view("admin/adminform_success", $data); 
+				$this->load->view("admin/adminformmodal_success", $data); 
 			}
 		}
 	}
