@@ -26,7 +26,7 @@ color: #00529B;
 
 background-color: #BDE5F8;
 
-background-image: url('bootstrap/img/info.png');
+background-image: url('../images/errorstyle/info.png');
 
 }
 
@@ -48,7 +48,7 @@ color: #4F8A10;
 
 background-color: #DFF2BF;
 
-background-image:url('bootstrap/img/success.png');
+background-image:url('../images/errorstyle/success.png');
 
 }
 
@@ -68,7 +68,7 @@ color: #9F6000;
 
 background-color: #FEEFB3;
 
-background-image: url('bootstrap/img/warning.png');
+background-image: url('../images/errorstyle/warning.png');
 
 }
 
@@ -88,7 +88,7 @@ color: #D8000C;
 
 background-color: #FFBABA;
 
-background-image: url('bootstrap/img/error.png');
+background-image: url('../images/errorstyle/error.png');
 
 }
 
