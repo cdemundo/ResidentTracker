@@ -36,7 +36,6 @@ class Admin extends CI_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
-			$check_array = array('firstName', 'lastName', 'resEmail', 'startYear', 'resPhone', 'selectRes');
 			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['startYear']) && !empty($_POST['resPhone']) && !empty($_POST['selectRes']))
 			{
 				//all forms were filled out
@@ -51,16 +50,19 @@ class Admin extends CI_Controller
 
 				if($newResident->addResident())
 				{ 
-					$data['errorState'] = "success"; 
+					$data['successHeading'] = "Resident Added"; 
+					$data['successMessage'] = $newResident->firstName . " " . $newResident->LastName . " was added as a PGY " . $newResident->pgy . " to " . $newResident->programName; 
 				}
 				else
 				{
-					$data['errorState'] = "error"; 
+					$data['errorHeading'] = "Resident Not Added"; 
+					$data['errorMessage'] = "Resident could not be added, please try again."; 
 				}
 			}
 			else
 			{
-				$data['errorState'] = "missing";
+				$data['errorHeading'] = "Form not filled out"; 
+				$data['errorMessage'] = "All fields were not filled out, resident could not be created."; 
 			}
 
 			$this->load->view("admin/adminform_success", $data); 
@@ -68,10 +70,10 @@ class Admin extends CI_Controller
 	}
 
 	/**
-	*Checks if a resident exists in the database and loads a confirmation page where user can double check if they want to remove
-	*Could maybe be redone with a modal so loading a separate view is not necessary
+	*Checks if a resident exists in the database and loads a confirmation page where user can double check if they want to remove or update
+	*Displays info in a modal
 	*/
-	function checkRemoveResident()
+	function checkExistResident()
 	{
 		$this->load->model('resident_model');
 
@@ -87,25 +89,37 @@ class Admin extends CI_Controller
 
 				if($id > 0)
 				{
-					$data['residentToRemove'] = $this->resident_model->loadByID($id); 
-					$this->load->view('admin/removeResidentModalContent_view.php', $data); 
+					$data['resident'] = $this->resident_model->loadByID($id); 
+					//ajax can come from update or remove.. remove sets a value to $_POST['remove']
+					if(isset($_POST['remove']))
+					{
+						$this->load->view('admin/removeResidentModalContent_view.php', $data); 
+					}
+					else
+					{
+						$this->load->view('admin/updateResidentModalContent_view.php', $data); 
+					}
 				}
 				else
 				{
-					$data['errorState'] = "error";
-					$this->load->view("admin/adminform_success", $data);
+					$data['errorHeading'] = "Not found."; 
+					$data['errorMessage'] = "A resident was not found with the last name " . $_POST['resLastName'];
+					$this->load->view("admin/removeResidentModalContent_view.php", $data);
 				}
 			}
 			else
 			{
-				echo "Please enter a resident to search for.";
-				echo "Full error message: No value via POST";  
+				echo "<h4>Please enter a resident to search for.</h4>";
 			}
 		}
 	}
 
+	/**
+	*Removes a resident from the database and loads a confirmation page
+	*/
 	function removeResident()
 	{
+
 		$this->load->model('resident_model');
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -116,43 +130,87 @@ class Admin extends CI_Controller
 
 				if($residentToRemove->remove())
 				{
+					$data['successHeading'] = "Resident Removed"; 
 					$data['successMessage'] = $residentToRemove->firstName . " " . $residentToRemove->lastName . " was successfully removed"; 
 				}
 				else
 				{
 					$data['errorHeading'] = "Resident not removed.";
-					$this->load->view("error/error", $data); 
+					$data['errorMessage'] = "Resident could not be removed. Please try again or contact support."; 
 				} 
 
-				$this->load->view("admin/adminformmodal_success", $data); 
+				$this->load->view("admin/adminform_success", $data); 
 			}
 		}
 	}
 
-	/**
-	*Pulls the information on a resident from a DB and displays for user to update
-	*/
-	function findResidentToUpdate()
+	function updateResident()
 	{
-		$this->load->model('resident_model');
+		$this->load->model('resident_model'); 
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
-			if(!empty($_POST['resLastName']))
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['startYear']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
 			{
-				//create empty resident object with last name
-				$residentToSearch = $this->resident_model->byLastName($_POST['resLastName']);
+				$residentToUpdate = $this->resident_model->loadByID($_POST['residentID']); 
 
-				//checkExistResident will return false if the resident is not found, will return the resident id if found
-				$id = $residentToSearch->checkExistResident();
+				//see if user changed any values and update them if so
 
-				if($id > 0)
+				if ($residentToUpdate->firstName != $_POST['firstName'])
 				{
-					$data['residentToUpdate'] = $this->resident_model->loadByID($id); 
-					$this->load->view('admin/updateResidentCheck_view.php', $data); 
+					$residentToUpdate->firstName = $_POST['firstName']; 
+					$changes = True; 
 				}
+
+				if ($residentToUpdate->lastName != $_POST['lastName'])
+				{
+					$residentToUpdate->lastName = $_POST['lastName']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->email != $_POST['resEmail'])
+				{
+					$residentToUpdate->email = $_POST['resEmail'];
+					$changes = True;  
+				}
+
+				if ($residentToUpdate->telephone != $_POST['resPhone'])
+				{
+					$residentToUpdate->telephone = $_POST['resPhone']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->pgy != $_POST['startYear'])
+				{
+					$residentToUpdate->pgy = $_POST['startYear']; 
+					$changes = True; 
+				}
+
+				if($residentToUpdate->update())
+				{
+					$data['successHeading'] = "Resident Updated"; 
+					$data['successMessage'] = $residentToUpdate->firstName . " " . $residentToUpdate->lastName . " was successfully updated"; 
+				}
+				else
+				{
+					if($changes)
+					{
+						$data['errorHeading'] = "Sorry!";
+						$data['errorMessage'] = "Resident could not be updated. Please try again or contact support."; 
+					}
+					else
+					{
+						$data['errorHeading'] = "No changes.";
+						$data['errorMessage'] = "You did not make any changes. Please try again.";
+					}
+				} 
+
+				$this->load->view("admin/adminform_success", $data); 
 			}
 		}
+
 	}
+
+	
 
 }

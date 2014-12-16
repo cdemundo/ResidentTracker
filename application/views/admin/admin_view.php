@@ -7,6 +7,7 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- PAGE SPECIFIC CSS -->
+		<link rel="stylesheet" href="/residentTracker/assets/css/validate/bootstrapValidator.min.css"/>
 		<link href="/residentTracker/assets/css/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
 	</head>
@@ -57,20 +58,19 @@
 		          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
 		            	</ul>
 		               
-		                <ul class="nav hidden-xs" id="lg-menu">
+		               	<ul class="nav hidden-xs" id="lg-menu">
 		                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-                    		<li><a href=""><i class="glyphicon glyphicon-user"></i> Residents</a></li>
-                    		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
-		                </ul>
-		                		              
+	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+	                		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
+	                	</ul>
+	                		              
 		              	<!-- tiny only nav-->
-		              <ul class="nav visible-xs" id="xs-menu">
-		                  	<li><a href="" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                    		<li><a href="" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-                    		<li><a href="" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-		                </ul>
-		              
-		            </div>
+		            	<ul class="nav visible-xs" id="xs-menu">
+		                	<li><a href="<?php echo base_url()?>main" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+	                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+		              	</ul>	              
+	            	</div><!--col-sm-2-->
 		            <!-- /sidebar -->
 
 		            <!-- confirmation modal -->
@@ -81,7 +81,7 @@
 					        <div class="modal-content">
 					            <div class="modal-header">
 					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title text-center">Are you sure?</h4>
+					                <h4 class="modal-title text-center">Verification</h4>
 					            </div>
 						            <div class="modal-body col-xs-10 col-xs-offset-1">
 						            	<div class = "panel panel-default top-spacer">
@@ -101,31 +101,6 @@
 					    </div>
 					</div>
 
-					<div id="successModal" class="modal fade">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title text-center">Submitted</h4>
-					            </div>
-						            <div class="modal-body col-xs-10 col-xs-offset-1">
-
-						            	<div class = "panel panel-default top-spacer">
-											<div class="panel-body text-center">
-								            	<div id="ajaxModal">
-								                	<p>Loading...</p>
-								                	<!-- ajax forms here will be called 'modalForm' -->
-								                </div>
-								            </div>
-								        </div>
-						            </div>
-						            <div class="modal-footer">
-						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
-						            </div>
-					        </div>
-					    </div>
-					</div>
-		          
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
 		            	<div class="inner-wrapper">
@@ -159,19 +134,32 @@
 															<p id = "defaultP"> Choose an action from above </p>
 
 															<!-- Add Resident Form -->
-															<form id="addResidentForm" action="<?php echo base_url()?>admin/addResident" method="post">
+															<form id="addResidentForm" action="<?php echo base_url()?>admin/addResident" method="post"
+																data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+											                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+											                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+
 																<h4 class="bottom-spacer"> Add A Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">First Name</label>
-															        <input type="text" class="form-control" name="firstName" placeholder="First Name">
+															        <input type="text" class="form-control" name="firstName" placeholder="First Name"
+															        	data-bv-notempty = "true"
+															        	data-bv-notempty-message="First name is required and cannot be empty"/>
 															    </div>
 															    <div class="form-group">
 															        <label for="resName">Last Name</label>
-															        <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+															        <input type="text" class="form-control" name="lastName" placeholder="Last Name"
+															        	data-bv-notempty = "true"
+															        	data-bv-notempty-message="Last name is required and cannot be empty"/>
 															    </div>
 															    <div class="form-group">
 															        <label for="resEmail">Email</label>
-															        <input type="text" class="form-control" name="resEmail" placeholder="Email">
+															        <input type="text" class="form-control" name="resEmail" placeholder="Email"
+															        	data-bv-notempty="true"
+										                                data-bv-notempty-message="The email address is required and cannot be empty"
+
+										                                data-bv-emailaddress="true"
+										                                data-bv-emailaddress-message="The email address is not a valid"/>
 															    </div>
 															    <div class="form-group">
 															        <label for="startYear">Post-Graduate Year</label>
@@ -186,7 +174,11 @@
 															    </div>
 															    <div class="form-group">
 															        <label for="resPhone">Phone</label>
-															        <input type="text" class="form-control" name="resPhone" placeholder="Phone">
+															        <input type="text" class="form-control" name="resPhone" placeholder="Format: 201-831-5555"
+															        	data-bv-notempty="true"
+															        	data-bv-phone="true"
+															        	data-bv-phone-country="US"
+															        	data-bv-phone-message="The value is not a valid phone number."/>
 															    </div>
 															    <div class="form-group" id="programSelect" name="program">
 															        <!-- ajax goes here -->
@@ -200,18 +192,22 @@
 																<h4 class="bottom-spacer"> Remove A Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">Last Name</label>
-															        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name">
+															        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name"
+															        data-bv-notempty="true"
+															        data-bv-notempty-message="Last name is required and cannot be empty"/>
 															    </div>
 
 															    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Remove Resident</button>
 															</form>
 
 															<!-- Update Resident Form -->
-															<form id="updateResidentForm" action="<?php echo base_url()?>admin/findResidentToUpdate" method="post">
+															<form id="updateResidentForm">
 																<h4 class="bottom-spacer"> Update A Resident </h4>
 															    <div class="form-group">
-															        <label for="resName">Name</label>
-															        <input type="text" class="form-control" name="resLastName" placeholder="Last Name">
+															        <label for="resLastName">Last Name</label>
+															        <input type="text" class="form-control" id = "upResLastName" name="resLastName" placeholder="Last Name"
+															        data-bv-notempty="true"
+															        data-bv-notempty-message="Last name is required and cannot be empty"/>
 															    </div>
 															    
 															    <button type="submit" class="btn btn-primary">Update Resident</button>
@@ -258,6 +254,9 @@
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+	<!-- BOOTSTRAP VALIDATOR -->
+	<script type="text/javascript" src="/residentTracker/assets/js/validate//bootstrapValidator.min.js"></script>
 
   	<!--JS FOR SELECT PICKER -->
   	<script src="<?=base_url()?>assets/js/bootstrap-select/bootstrap-select.min.js"></script>
@@ -324,6 +323,13 @@
   				getPrograms(); 
   			})
   			//******* end of links ********************
+
+  			//form validation initalizations
+			$('#addResidentForm').bootstrapValidator(); 
+
+			$('#removeResidentForm').bootstrapValidator(); 
+
+			$('#updateResidentForm').bootstrapValidator(); 
   		});
 	</script>
 
@@ -337,8 +343,28 @@
 			
 			$.ajax({
 			  type: "POST",
-			  url: base_url + 'admin' + '/checkRemoveResident',
-			  data: {resLastName : $('#resLastName').val() },
+			  url: base_url + 'admin' + '/checkExistResident',
+			  data: {resLastName : $('#resLastName').val(), remove : 'remove' },
+			  dataType: "html",
+			  success: function(data) {
+					$('#ajaxModal').html(data);
+					}
+				})
+		})
+	</script>
+
+	<script>
+	$('#updateResidentForm').submit(function( event ) {
+			event.preventDefault(); 
+
+			$("#confirmModal").modal('show');
+			
+			var base_url = '<?php echo site_url();?>'; 
+			
+			$.ajax({
+			  type: "POST",
+			  url: base_url + 'admin' + '/checkExistResident',
+			  data: {resLastName : $('#upResLastName').val(), },
 			  dataType: "html",
 			  success: function(data) {
 					$('#ajaxModal').html(data);
@@ -350,24 +376,7 @@
 	<!-- handle the modal form submissions -->
 	<script>
 		$('#modalOK').click(function() {
-			console.log("clicked");
-			$('#modalForm').submit(function( event ){
-				event.preventDefault(); 
-
-				$("#successModal").modal('show');
-				
-				var base_url = '<?php echo site_url();?>'; 
-				
-				$.ajax({
-				  type: "POST",
-				  url: base_url + 'admin' + '/removeResident',
-				  data: { residentID : $('#residentID').val() },
-				  dataType: "html",
-				  success: function(data) {
-						$('#ajaxModal').html(data);
-						}
-					})
-			})
+			$('#modalForm').submit();
 		});
 	</script>
 

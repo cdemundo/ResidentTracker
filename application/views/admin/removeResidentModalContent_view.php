@@ -1,10 +1,22 @@
-<form id="modalForm" action="<?php echo base_url()?>admin/removeResident" method="post"> 
-    <p class = 'alert alert-danger'> This cannot be reversed </p>
-    <?php 
-        echo '<p><b>First Name:</b> ' . $residentToRemove->firstName . '</p>'; 
-        echo '<p><b>Last Name:</b> ' . $residentToRemove->lastName . '</p>'; 
-        echo '<p><b>Residency Program:</b> ' . $residentToRemove->programName . '</p>'; 
-        echo '<p><b>PGY:</b> ' . $residentToRemove->pgy . '</p>'; 
-    ?>
-<input type="hidden" name = "residentID" id = "residentID" value = "<?php echo $residentToRemove->getID() ?>" />
-</form>                                                     
+<?php
+    if(!empty($errorMessage))
+    {
+        echo '<p class = "alert alert-warning"> Not found </p>';
+        echo $errorMessage;
+    }
+    else
+    { 
+        echo '<h4 class="bottom-spacer"> Remove A Resident </h4>'; 
+        $attributes = array('id' => 'modalForm');
+        echo form_open('admin/removeResident', $attributes); 
+
+        echo '<p class = "alert alert-danger"> This cannot be reversed </p>'; 
+        echo '<p><b>First Name:</b> ' . $resident->firstName . '</p>'; 
+        echo '<p><b>Last Name:</b> ' . $resident->lastName . '</p>'; 
+        echo '<p><b>Residency Program:</b> ' . $resident->programName . '</p>'; 
+        echo '<p><b>PGY:</b> ' . $resident->pgy . '</p>'; 
+
+        echo form_hidden('residentID', $resident->getID()); 
+        echo '</form>';
+    } 
+                                                

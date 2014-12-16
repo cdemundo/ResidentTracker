@@ -82,6 +82,12 @@ class Residencyprogram extends CI_Controller
 	*******/
 	function getResident($residentID)
 	{
+		//submitted via post value from residentsSearchResults_view.php
+		if(!empty($_POST['selectRes']))
+		{
+			$residentID = $_POST['selectRes']; 
+		}
+		
 		$this->load->model('resident_model'); 
 
 		$theResident = $this->resident_model->loadByID($residentID); 

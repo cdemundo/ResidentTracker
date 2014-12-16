@@ -83,21 +83,41 @@ class Resident_model extends CI_Model
     **/
     public function addResident()
     {
-    	//calculate date for program start year
-    	$programStartYear = date('Y') - ($this->pgy - 1);
-    	//assume a start date of July 15 for all residents, only the year is important to track
-    	$programStartYear = $programStartYear . "-07-15"; 
-
     	$data = array(
     			'firstname' => $this->firstName, 
     			'lastname' => $this->lastName, 
     			'program_name' => $this->programName, 
-    			'program_start_year' => $programStartYear, 
+    			'program_start_year' => $this->convertStartYear(), 
     			'email' => $this->email, 
     			'telephone' => $this->telephone
     		);
 
     	$this->db->insert('resident', $data); 
+
+    	return $this->db->affected_rows() > 0;
+    }
+
+    /**
+    *Updates a resident that exists in the database already
+    *@return boolean
+    */
+
+    public function update()
+    {
+    	//calculate date for program start year, assumes PGY is set as an integer from 1-5
+    	$programStartYear = date('Y') - ($this->pgy - 1);
+    	//assume a start date of July 15 for all residents, only the year is important to track
+    	$programStartYear = $programStartYear . "-07-15"; 
+
+    	$data = array('firstname' => $this->firstName,
+    		'lastname' => $this->lastName, 
+    		'program_start_year' => $this->convertStartYear(), 
+    		'email' => $this->email, 
+    		'telephone' => $this->telephone
+    		); 
+
+    	$this->db->where('id', $this->_id); 
+    	$this->db->update('resident', $data); 
 
     	return $this->db->affected_rows() > 0;
     }
@@ -174,4 +194,19 @@ class Resident_model extends CI_Model
 			return $returnArray; 
 		}
 	}
+
+	/**
+    *Helper function, converts PGY 1-5 to start year in YYYY-MM-DD format (where MM-DD is always 07-15)
+    *@return date, YYYY-MM-DD
+    */
+
+    private function convertStartYear()
+    {
+    	//calculate date for program start year, assumes PGY is set as an integer from 1-5
+    	$programStartYear = date('Y') - ($this->pgy - 1);
+    	//assume a start date of July 15 for all residents, only the year is important to track
+    	$programStartYear = $programStartYear . "-07-15"; 
+
+    	return $programStartYear; 
+    }
 }

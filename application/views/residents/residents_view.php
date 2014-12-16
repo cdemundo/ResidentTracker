@@ -7,7 +7,8 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- PAGE SPECIFIC CSS -->
-		<link href="/residentTracker/assets/css/error.css" rel="stylesheet">
+		<link rel="stylesheet" href="/residentTracker/assets/css/validate/bootstrapValidator.min.css"/>
+		<link href="/residentTracker/assets/css/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
 	</head>
 	<body>
@@ -61,15 +62,15 @@
 		                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
 	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
 	                		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
-	                	</ul>
-	                		              
+		                </ul>
+		                		              
 		              	<!-- tiny only nav-->
 		            	<ul class="nav visible-xs" id="xs-menu">
 		                	<li><a href="<?php echo base_url()?>main" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
 	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
 	                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
 		              	</ul>	              
-	            	</div><!--col-sm-2-->
+		            </div><!--col-sm-2-->
 		            <!-- /sidebar -->
 
 		            <!-- confirmation modal -->
@@ -80,54 +81,67 @@
 					        <div class="modal-content">
 					            <div class="modal-header">
 					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title">Are you sure?</h4>
+					                <h4 class="modal-title text-center">Verification</h4>
 					            </div>
-					            <div class="modal-body col-xs-10 col-xs-offset-1">
-					            	<div class = "panel panel-default top-spacer">
-										<div class="panel-body text-center">
-							            	<div id="ajaxModal">
-							                	<p>Loading...</p>
-							                </div>
-							            </div>
-							        </div>
-					            </div>
-					            <div class="modal-footer">
-					                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete Resident</button>
-					                <button type="button" class="btn btn-primary">Cancel</button>
-					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="ajaxModal">
+								                	<p>Loading...</p>
+								                	<!-- ajax forms here will be called 'modalForm' -->
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-danger" data-dismiss="modal">OK</button>
+						                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+						            </div>
 					        </div>
 					    </div>
 					</div>
-		          
+
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
 		            	<div class="inner-wrapper">
 		                <div class="padding">
 		                    <div class="full col-sm-9">
+
 		                        <!-- content -->                      
 		                      	<div class="row">
-		                      		<div class="col-md-12">
-							            <div class="error-template">
-							                <h1>Oops!</h1>
-							                <h2><?php echo $errorHeading ?></h2>
-							                <div class="error-details">
-							                    <?php 
-							                    	if(!empty($errorMessage))
-							                    	{
-							                    		echo $errorMessage;
-							                    	}
-							                    	else
-							                    	{
-							                    		echo "Sorry, there was an error!  Please try again.";
-							                    	}
-							                    ?>
-							                </div>
-							                <div class="error-actions">
-							                    <a href="http://www.jquery2dotnet.com" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-							                        Take Me Home </a><a href="http://www.jquery2dotnet.com" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
-							                </div>
-							            </div>
-							        </div>
+		                      		<!-- Header in top of content section -->
+		                        	<div class = "col-sm-12">
+		                        		<div class="col-sm-8 col-sm-offset-2">
+		                        		<div class="panel panel-default">
+			                                <div class="panel-body">
+			                                  <h4 class = "text-center bottom-spacer"> Search for a Resident </h4>
+				                            </div>
+			                            </div><!--panel panel-default-->
+			                            </div><!-- col-sm-5 col-sm-offset-4-->
+			                                <div id = "formGoesHere" class="col-sm-10 col-sm-offset-1">
+			                                	<div class = "panel panel-default">
+													<div class="panel-body text-center">
+														<div class = "col-sm-4 col-sm-offset-4 text-center">
+															<form id = "resSearchForm">
+															<div class="form-group">
+																<label for="resLastName">Last Name: </label> 
+																<input class = "form-control" type = "text" name = "resLastName" id = "resLastName" placeholder = "Last Name"
+																	data-bv-notempty = "true"
+																	data-bv-notempty-message = "Last name is required and cannot be empty." />
+															</div>
+
+															<button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+
+															</form>
+														</div>
+													</div>
+												</div>
+												<div id = "ajaxGoesHere">
+
+												</div>
+			                                </div>
+		                              	</div>
+		                        	</div>
 		                       </div><!--/row-->
 		                    </div><!-- /col-9 -->
 		                </div><!-- inner-wrapper -->
@@ -153,6 +167,9 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
+	<!-- BOOTSTRAP VALIDATOR -->
+	<script type="text/javascript" src="/residentTracker/assets/js/validate//bootstrapValidator.min.js"></script>
+
   	<!--JS FOR SELECT PICKER -->
   	<script src="<?=base_url()?>assets/js/bootstrap-select/bootstrap-select.min.js"></script>
 
@@ -168,6 +185,38 @@
 		    $('#btnShow').toggle();
 		});
 	</script>
+
+	<script> 
+		$(document).ready(function(){
+			
+			//form validation initalizations
+			$('#resSearchForm').bootstrapValidator();
+
+		});
+	</script>
+
+	<script>
+		$('#resSearchForm').submit(function( event ) {
+			event.preventDefault(); 
+			
+			var base_url = '<?php echo site_url();?>'; 
+			
+			$.ajax({
+			  type: "POST",
+			  url: base_url + 'residents' + '/lastNameSearch/' + $('#resLastName').val(),
+			  dataType: "html",
+			  success: function(data) {
+					$('#ajaxGoesHere').html(data);
+					}
+				})
+		})
+
+		//form is loaded by ajax, handle the submit
+		$('#selectResBtn').click(function() {
+			$('#selectResForm').submit();
+		});
+	</script>
+
 	</body>
 </html>
 

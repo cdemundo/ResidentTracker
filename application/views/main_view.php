@@ -57,15 +57,15 @@
 	               
 	                <ul class="nav hidden-xs" id="lg-menu">
 	                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-                		<li><a href="#stories"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
                 		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
 	                </ul>
 	                		              
 	              	<!-- tiny only nav-->
 	            	<ul class="nav visible-xs" id="xs-menu">
 	                	<li><a href="<?php echo base_url()?>main" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                		<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-                		<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
 	              	</ul>	              
 	            </div><!--col-sm-2-->
 	            <!-- /sidebar -->

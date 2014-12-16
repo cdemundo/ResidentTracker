@@ -57,20 +57,19 @@
 		          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
 		            	</ul>
 		               
-		                <ul class="nav hidden-xs" id="lg-menu">
+		              	<ul class="nav hidden-xs" id="lg-menu">
 		                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-                    		<li><a href=""><i class="glyphicon glyphicon-user"></i> Residents</a></li>
-                    		<li><a href=""><i class="glyphicon glyphicon-file"></i> Admin Controls </a></li>
-		                </ul>
-		                		              
+	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+	                		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
+	                	</ul>
+	                		              
 		              	<!-- tiny only nav-->
-		              <ul class="nav visible-xs" id="xs-menu">
-		                  	<li><a href="" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                    		<li><a href="" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-                    		<li><a href="" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-		                </ul>
-		              
-		            </div>
+		            	<ul class="nav visible-xs" id="xs-menu">
+		                	<li><a href="<?php echo base_url()?>main" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+	                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+		              	</ul>	              
+	            	</div><!--col-sm-2-->
 		            <!-- /sidebar -->
 		          
 		            <!-- main content -->
@@ -87,37 +86,40 @@
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                	<?php 
-			                                	if($errorState == "success")
-			                                	{
-			                                		echo '<h4 class = "text-center bottom-spacer alert alert-success"> Form Submitted </h4>';
-			                                	}
-			                                	else
-			                                	{
-			                                		echo '<h4 class = "text-center bottom-spacer alert alert-danger"> Form Submitted </h4>';
-			                                	}
-			                                	?>				                                  
+			                                		if(!empty($successHeading))
+			                                		{
+				                                		echo '<p class="success-header text-center">' . $successHeading . '</p>'; 
+				                                	}
+				                                	else
+			                                		{
+			                                			if(!empty($errorHeading))
+			                                			{
+				                                			echo '<p class="error-header text-center">' . $errorHeading . '</p>'; 
+				                                		}
+				                                	}
+			                                	?>
 			                                </div>
 			                            </div><!--panel panel-default-->
 			                            </div><!-- col-sm-5 col-sm-offset-4-->
 			                                <div id = "formGoesHere" class="col-sm-10 col-sm-offset-1">
 			                                	<div class = "panel panel-default">
 													<div class="panel-body text-center">
-														<div class = "col-sm-4 col-sm-offset-4 text-center">
+														<div class = "col-sm-8 col-sm-offset-2">
 															<?php 
-						                                	if($errorState == "success")
-						                                	{
-						                                		echo '<p class = text-center success> Form submitted successfully. </p>';
-						                                	}
-						                                	else if ($errorState == "missing")
-						                                	{
-						                                		echo '<p class = text-center error> Not all fields were filled out.  Your form was not submitted </p>';
-						                                	}
-						                                	else
-						                                	{
-						                                		echo '<p class = text-center error> Sorry, there was an error!  Please try again. </p>'; 
-						                                	}
-						                                	?>															
-														</div>
+							                                	if(!empty($successMessage))
+							                                	{
+							                                		echo '<p class="success text-center">' . $successMessage . '</p>'; 
+							                                	}
+							                                	else
+							                                	{
+							                                		if(!empty($errorMessage))
+							                                		{
+							                                			echo '<p class="error text-center">' . $errorMessage . '</p>';
+							                                		}
+							                                	}
+						                                	?>	
+						                                	<a href="<?php echo base_url()?>admin/loadAdminView" class="btn btn-primary btn-lg top-spacer">Back to Admin Tools </a>	
+					                                	</div>
 													</div>
 												</div>
 			                                </div>
