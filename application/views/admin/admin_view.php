@@ -29,20 +29,8 @@
 			        <div id="navbar" class="navbar-collapse collapse">
 				        <ul class="nav navbar-nav">
 					         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
-					         <li><a href="#about">About</a></li>
-					         <li><a href="#contact">Contact</a></li>
-					         <li class="dropdown">
-					            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-					            <ul class="dropdown-menu" role="menu">
-						            <li><a href="#">Action</a></li>
-						            <li><a href="#">Another action</a></li>
-						            <li><a href="#">Something else here</a></li>
-						            <li class="divider"></li>
-						            <li class="dropdown-header">Nav header</li>
-						            <li><a href="#">Separated link</a></li>
-						            <li><a href="#">One more separated link</a></li>
-					            </ul>
-				          	</li>
+					         <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+					         <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
 				        </ul>
 				        <ul class="nav navbar-nav navbar-right">
 				        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
@@ -101,6 +89,72 @@
 					    </div>
 					</div>
 
+					<div id="aboutModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">About</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		This website was created by the Stryker Trauma & Extremities Medical Education team to facilitate engagement
+								                		with residents across the country.  It provides a record of residents our education team and sales force have interacted with
+								                		and notes on courses that residents have attended with Stryker.  
+								                	</p>
+								                	<p class="text-left">
+								                		On this website you can: 
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> Look at individual pages for each residency program in the country.  These pages contain contact information, information about the
+								                			 residency program, and a list of the residents currently at each program that Stryker has interacted with </li>
+								                		<li> Look at each individual residents profile - see what courses they have attended and contact information available. </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--about modal-->
+
+					<div id="contactModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Contact Us</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		Stryker Trauma & Extremities has a team of dedicated resident education experts.  By region they are:   
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> <b>East Coast:</b> Matt Murphy </li>
+								                		<li> <b>Central:</b> Cindy Immel </li>
+								                		<li> <b>Mid-South:</b> Brent Benham </li>
+								                		<li> <b>West Coast:</b> Fred Habel </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--contact modal-->
+
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
 		            	<div class="inner-wrapper">
@@ -118,9 +172,9 @@
 				                                  <div class="text-center">
 				                                  	  <ul class="list-group list-inline">
 					                                  	  <li> <a href="#" id="addResLink">Add Resident</a></li>
-					                                  	  <li> <a href="#" id="removeResLink">Remove Resident</a></li>
-					                                  	  <li> <a href="#" id="updateResLink">Update Resident</a></li>
+					                                  	  <li> <a href="#" id="chooseResLink">Remove/Update Resident</a></li>
 					                                  	  <li> <a href="#" id="updateProgramLink">Update Programs</a></li>
+					                                  	  <li> <a href="#" id="addCourseLink">Add Courses</a></li>
 				                                  	  </ul>
 				                                  </div>
 			                                </div>
@@ -188,8 +242,8 @@
 															</form>
 
 															<!-- Remove Resident Form -->
-															<form id="removeResidentForm">
-																<h4 class="bottom-spacer"> Remove A Resident </h4>
+															<form id="chooseResidentForm">
+																<h4 class="bottom-spacer"> Remove or Update a Resident </h4>
 															    <div class="form-group">
 															        <label for="resName">Last Name</label>
 															        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name"
@@ -197,20 +251,7 @@
 															        data-bv-notempty-message="Last name is required and cannot be empty"/>
 															    </div>
 
-															    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Remove Resident</button>
-															</form>
-
-															<!-- Update Resident Form -->
-															<form id="updateResidentForm">
-																<h4 class="bottom-spacer"> Update A Resident </h4>
-															    <div class="form-group">
-															        <label for="resLastName">Last Name</label>
-															        <input type="text" class="form-control" id = "upResLastName" name="resLastName" placeholder="Last Name"
-															        data-bv-notempty="true"
-															        data-bv-notempty-message="Last name is required and cannot be empty"/>
-															    </div>
-															    
-															    <button type="submit" class="btn btn-primary">Update Resident</button>
+															    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Search</button>
 															</form>
 
 															<!-- submits via jquery and ajax, no action or method -->
@@ -218,12 +259,42 @@
 															<form id="updateProgramForm">
 																<h4 class="bottom-spacer"> Update a Residency Program </h4>
 
-															    <div class="form-group fakeClass" id="programSelect2">
+															    <div class="form-group" id="programSelect2">
 															        <!-- ajax goes here -->
 															    </div>
 															    
 															    <button type="submit" class="btn btn-primary">Select Program</button>
 															</form>
+															<form id="addCourseForm" action ="<?php echo base_url()?>admin/addCourse" method="post">
+																<h4 class="bottom-spacer"> Add a Course </h4>
+
+															    <div class="form-group">
+															        <label for="courseName">Course Name</label>
+															        <input type="text" class="form-control" name="courseName" placeholder="Course Name"
+															        	data-bv-notempty = "true"
+															        	data-bv-notempty-message="First name is required and cannot be empty"/>
+															    </div>
+															    <div class="form-group">
+															        <label for="courseDesc">Course Description (max. 1000 char)</label>
+															        <textarea type="text" cols="40" rows="4" maxlength="1000" name="courseDesc"
+												                		data-bv-notempty="true"
+				                               							data-bv-notempty-message="This field cannot be empty"></textarea>
+															    </div>
+															    <div class="form-group">
+															        <label for="startDate">Course Start Date (YYYY-MM-DD)</label>
+															        <input type="text" class="form-control" name="startDate" placeholder="YYYY-MM-DD"
+															        	data-bv-notempty = "true"
+															        	data-bv-date="true"
+														                data-bv-date-format="YYYY-MM-DD"
+														                data-bv-date-message="The value is not a valid date"
+														                data-bv-notempty-message="Start date is required and cannot be empty"/>
+															    </div>
+															    
+															    <button type="submit" class="btn btn-primary">Add Course</button>
+															</form>
+														</div>
+														<div id = "ajaxGoesHere">
+
 														</div>
 													</div>
 												</div>
@@ -249,7 +320,7 @@
 		          
 		        </div><!-- box -->
 		    </div>
-		</div>
+
 
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
@@ -295,24 +366,15 @@
   			})
 
   			//Remove resident click
-  			$('#removeResLink').click(function() {
+  			$('#chooseResLink').click(function() {
   				//hide all other forms open
   				$("form").hide(); 
   				$('#defaultP').hide(); 
   				//show resident form
-  				$('#removeResidentForm').show(); 
+  				$('#chooseResidentForm').show(); 
   			})
 
-  			//Remove resident click
-  			$('#updateResLink').click(function() {
-  				//hide all other forms open
-  				$("form").hide(); 
-  				$('#defaultP').hide(); 
-  				//show resident form
-  				$('#updateResidentForm').show(); 
-  			})
-
-  			//Remove resident click
+  			//Update program click
   			$('#updateProgramLink').click(function() {
   				//hide all other forms open
   				$("form").hide(); 
@@ -322,22 +384,32 @@
   				//load select dropdown via ajax
   				getPrograms(); 
   			})
+
+  			//Update courses click
+  			$('#addCourseLink').click(function() {
+  				//hide all other forms open
+  				$("form").hide(); 
+  				$('#defaultP').hide(); 
+  				//show resident form
+  				$('#addCourseForm').show(); 
+  			})
   			//******* end of links ********************
 
   			//form validation initalizations
 			$('#addResidentForm').bootstrapValidator(); 
 
-			$('#removeResidentForm').bootstrapValidator(); 
+			$('#chooseResidentForm').bootstrapValidator(); 
 
-			$('#updateResidentForm').bootstrapValidator(); 
+			$('#addCourseForm').bootstrapValidator(); 
   		});
 	</script>
 
+
 	<script> 
-		$('#removeResidentForm').submit(function( event ) {
+		$('#chooseResidentForm').submit(function( event ) {
 			event.preventDefault(); 
 
-			$("#confirmModal").modal('show');
+			//$("#confirmModal").modal('show');
 			
 			var base_url = '<?php echo site_url();?>'; 
 			
@@ -347,29 +419,59 @@
 			  data: {resLastName : $('#resLastName').val(), remove : 'remove' },
 			  dataType: "html",
 			  success: function(data) {
-					$('#ajaxModal').html(data);
+					$('#ajaxGoesHere').html(data);
 					}
 				})
 		})
 	</script>
 
-	<script>
-	$('#updateResidentForm').submit(function( event ) {
-			event.preventDefault(); 
+	<script> 
+		$(document).on("click","#deleteResBtn",function(){
 
-			$("#confirmModal").modal('show');
-			
-			var base_url = '<?php echo site_url();?>'; 
-			
-			$.ajax({
-			  type: "POST",
-			  url: base_url + 'admin' + '/checkExistResident',
-			  data: {resLastName : $('#upResLastName').val(), },
-			  dataType: "html",
-			  success: function(data) {
-					$('#ajaxModal').html(data);
-					}
-				})
+			if($('#resID').val() != 0)
+			{
+				console.log($('#resID').val()); 
+				$("#confirmModal").modal('show');
+				
+				var base_url = '<?php echo site_url();?>'; 
+				
+				$.ajax({
+				  type: "POST",
+				  url: base_url + 'admin' + '/checkRemoveResident/' + $('#resID').val(),
+				  dataType: "html",
+				  success: function(data) {
+						$('#ajaxModal').html(data);
+						}
+					})
+			}
+			else
+			{
+				//do nothing
+			}
+		})
+	</script>
+
+	<script>
+		$(document).on("click","#updateResBtn",function(){
+			if($('#resID').val() != 0)
+			{
+				$("#confirmModal").modal('show');
+				
+				var base_url = '<?php echo site_url();?>'; 
+				
+				$.ajax({
+				  type: "POST",
+				  url: base_url + 'admin' + '/checkUpdateResident/' + $('#resID').val(),
+				  dataType: "html",
+				  success: function(data) {
+						$('#ajaxModal').html(data);
+						}
+					})
+			}
+			else
+			{
+				//do nothing
+			}
 		})
 	</script>
 

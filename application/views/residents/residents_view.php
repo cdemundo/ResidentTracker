@@ -29,20 +29,8 @@
 			        <div id="navbar" class="navbar-collapse collapse">
 				        <ul class="nav navbar-nav">
 					         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
-					         <li><a href="#about">About</a></li>
-					         <li><a href="#contact">Contact</a></li>
-					         <li class="dropdown">
-					            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-					            <ul class="dropdown-menu" role="menu">
-						            <li><a href="#">Action</a></li>
-						            <li><a href="#">Another action</a></li>
-						            <li><a href="#">Something else here</a></li>
-						            <li class="divider"></li>
-						            <li class="dropdown-header">Nav header</li>
-						            <li><a href="#">Separated link</a></li>
-						            <li><a href="#">One more separated link</a></li>
-					            </ul>
-				          	</li>
+					         <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+					         <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
 				        </ul>
 				        <ul class="nav navbar-nav navbar-right">
 				        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
@@ -100,6 +88,73 @@
 					        </div>
 					    </div>
 					</div>
+
+
+	            <div id="aboutModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">About</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		This website was created by the Stryker Trauma & Extremities Medical Education team to facilitate engagement
+								                		with residents across the country.  It provides a record of residents our education team and sales force have interacted with
+								                		and notes on courses that residents have attended with Stryker.  
+								                	</p>
+								                	<p class="text-left">
+								                		On this website you can: 
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> Look at individual pages for each residency program in the country.  These pages contain contact information, information about the
+								                			 residency program, and a list of the residents currently at each program that Stryker has interacted with </li>
+								                		<li> Look at each individual residents profile - see what courses they have attended and contact information available. </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--about modal-->
+
+					<div id="contactModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Contact Us</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		Stryker Trauma & Extremities has a team of dedicated resident education experts.  By region they are:   
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> <b>East Coast:</b> Matt Murphy </li>
+								                		<li> <b>Central:</b> Cindy Immel </li>
+								                		<li> <b>Mid-South:</b> Brent Benham </li>
+								                		<li> <b>West Coast:</b> Fred Habel </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--contact modal-->
 
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">

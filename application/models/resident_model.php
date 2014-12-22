@@ -14,11 +14,8 @@ class Resident_model extends CI_Model
 	public $pgy; //post graduate year, 1-5, indicates what year of residency a resident is in
 	public $email; 
 	public $telephone; 
+	public $notes = array(); //array of notes, key is posted_by, value is note
 
-	/***
-	*This would only be to load a resident from the DB - already know the id
-	*Would construct by name to get an empty resident, with just a new name
-	****/
 	
 	function __construct()
 	{
@@ -60,8 +57,16 @@ class Resident_model extends CI_Model
 			}
 			else
 			{
-				$this->pgy = "Graduated"; 
+				$this->pgy = " (Archived)"; 
 			}
+		}
+
+		//get all notes written about this resident
+		$query = $this->db->get_where('resident_notes', array('resident_id' => $this->_id)); 
+
+		foreach($query->result() as $oneNote)
+		{
+			$this->notes[$oneNote->note] = $oneNote->posted_by; 
 		}
 
 		return $this; 
@@ -104,14 +109,18 @@ class Resident_model extends CI_Model
 
     public function update()
     {
-    	//calculate date for program start year, assumes PGY is set as an integer from 1-5
-    	$programStartYear = date('Y') - ($this->pgy - 1);
-    	//assume a start date of July 15 for all residents, only the year is important to track
-    	$programStartYear = $programStartYear . "-07-15"; 
+    	if(!is_numeric($this->pgy))
+    	{
+    		$start = $this->pgy = " (Archived)"; 
+    	}
+    	else
+    	{
+    		$start = $this->convertStartYear(); 
+    	}
 
     	$data = array('firstname' => $this->firstName,
     		'lastname' => $this->lastName, 
-    		'program_start_year' => $this->convertStartYear(), 
+    		'program_start_year' => $start, 
     		'email' => $this->email, 
     		'telephone' => $this->telephone
     		); 
@@ -130,15 +139,34 @@ class Resident_model extends CI_Model
     {
     	$query = $this->db->get_where('resident', array('lastname' => $this->lastName)); 
 
-    	if($query->num_rows() > 0)
+    	if($query->num_rows() == 1)
     	{
     		return $query->row()->id; 
+    	}
+    	elseif ($query->num_rows() > 1)
+    	{
+    		return $query->result(); 
     	}
     	else
     	{
     		return false; 
     	}
+
     }
+
+    	/**
+	*Search for all residents by partial last name
+	*/
+	function searchByLastName()
+	{
+		$this->db->like('lastname', $this->lastName); 
+		$query = $this->db->get('resident'); 
+
+		if($query->num_rows() > 0)
+    	{
+    		return $query->result();
+    	}
+	}
 
     /**
     *Remove a resident from the database
@@ -193,6 +221,29 @@ class Resident_model extends CI_Model
 		{
 			return $returnArray; 
 		}
+	}
+
+	/**
+	*Submits a new note to the resident_notes database
+	*/
+	function addNote($id, $note)
+	{
+		//get user email to mark who posted
+		$this->load->library('tank_auth');
+		$this->db->select('email'); 
+		$query = $this->db->get_where('users', array('id' => $this->tank_auth->get_user_id())); 
+		$email = $query->row()->email;
+
+
+		$data = array(
+    			'resident_id' => $id, 
+    			'note' => $note, 
+    			'posted_by' => $email . "(" . date("Y-m-d") . ")"
+    		);
+
+    	$this->db->insert('resident_notes', $data); 
+
+    	return $this->db->affected_rows() > 0;
 	}
 
 	/**

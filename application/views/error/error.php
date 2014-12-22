@@ -71,33 +71,6 @@
 		              	</ul>	              
 	            	</div><!--col-sm-2-->
 		            <!-- /sidebar -->
-
-		            <!-- confirmation modal -->
-		            <!-- Modal -->
-					<!-- Modal HTML -->
-					<div id="confirmModal" class="modal fade">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title">Are you sure?</h4>
-					            </div>
-					            <div class="modal-body col-xs-10 col-xs-offset-1">
-					            	<div class = "panel panel-default top-spacer">
-										<div class="panel-body text-center">
-							            	<div id="ajaxModal">
-							                	<p>Loading...</p>
-							                </div>
-							            </div>
-							        </div>
-					            </div>
-					            <div class="modal-footer">
-					                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete Resident</button>
-					                <button type="button" class="btn btn-primary">Cancel</button>
-					            </div>
-					        </div>
-					    </div>
-					</div>
 		          
 		            <!-- main content -->
 		            <div class="column col-sm-10 col-xs-11" id="main">
@@ -109,7 +82,7 @@
 		                      		<div class="col-md-12">
 							            <div class="error-template">
 							                <h1>Oops!</h1>
-							                <h2><?php echo $errorHeading ?></h2>
+							                <h2><?php if(!empty($errorHeading)) echo $errorHeading ?></h2>
 							                <div class="error-details">
 							                    <?php 
 							                    	if(!empty($errorMessage))
@@ -123,8 +96,8 @@
 							                    ?>
 							                </div>
 							                <div class="error-actions">
-							                    <a href="http://www.jquery2dotnet.com" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-							                        Take Me Home </a><a href="http://www.jquery2dotnet.com" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+							                    <a href="<?php echo base_url()?>main" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+							                        Take Me Home </a><a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
 							                </div>
 							            </div>
 							        </div>

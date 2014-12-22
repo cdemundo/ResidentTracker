@@ -69,6 +69,7 @@ class Tank_auth
 
 					} else {
 						$this->ci->session->set_userdata(array(
+								'is_admin'	=> (bool) $user->is_admin, //added
 								'user_id'	=> $user->id,
 								'username'	=> $user->username,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
@@ -147,6 +148,12 @@ class Tank_auth
 	function get_username()
 	{
 		return $this->ci->session->userdata('username');
+	}
+
+	function is_admin()
+	{
+		//$this->is_logged_in() && 
+	    return $this->ci->session->userdata('is_admin');
 	}
 
 	/**

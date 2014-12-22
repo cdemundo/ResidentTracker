@@ -76,26 +76,4 @@ class Residencyprogram extends CI_Controller
 
 		$this->load->view('residency_program/residencyprogram_view', $data);
 	}
-
-	/*******
-	*Loads a page that represents a specific resident
-	*******/
-	function getResident($residentID)
-	{
-		//submitted via post value from residentsSearchResults_view.php
-		if(!empty($_POST['selectRes']))
-		{
-			$residentID = $_POST['selectRes']; 
-		}
-		
-		$this->load->model('resident_model'); 
-
-		$theResident = $this->resident_model->loadByID($residentID); 
-
-		//an array of courses attended - array[courseName] = date
-		$data['coursesAttended'] = $theResident->getCourses(); 
-
-		$data['resident'] = $theResident; 
-		$this->load->view('resident_view.php', $data);
-	}
 }

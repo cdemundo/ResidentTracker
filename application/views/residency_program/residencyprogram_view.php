@@ -27,20 +27,8 @@
 				        <div id="navbar" class="navbar-collapse collapse">
 					        <ul class="nav navbar-nav">
 						         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
-						         <li><a href="#about">About</a></li>
-						         <li><a href="#contact">Contact</a></li>
-						         <li class="dropdown">
-						            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-						            <ul class="dropdown-menu" role="menu">
-							            <li><a href="#">Action</a></li>
-							            <li><a href="#">Another action</a></li>
-							            <li><a href="#">Something else here</a></li>
-							            <li class="divider"></li>
-							            <li class="dropdown-header">Nav header</li>
-							            <li><a href="#">Separated link</a></li>
-							            <li><a href="#">One more separated link</a></li>
-						            </ul>
-					          	</li>
+						         <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+					         	<li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
 					        </ul>
 					        <ul class="nav navbar-nav navbar-right">
 					        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
@@ -70,9 +58,75 @@
 	            	</div><!--col-sm-2-->
 		            <!-- /sidebar -->
 	          
+	          		<div id="aboutModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">About</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		This website was created by the Stryker Trauma & Extremities Medical Education team to facilitate engagement
+								                		with residents across the country.  It provides a record of residents our education team and sales force have interacted with
+								                		and notes on courses that residents have attended with Stryker.  
+								                	</p>
+								                	<p class="text-left">
+								                		On this website you can: 
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> Look at individual pages for each residency program in the country.  These pages contain contact information, information about the
+								                			 residency program, and a list of the residents currently at each program that Stryker has interacted with </li>
+								                		<li> Look at each individual residents profile - see what courses they have attended and contact information available. </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--about modal-->
+
+					<div id="contactModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Contact Us</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		Stryker Trauma & Extremities has a team of dedicated resident education experts.  By region they are:   
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> <b>East Coast:</b> Matt Murphy </li>
+								                		<li> <b>Central:</b> Cindy Immel </li>
+								                		<li> <b>Mid-South:</b> Brent Benham </li>
+								                		<li> <b>West Coast:</b> Fred Habel </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--contact modal-->
+
 		            <!-- main content -->
 		            <div class="column col-sm-11 col-xs-11" id="main">
-	
+						<div class="inner-wrapper">
 		                <div class="padding">
 		                    <div class="full col-sm-10">
 		                        <!-- content -->                      
@@ -103,12 +157,12 @@
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                <p class="lead"> Contact Information  </p>	
-			                                <p class="top-spacer"> Address: <?php echo $residencyProgram[0]->address ?> </p>
-			                                <p> City + State: <?php echo $residencyProgram[0]->city . "," . $residencyProgram[0]->state ?></p>
-			                                <p> Telephone: <?php echo $residencyProgram[0]->telephone ?> </p>
-			                                <p> Fax: <?php echo $residencyProgram[0]->fax ?> </p>
-			                                <p> Contact: <?php echo $residencyProgram[0]->contact_name ?> </p>
-			                                <p> Contact Email: <?php echo $residencyProgram[0]->contact_email ?> </p>
+			                                <p class="top-spacer"> <b> Address: </b> <?php echo $residencyProgram[0]->address ?> </p>
+			                                <p> <b> City + State: </b> <?php echo $residencyProgram[0]->city . "," . $residencyProgram[0]->state ?></p>
+			                                <p> <b> Telephone: </b> <?php echo $residencyProgram[0]->telephone ?> </p>
+			                                <p> <b> Fax: </b> <?php echo $residencyProgram[0]->fax ?> </p>
+			                                <p> <b> Contact: </b> <?php echo $residencyProgram[0]->contact_name ?> </p>
+			                                <p> <b> Contact Email: </b> <?php echo $residencyProgram[0]->contact_email ?> </p>
 			                                </div>
 		                              	</div>
 
@@ -117,17 +171,20 @@
 		                        		<div class="panel panel-default">
 			                                <div class="panel-body">
 			                                <p class="lead"> Director and Faculty </p>
-			                                <p class="top-spacer"> Director: <?php echo $residencyProgram[0]->director ?> </p>	
-			                                <p> Email: <?php echo $residencyProgram[0]->director_email ?> </p>
+			                                <p class="top-spacer"> <b> Director: </b> <?php echo $residencyProgram[0]->director ?> </p>	
+			                                <p> <b> Email: </b> <?php echo $residencyProgram[0]->director_email ?> </p>
 			                                </div>
 		                              	</div>
 
-			                        	<!-- SOEMTHING GOES HERE -->
+			                        	<!-- STRYKER CONTACT INFO -->
 		                        		<div class="panel panel-default">
-			                        		<div class="panel-body">
-			                        			<p class="lead"> Notes: </p>
-			                        			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt commodo urna ac bibendum. Mauris a interdum leo. Proin ultricies ut felis non interdum. Nulla consectetur placerat rhoncus. Maecenas sed ultrices velit. Vivamus augue sapien, scelerisque eu turpis ac, eleifend semper orci. In malesuada, mauris quis porta viverra, ex mi pulvinar urna, a rutrum ante dui quis leo. </p> 
-			                              	</div>
+			                                <div class="panel-body">
+				                                <p class="lead"> Stryker Contacts  </p>	
+				                                <p class="top-spacer"> <b> TSM: </b> <?php echo $residencyProgram[0]->tsm_name ?> </p>
+				                                <p> <b> TSM Email: </b> <?php echo $residencyProgram[0]->tsm_email ?></p>
+				                                <p> <b> Sales Rep: </b> <?php echo $residencyProgram[0]->rep_name ?> </p>
+				                                <p> <b> Sales Rep Email: </b> <?php echo $residencyProgram[0]->rep_email ?> </p>
+			                                </div>
 		                              	</div>
 			                       </div> <!--col-sm-6 left col-->
 
@@ -152,7 +209,7 @@
 					                        				{
 					                        					//url link is to the specific residents page, based on ID
 					                        					//display is the residents name
-					                          					echo '<p><a href="' . base_url() . 'residencyprogram/getResident/' . $value .'">' . $key . '</a></p>';
+					                          					echo '<p><a href="' . base_url() . 'residents/getResident/' . $value .'">' . $key . '</a></p>';
 					                        				}
 					                        			}
 					                        			else
@@ -166,16 +223,16 @@
 		                        		</div><!-- panel -->
 			                       </div><!--col-sm-6 right col -->
 		                       </div><!--/row-->
-		                      
-		                        <div class="row footer" id="footer">    
+		                    </div><!-- full col-sm-10 -->
+		                </div><!--padding-->
+		                </div><!-- inner wrapper -->
+		                	<div class="row footer" id="footer">    
 			                    	<hr>
 		                            	<h4 class="text-center">
 				                      		<p>This website courtesy of Stryker Medical Education</p>
 				                        </h4>
 	 	                        	<hr>
-                        		</div>
-		                    </div><!-- full col-sm-10 -->
-		                </div><!-- /padding -->
+	                    	</div>
 		            </div><!-- /main -->
 		        </div><!--row row-offcanvas row-offcanvas-left-->
 		    </div><!--box-->

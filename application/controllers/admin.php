@@ -76,41 +76,49 @@ class Admin extends CI_Controller
 	function checkExistResident()
 	{
 		$this->load->model('resident_model');
+		$this->load->model('residentall_model'); 
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
 			if(!empty($_POST['resLastName']))
 			{
-				//create empty resident object with last name
-				$residentToSearch = $this->resident_model->byLastName($_POST['resLastName']);
-
-				//checkExistResident will return false if the resident is not found, will return the resident id if found
-				$id = $residentToSearch->checkExistResident(); 
-
-				if($id > 0)
-				{
-					$data['resident'] = $this->resident_model->loadByID($id); 
-					//ajax can come from update or remove.. remove sets a value to $_POST['remove']
-					if(isset($_POST['remove']))
-					{
-						$this->load->view('admin/removeResidentModalContent_view.php', $data); 
-					}
-					else
-					{
-						$this->load->view('admin/updateResidentModalContent_view.php', $data); 
-					}
-				}
-				else
-				{
-					$data['errorHeading'] = "Not found."; 
-					$data['errorMessage'] = "A resident was not found with the last name " . $_POST['resLastName'];
-					$this->load->view("admin/removeResidentModalContent_view.php", $data);
-				}
+				//search for all residents with last name
+				$data['allResidents'] = $this->residentall_model->allByLastName($_POST['resLastName']);
+				$this->load->view('admin/multResFound_view', $data);
 			}
 			else
 			{
 				echo "<h4>Please enter a resident to search for.</h4>";
 			}
+		}
+	}
+
+	/**
+	*Load a confirmation page with the residents information and ask user to confirm before deleting
+	*/
+	function checkRemoveResident($id)
+	{
+		$this->load->model('resident_model'); 
+
+		if($id > 0)
+		{
+			$data['resident'] = $this->resident_model->loadByID($id); 
+			$this->load->view('admin/removeResidentModalContent_view.php', $data);
+		}
+
+	}
+
+	/**
+	*Load a page with user's info and allow it to be edited/updated to database
+	*/
+	function checkUpdateResident($id)
+	{
+		$this->load->model('resident_model'); 
+
+		if($id > 0)
+		{
+			$data['resident'] = $this->resident_model->loadByID($id); 
+			$this->load->view('admin/updateResidentModalContent_view.php', $data);
 		}
 	}
 
@@ -150,8 +158,17 @@ class Admin extends CI_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
-			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['startYear']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
 			{
+				if(empty($_POST['startYear']))
+				{
+					$start = " (Archived)"; 
+				}
+				else
+				{
+					$start = $_POST['startYear'];
+				}
+
 				$residentToUpdate = $this->resident_model->loadByID($_POST['residentID']); 
 
 				//see if user changed any values and update them if so
@@ -180,9 +197,9 @@ class Admin extends CI_Controller
 					$changes = True; 
 				}
 
-				if ($residentToUpdate->pgy != $_POST['startYear'])
+				if ($residentToUpdate->pgy != $start)
 				{
-					$residentToUpdate->pgy = $_POST['startYear']; 
+					$residentToUpdate->pgy = $start; 
 					$changes = True; 
 				}
 
@@ -207,8 +224,45 @@ class Admin extends CI_Controller
 
 				$this->load->view("admin/adminform_success", $data); 
 			}
+			else
+			{
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "Please make sure all fields were filled out."; 
+				$this->load->view("admin/adminform_success", $data); 
+			}
 		}
 
+	}
+
+	function addCourse()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['courseName']) && !empty($_POST['courseDesc']) && !empty($_POST['startDate']))
+			{
+				$this->load->model('course_model'); 
+				$newCourse = $this->course_model->newCourse($_POST['courseName'], $_POST['courseDesc'], $_POST['startDate']); 
+
+				if($newCourse->add())
+				{
+					$data['successHeading'] = "Course Added"; 
+					$data['successMessage'] = $newCourse->name . " on " . $newCourse->startDate . " was added to the database.";
+				}
+				else
+				{
+					$data['errorHeading'] = "Sorry!";
+					$data['errorMessage'] = "There was an error, please try again!."; 
+				}
+
+				$this->load->view("admin/adminform_success", $data); 
+			}
+			else
+			{
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "All fields were not filled out."; 
+				$this->load->view("admin/adminform_success", $data);
+			}
+		}
 	}
 
 	

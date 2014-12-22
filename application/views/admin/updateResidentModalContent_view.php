@@ -14,21 +14,29 @@
     </div>
     <div class="form-group">
         <label for="startYear">Post-Graduate Year</label>
-        <select class="form-control text-center" name="startYear" value = "<?php echo $resident->pgy ?>">
-        	<?php 
-        		for ($i = 1; $i<6; $i++)
-        		{
-        			if($i == $resident->pgy)
-        			{
-        				echo '<option selected="selected" value ="' . $i . '">' . $i . '</option>';
-        			}
-        			else
-        			{
-        				echo '<option value ="' . $i . '">' . $i . '</option>';
-        			}
-        		}
-        	?>
-        </select>
+        <?php 
+            if(!is_numeric($resident->pgy))
+            {
+                echo '<p> Archived </p>'; 
+            }
+            else
+            { ?>
+                <select class="form-control text-center" name="startYear" value = "<?php echo $resident->pgy ?>">
+                	<?php 
+                		for ($i = 1; $i<6; $i++)
+                		{
+                			if($i == $resident->pgy)
+                			{
+                				echo '<option selected="selected" value ="' . $i . '">' . $i . '</option>';
+                			}
+                			else
+                			{
+                				echo '<option value ="' . $i . '">' . $i . '</option>';
+                			}
+                		}
+            }
+                	?>
+                </select>
     </div>
     <div class="form-group">
         <label for="resPhone">Phone</label>

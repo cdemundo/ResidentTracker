@@ -7,6 +7,7 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- PAGE SPECIFIC CSS -->
+		<link rel="stylesheet" href="/residentTracker/assets/css/validate/bootstrapValidator.min.css"/>
 		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
 	</head>
 	<body>
@@ -26,21 +27,9 @@
 			        	</div> <!-- navbar header -->
 				        <div id="navbar" class="navbar-collapse collapse">
 					        <ul class="nav navbar-nav">
-						         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
-						         <li><a href="#about">About</a></li>
-						         <li><a href="#contact">Contact</a></li>
-						         <li class="dropdown">
-						            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-						            <ul class="dropdown-menu" role="menu">
-							            <li><a href="#">Action</a></li>
-							            <li><a href="#">Another action</a></li>
-							            <li><a href="#">Something else here</a></li>
-							            <li class="divider"></li>
-							            <li class="dropdown-header">Nav header</li>
-							            <li><a href="#">Separated link</a></li>
-							            <li><a href="#">One more separated link</a></li>
-						            </ul>
-					          	</li>
+						        <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
+						        <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+					         	<li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
 					        </ul>
 					        <ul class="nav navbar-nav navbar-right">
 					        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
@@ -69,130 +58,245 @@
 		              	</ul>	              
 		            </div><!--col-sm-2-->
 		            <!-- /sidebar -->
+
+		            <div id="aboutModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">About</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		This website was created by the Stryker Trauma & Extremities Medical Education team to facilitate engagement
+								                		with residents across the country.  It provides a record of residents our education team and sales force have interacted with
+								                		and notes on courses that residents have attended with Stryker.  
+								                	</p>
+								                	<p class="text-left">
+								                		On this website you can: 
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> Look at individual pages for each residency program in the country.  These pages contain contact information, information about the
+								                			 residency program, and a list of the residents currently at each program that Stryker has interacted with </li>
+								                		<li> Look at each individual residents profile - see what courses they have attended and contact information available. </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--about modal-->
+
+					<div id="contactModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Contact Us</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+								            	<div id="websiteAbout">
+								                	<p class="text-left">
+								                		Stryker Trauma & Extremities has a team of dedicated resident education experts.  By region they are:   
+								                	</p>
+								                	<ul class="text-left">
+								                		<li> <b>East Coast:</b> Matt Murphy </li>
+								                		<li> <b>Central:</b> Cindy Immel </li>
+								                		<li> <b>Mid-South:</b> Brent Benham </li>
+								                		<li> <b>West Coast:</b> Fred Habel </li>
+								                	</ul>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
+						            </div>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--contact modal-->
+
+					<div id="notesModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Add a Note</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+												<form id="addNoteForm" action = '<?php echo base_url() . "residents/addNote/" . $resident->getID()?>' method="post">
+								            	<div id="noteBox">
+								            		<p> (Max char limit of 1000) </p>
+								                	<textarea type="text" cols="40" rows="4" maxlength="1000" name="newNote" autofocus
+								                		data-bv-notempty="true"
+                               							data-bv-notempty-message="This field cannot be empty"></textarea>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" id = "addNoteBtn" class="btn btn-primary" data-dismiss="modal">OK</button>
+						                <button type="button" id = "cancelNoteBtn" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+						            </div>
+						            </form>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--notes modal-->
+
+					<div id="courseModal" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title text-center">Add a Course</h4>
+					            </div>
+						            <div class="modal-body col-xs-10 col-xs-offset-1">
+						            	<div class = "panel panel-default top-spacer">
+											<div class="panel-body text-center">
+												<form id="addCourseForm">
+								            	<div id="courseBox" class="form-group">
+								            		<label for="courseName"> Course Name: </label>
+								                	<input type="text" id="courseName" name="courseName" placeholder="Course Name" class="form-control" autofocus
+								                		data-bv-notempty="true"
+                               							data-bv-notempty-message="This field cannot be empty"/>
+								                </div>
+								            </div>
+								        </div>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="submit" id = "findCourseBtn" class="btn btn-primary" data-dismiss="modal">Go</button>
+						            </div>
+						            </form>
+					        </div><!--modal content-->
+					    </div><!--modal dialog-->
+					</div><!--contact modal-->
+
+
 		          
 		            <!-- main content -->
 		            <div class="column col-sm-11 col-xs-11" id="main">
-		                <div class="padding">
-		                    <div class="full col-sm-10">
-		                        <!-- content -->                      
-		                      	<div class="row">
-		                      		<!-- Header in top of content section -->
-		                        	<div class = "col-sm-12 hidden-xs">
-		                        		<div class="panel panel-default">
-			                                <div class="panel-body">
-			                                	<p class="lead no-bottom">
-			                                		<?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy;?>
-			                                		<!-- This is a link to the Program page for the residents Residency program -->
-			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
-			                                	</p>
-			                                </div>
-		                              	</div>
-		                        	</div>
-
-		                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
-		                        	<div class = "col-sm-12 visible-xs">
-		                        		<div class="panel panel-default big-top-spacer">
-			                                <div class="panel-body">
-			                                	<p class="lead no-bottom"><?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy; ?>
-			                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
-			                                	</p>
-			                                </div>
-		                              	</div>
-		                        	</div>
-
-		                        	<!-- LEFT COLUMN -->
-
-		                        	<div class ="col-sm-6">
-
-			                        	<!-- CONTACT INFO HERE -->
-		                        		<div class="panel panel-default">
-			                                <div class="panel-body">
-			                                <p class="lead"> Contact Information  </p>	
-			                                <p class="top-spacer"> Email: <?php echo $resident->email ?> </p>
-			                                <p> Telephone: <?php echo $resident->telephone ?> </p>
-			                                </div>
-		                              	</div>
-
-			                        	<!-- SOEMTHING GOES HERE -->
-		                        		<div class="panel panel-default">
-			                        		<div class="panel-body">
-			                        			<p class="lead"> Notes: </p>
-			                        			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt commodo urna ac bibendum. Mauris a interdum leo. Proin ultricies ut felis non interdum. Nulla consectetur placerat rhoncus. Maecenas sed ultrices velit. Vivamus augue sapien, scelerisque eu turpis ac, eleifend semper orci. In malesuada, mauris quis porta viverra, ex mi pulvinar urna, a rutrum ante dui quis leo. </p> 
+		            	<div class = "inner-wrapper">
+			                <div class="padding">
+			                    <div class="full col-sm-10">
+			                        <!-- content -->                      
+			                      	<div class="row">
+			                      		<!-- Header in top of content section -->
+			                        	<div class = "col-sm-12 hidden-xs">
+			                        		<div class="panel panel-default">
+				                                <div class="panel-body">
+				                                	<p class="lead no-bottom">
+				                                		<?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy;?>
+				                                		<!-- This is a link to the Program page for the residents Residency program -->
+				                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
+				                                	</p>
+				                                </div>
 			                              	</div>
-		                              	</div>
-			                       </div> <!--col-sm-6 left col-->
+			                        	</div>
 
-			                       <!-- RIGHT COLUMN --> 
-			                       <div class="col-sm-6">
-			                       		<!-- Courses Attended -->
-		                        		<div class="panel panel-default">
-			                        		<div class="panel-body">
-				                        		<p class="lead"> Courses Attended</p>
-				                        		<div id="listdiv">
-					                        		<?php 
-					                        			//resident may not have gone to any courses or had any recorded
-					                        			if(!empty($coursesAttended))
-					                        			{
-					                        				//key is name, value is date
-						                        			foreach($coursesAttended as $key => $value)
-						                        			{
-						                        				echo "<p><b>" . $value . "</b>: " . $key . "</p>"; 
-						                        			}
-					                        			}
-					                        			else
-					                        			{
-					                        				echo "<p> No courses recorded. </p>";  
-					                        			} 
+			                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
+			                        	<div class = "col-sm-12 visible-xs">
+			                        		<div class="panel panel-default big-top-spacer">
+				                                <div class="panel-body">
+				                                	<p class="lead no-bottom"><?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy; ?>
+				                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
+				                                	</p>
+				                                </div>
+			                              	</div>
+			                        	</div>
+
+			                        	<!-- LEFT COLUMN -->
+
+			                        	<div class ="col-sm-6">
+
+				                        	<!-- CONTACT INFO HERE -->
+			                        		<div class="panel panel-default">
+				                                <div class="panel-body">
+				                                <p class="lead"> Contact Information  </p>	
+				                                <p class="top-spacer"> <b> Email: </b> <?php echo $resident->email ?> </p>
+				                                <p> <b> Telephone: </b> <?php echo $resident->telephone ?> </p>
+				                                </div>
+			                              	</div>
+
+				                        	<!-- NOTES GOES HERE -->
+			                        		<div class="panel panel-default">
+				                        		<div class="panel-body">
+				                        			<p class="lead"> Notes: <span class="pull-right"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#notesModal">Add a Note</a></span></p>
+				                        			<?php
+				                        				foreach($resident->notes as $key => $value)
+				                        				{
+				                        					echo '<p><b>' . $value . "</b>:<br/>  " .  $key . '</p>'; 
+				                        				}
+				                        			?> 
+				                              	</div>
+			                              	</div>
+				                       </div> <!--col-sm-6 left col-->
+
+				                       <!-- RIGHT COLUMN --> 
+				                       <div class="col-sm-6">
+				                       		<!-- Courses Attended -->
+			                        		<div class="panel panel-default">
+				                        		<div class="panel-body">
+				                        			<?php 
+						                        		echo '<p class="lead"> Courses Attended';
+						                        		if($admin)
+						                        		{
+						                        			echo '<span class="pull-right"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#courseModal">Add a Course</a></span>';
+						                        		}
+						                        		echo '</p>'; 
 					                        		?>
-				                        		</div><!--list div -->
-			                        		</div><!-- panel body -->
-		                        		</div><!-- panel -->
-			                       </div><!--col-sm-6 right col -->
-		                       </div><!--/row-->
-		                      
-		                        <div class="row footer" id="footer">    
-			                    	<hr>
-		                            	<h4 class="text-center">
-				                      		<p>This website courtesy of Stryker Medical Education</p>
-				                        </h4>
-	 	                        	<hr>
-                        		</div>
-		                    </div><!-- full col-sm-10 -->
-		                </div><!-- /padding -->
+					                        		<div id="listdiv">
+						                        		<?php 
+						                        			//resident may not have gone to any courses or had any recorded
+						                        			if(!empty($coursesAttended))
+						                        			{
+						                        				//key is name, value is date
+							                        			foreach($coursesAttended as $key => $value)
+							                        			{
+							                        				echo "<p><b>" . $value . "</b>: " . $key . "</p>"; 
+							                        			}
+						                        			}
+						                        			else
+						                        			{
+						                        				echo "<p> No courses recorded. </p>";  
+						                        			} 
+						                        		?>
+					                        		</div><!--list div -->
+				                        		</div><!-- panel body -->
+			                        		</div><!-- panel -->
+				                       </div><!--col-sm-6 right col -->
+			                       </div><!--/row-->
+			                    </div><!-- full col-sm-10 -->
+			                </div><!-- /padding -->
+		                </div><!-- inner wrapper-->
+		                <div class="row footer" id="footer">    
+	                    	<hr>
+                            	<h4 class="text-center">
+		                      		<p>This website courtesy of Stryker Medical Education</p>
+		                        </h4>
+	                        	<hr>
+                		</div>
 		            </div><!-- /main -->
 		        </div><!--row row-offcanvas row-offcanvas-left-->
 		    </div><!--box-->
 		</div><!--wrapper-->
 
-
-	<!--post modal-->
-	<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				Update Status
-	      </div>
-	      <div class="modal-body">
-	          <form class="form center-block">
-	            <div class="form-group">
-	              <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-	            </div>
-	          </form>
-	      </div>
-	      <div class="modal-footer">
-	          <div>
-	          <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-	            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-			  </div>	
-	      </div>
-	  </div>
-	  </div>
-	</div>
-
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+	<!-- BOOTSTRAP VALIDATOR -->
+	<script type="text/javascript" src="/residentTracker/assets/js/validate//bootstrapValidator.min.js"></script>
 
 
   	<!-- SCRIPT FOR OFF CANVAS LEFT SIDEBAR -->
@@ -206,7 +310,29 @@
 		    $('#btnShow').toggle();
 		});
 	</script>
+
+	<script> 
+		$(document).on("click","#findCourseBtn",function(){
+			console.log("test"); 
+			var base_url = '<?php echo site_url();?>'; 
+			
+			$.ajax({
+			  type: "POST",
+			  url: base_url + 'residents' + '/findCourse/' + $('#courseName').val(),
+			  dataType: "html",
+			  data: {residentID : <?php echo $resident->getID() ?>}, 
+			  success: function(data) {
+					$('#courseBox').html(data);
+					}
+				})
+		})
+	</script>
+
+	<!-- handle the modal form submissions -->
+	<script>
+		$('#addNoteBtn').click(function() {
+			$('#addNoteForm').submit();
+		});
+	</script>
 	</body>
 </html>
-
-
