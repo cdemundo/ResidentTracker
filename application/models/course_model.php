@@ -5,7 +5,7 @@
 */
 class Course_model extends CI_Model
 {
-	private $_id; 
+	private $_id;
 	public $name; 
 	public $description; 
 	public $startDate; 
@@ -54,5 +54,17 @@ class Course_model extends CI_Model
     	{
     		return $query->result();
     	}
+    }
+
+    public function addResident($courseID, $residentID)
+    {
+    	$data = array(
+    			'resident_id' => $residentID, 
+    			'course_id' => $courseID, 
+    		);
+
+    	$this->db->insert('courses_attended', $data);
+
+    	return $this->db->affected_rows() > 0;  
     }
 }

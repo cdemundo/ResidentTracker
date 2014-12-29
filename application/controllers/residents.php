@@ -52,19 +52,66 @@ class Residents extends CI_Controller
 		$this->load->view('resident_view.php', $data);
 	}
 
-	function findCourse($courseName)
+	/*******************************************
+	Following functions are used for adding courses to a residents page
+	    loadAddResidentCourseView
+	    findCourse
+	    addResidentToCourse
+	*******************************************/
+
+	/*
+	*Load view to select courses to add to resident profile.  Passes ResidentID
+	*/
+
+	function loadAddResidentCourseView($residentID)
 	{
-		$this->load->model['course_model']; 
+		$data['id'] = $residentID; 
+		$this->load->view('admin/addResidentToCourse_view', $data); 
+	}
 
-		if(!empty($_POST['residentID']))
+	/*
+	*Search for courses based on course name inputted by user
+	*/
+
+	function findCourse($courseName, $residentID)
+	{
+		$this->load->model('course_model');
+
+		if(!empty($courseName))
 		{
-			$data['id'] = $_POST['residentID']; 
-
 			$data['courses'] = $this->course_model->getCourses($courseName); 
+			$data['id'] = $residentID; 
 
-			$this->load->view('addResidentToCourse_view', $data); 
+			$this->load->view('admin/coursesFound_view', $data); 
 		}
 	}
+
+	/*
+	*Takes courseID as a $_POST variable and $residentID via url to add to courses_attended db
+	*If no error, loads residents page, where updated course should show
+	*/
+	function addResidentToCourse($residentID)
+	{
+		$this->load->model('course_model');
+
+		if(!empty($_POST['selectCourse']) && !empty($residentID))
+		{
+			if($this->course_model->addResident($_POST['selectCourse'], $residentID))
+			{
+				//load the resident's page, which should now have the courses added
+				$this->getResident($residentID);
+			} 
+			else
+			{
+				$this->load->view('error/error');
+			}
+		}
+	}
+
+	/************************************************
+	 Following functions are used for adding notes to a residents page
+	    addNote
+	*************************************************/
 
 	function addNote($residentID)
 	{

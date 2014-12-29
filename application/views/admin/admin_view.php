@@ -272,7 +272,7 @@
 															        <label for="courseName">Course Name</label>
 															        <input type="text" class="form-control" name="courseName" placeholder="Course Name"
 															        	data-bv-notempty = "true"
-															        	data-bv-notempty-message="First name is required and cannot be empty"/>
+															        	data-bv-notempty-message="Course name is required and cannot be empty"/>
 															    </div>
 															    <div class="form-group">
 															        <label for="courseDesc">Course Description (max. 1000 char)</label>

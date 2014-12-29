@@ -154,36 +154,6 @@
 					    </div><!--modal dialog-->
 					</div><!--notes modal-->
 
-					<div id="courseModal" class="modal fade">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title text-center">Add a Course</h4>
-					            </div>
-						            <div class="modal-body col-xs-10 col-xs-offset-1">
-						            	<div class = "panel panel-default top-spacer">
-											<div class="panel-body text-center">
-												<form id="addCourseForm">
-								            	<div id="courseBox" class="form-group">
-								            		<label for="courseName"> Course Name: </label>
-								                	<input type="text" id="courseName" name="courseName" placeholder="Course Name" class="form-control" autofocus
-								                		data-bv-notempty="true"
-                               							data-bv-notempty-message="This field cannot be empty"/>
-								                </div>
-								            </div>
-								        </div>
-						            </div>
-						            <div class="modal-footer">
-						                <button type="submit" id = "findCourseBtn" class="btn btn-primary" data-dismiss="modal">Go</button>
-						            </div>
-						            </form>
-					        </div><!--modal content-->
-					    </div><!--modal dialog-->
-					</div><!--contact modal-->
-
-
-		          
 		            <!-- main content -->
 		            <div class="column col-sm-11 col-xs-11" id="main">
 		            	<div class = "inner-wrapper">
@@ -251,7 +221,7 @@
 						                        		echo '<p class="lead"> Courses Attended';
 						                        		if($admin)
 						                        		{
-						                        			echo '<span class="pull-right"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#courseModal">Add a Course</a></span>';
+						                        			echo '<span class="pull-right"><a href="' . site_url() . 'residents/loadAddResidentCourseView/' . $resident->getID() . '" class="btn btn-primary">Add a Course</a></span>';
 						                        		}
 						                        		echo '</p>'; 
 					                        		?>
@@ -314,7 +284,7 @@
 	<script> 
 		$(document).on("click","#findCourseBtn",function(){
 			console.log("test"); 
-			var base_url = '<?php echo site_url();?>'; 
+			var base_url = '<?php echo site_url();?>residents/findCourse/'; 
 			
 			$.ajax({
 			  type: "POST",
