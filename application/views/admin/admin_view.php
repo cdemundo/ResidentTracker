@@ -209,9 +209,7 @@
 															    <div class="form-group">
 															        <label for="resEmail">Email</label>
 															        <input type="text" class="form-control" name="resEmail" placeholder="Email"
-															        	data-bv-notempty="true"
-										                                data-bv-notempty-message="The email address is required and cannot be empty"
-
+															        	
 										                                data-bv-emailaddress="true"
 										                                data-bv-emailaddress-message="The email address is not a valid"/>
 															    </div>
@@ -229,13 +227,20 @@
 															    <div class="form-group">
 															        <label for="resPhone">Phone</label>
 															        <input type="text" class="form-control" name="resPhone" placeholder="Format: 201-831-5555"
-															        	data-bv-notempty="true"
 															        	data-bv-phone="true"
 															        	data-bv-phone-country="US"
 															        	data-bv-phone-message="The value is not a valid phone number."/>
 															    </div>
 															    <div class="form-group" id="programSelect" name="program">
-															        <!-- ajax goes here -->
+															        <label for="selectRes">Residency Program</label>
+																	<select class="form-control" id="selectResProgram" name="selectResProgram">
+																	<?php
+																		foreach($residencyProgram as $program)
+																		{	
+																			echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
+																		} 
+																	?>
+																	</select>
 															    </div>
 
 															    <button type="submit" class="btn btn-primary" id="addResBtn">Add Resident</button>
@@ -260,7 +265,15 @@
 																<h4 class="bottom-spacer"> Update a Residency Program </h4>
 
 															    <div class="form-group" id="programSelect2">
-															        <!-- ajax goes here -->
+															        <label for="selectRes">Residency Program</label>
+																	<select class="form-control" id="selectResProgram2" name="selectResProgram2">
+																	<?php
+																		foreach($residencyProgram as $program)
+																		{	
+																			echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
+																		} 
+																	?>
+																	</select>
 															    </div>
 															    
 															    <button type="submit" class="btn btn-primary">Select Program</button>
@@ -361,8 +374,6 @@
   				$('#defaultP').hide(); 
   				//show resident form
   				$('#addResidentForm').show(); 
-  				//load select dropdown via ajax 
-  				getPrograms(); 
   			})
 
   			//Remove resident click
@@ -381,8 +392,6 @@
   				$('#defaultP').hide(); 
   				//show resident form
   				$('#updateProgramForm').show(); 
-  				//load select dropdown via ajax
-  				getPrograms(); 
   			})
 
   			//Update courses click
@@ -404,22 +413,21 @@
   		});
 	</script>
 
-
 	<script> 
-		$('#chooseResidentForm').submit(function( event ) {
+		$('#updateProgramForm').submit(function( event ) {
 			event.preventDefault(); 
 
-			//$("#confirmModal").modal('show');
+			$("#confirmModal").modal('show');
 			
 			var base_url = '<?php echo site_url();?>'; 
 			
 			$.ajax({
 			  type: "POST",
-			  url: base_url + 'admin' + '/checkExistResident',
-			  data: {resLastName : $('#resLastName').val(), remove : 'remove' },
+			  url: base_url + 'admin' + '/checkUpdateProgram',
+			  data: {selectResProgram : $('#selectResProgram2').val()},
 			  dataType: "html",
 			  success: function(data) {
-					$('#ajaxGoesHere').html(data);
+					$('#ajaxModal').html(data);
 					}
 				})
 		})
@@ -480,24 +488,6 @@
 		$('#modalOK').click(function() {
 			$('#modalForm').submit();
 		});
-	</script>
-
-	<!-- Jquery function, ajax to get all residency programs info 
-		 ajax request to admin/getAllPrograms                    -->
-	<script>
-		function getPrograms() {
-			var base_url = '<?php echo site_url();?>'; 
-
-			$.ajax({
-			  type: "POST",
-			  url: base_url + 'admin' + '/getAllPrograms',
-			  dataType: "html",
-			  success: function(data) {
-					$('#programSelect').html(data);
-					$('#programSelect2').html(data);
-					}
-				})
-		}
 	</script>
 	</body>
 </html>

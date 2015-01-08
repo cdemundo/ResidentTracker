@@ -195,17 +195,16 @@
 			                        		<div class="panel-body">
 				                        		<p class="lead"> Current Residents </p>
 				                        		<div id="listdiv">
-					                        		<?php for ($i = 0; $i <= 4; $i++)
+					                        		<?php for ($i = 1; $i <= 5; $i++)
 					                        		{ 
-					                        			//date('Y') - $1 in the first iteration is the current 0.. current date - 0
-					                        			//then it goes back, -1, -2, -3, -4 to get the last 5 years
-					                        			echo '<h4> PGY ' . ($i + 1) . ' - Started in '  . (date('Y') - $i) . '</h4>';
+					                        			//residents[$i] is an array of all PGY $i at a residency program
+					                        			echo '<h4> PGY ' . ($i) . ' - Started in '  . (date('Y') - $i) . '</h4>';
 					                        			echo '<ul>';
 					                        			//if there are any residents in a given year
-					                        			if(!empty($residents[date('Y') - $i]))
+					                        			if(!empty($residents[$i]))
 					                        			{
 					                        				//print out each one of those residents, key is resident name, value is resident id
-					                        				foreach($residents[date('Y') - $i] as $key => $value)
+					                        				foreach($residents[$i] as $key => $value)
 					                        				{
 					                        					//url link is to the specific residents page, based on ID
 					                        					//display is the residents name

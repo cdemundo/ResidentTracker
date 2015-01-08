@@ -46,18 +46,44 @@ class Resident_model extends CI_Model
 			$this->lastName = $temp->lastname; 
 			$this->programName = $temp->program_name; 
 			$this->email = $temp->email; 
-			$this->telephone = $temp->telephone; 
+   			$this->telephone = $temp->telephone; 
 
 			//convert program_start_year to pgy year (1-5)
-			$yearsSinceStart = date('Y') - $temp->program_start_year; 
+			$resStartDate = new DateTime($temp->program_start_year); 
+			$currentDate = new DateTime(); 
 
-			if($yearsSinceStart < 5)
+			//figure out what year the resident is
+			$diff = $currentDate->diff($resStartDate)->format("%a");
+			$mod = $diff / 365;
+
+			if($mod > 0 && $mod < 1)
 			{
-				$this->pgy = (date('Y') - $temp->program_start_year + 1); 
+				$this->pgy = 1; 
 			}
-			else
+
+			if($mod > 1 && $mod < 2)
 			{
-				$this->pgy = " (Archived)"; 
+				$this->pgy = 2; 
+			}
+
+			if($mod > 2 && $mod < 3)
+			{
+				$this->pgy = 3; 
+			}
+
+			if($mod > 3 && $mod < 4)
+			{
+				$this->pgy = 4; 
+			}
+
+			if($mod > 4 && $mod < 5)
+			{
+				$this->pgy = 5; 
+			}
+
+			if($mod > 5)
+			{
+				$this->pgy = "Archived"; 
 			}
 		}
 
@@ -88,6 +114,15 @@ class Resident_model extends CI_Model
     **/
     public function addResident()
     {
+    	if (empty($this->email))
+    	{
+    		$this->email = "No Entry";
+    	}
+    	if(empty($this->telephone))
+    	{
+    		$this->telephone = "No Entry";
+    	}
+
     	$data = array(
     			'firstname' => $this->firstName, 
     			'lastname' => $this->lastName, 
@@ -253,8 +288,26 @@ class Resident_model extends CI_Model
 
     private function convertStartYear()
     {
-    	//calculate date for program start year, assumes PGY is set as an integer from 1-5
-    	$programStartYear = date('Y') - ($this->pgy - 1);
+    	//figure out what part of the year we are in. Residents year starts in July, so can't just subtract date
+    	//if it is between Jul 31 and Dec 31, the current academic year just started, so if a resident is a PGY 2
+    	//they started the previous year
+    	//Ex. August, 18, 2014. Resident is a PGY 2
+    	//Resident went from PGY 1->2 on July 15, 2014. Resident started as PGY 1 on July 15, 2013
+    	//but if you subtract 2014 - PGY 2, you get 2012
+    	$year = date('Y'); 
+    	$currentDate = new DateTime(); 
+    	$startYear = new DateTime($year . '-07-15'); 
+    	$endYear = new DateTime($year . '12-31');
+
+   		if($currentDate > $startYear && $currentDate <= $endYear)
+   		{
+   			$programStartYear = date('Y') - ($this->pgy - 1);
+   		}
+   		else
+   		{
+   			$programStartYear = date('Y') - ($this->pgy);
+   		}
+
     	//assume a start date of July 15 for all residents, only the year is important to track
     	$programStartYear = $programStartYear . "-07-15"; 
 

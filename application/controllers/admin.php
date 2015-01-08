@@ -12,18 +12,12 @@ class Admin extends CI_Controller
 
 	function loadAdminView()
 	{
-		$this->load->view('admin/admin_view');
-	}
-
-	function getAllPrograms()
-	{
-		//load list of residency programs first
+		//load list of residency programs first, to populate select
 		$this->load->model('residencyprogram_model'); 
 
 		$data['residencyProgram'] = $this->residencyprogram_model->getAllResidencyPrograms(); 
 
-		//fills a html select with all the residency programs, loaded via ajax
-		$this->load->view('admin/adminselect_view', $data);
+		$this->load->view('admin/admin_view', $data);
 	}
 
 	/***
@@ -36,17 +30,23 @@ class Admin extends CI_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
-			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['startYear']) && !empty($_POST['resPhone']) && !empty($_POST['selectRes']))
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName'])&& !empty($_POST['startYear']) && !empty($_POST['selectResProgram']))
 			{
 				//all forms were filled out
 				//create a new resident object with only lastName property filled
 				$newResident = $this->resident_model->byLastName($_POST['lastName']);
 
 				$newResident->firstName = $_POST['firstName'];
-				$newResident->email = $_POST['resEmail'];
+				if(!empty($_POST['resEmail']))
+				{
+					$newResident->email = $_POST['resEmail'];
+				}
+				if(!empty($_POST['resPhone']))
+				{
+					$newResident->telephone = $_POST['resPhone'];
+				}
 				$newResident->pgy = $_POST['startYear'];
-				$newResident->telephone = $_POST['resPhone'];
-				$newResident->programName = $_POST['selectRes'];
+				$newResident->programName = $_POST['selectResProgram'];
 
 				if($newResident->addResident())
 				{ 
@@ -261,6 +261,181 @@ class Admin extends CI_Controller
 				$data['errorHeading'] = "Sorry!";
 				$data['errorMessage'] = "All fields were not filled out."; 
 				$this->load->view("admin/adminform_success", $data);
+			}
+		}
+	}
+
+	/*
+	*Load data into a modal via an ajax call to represent a residency program in the database
+	*/
+	function checkUpdateProgram()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['selectResProgram']))
+			{
+				$this->load->model('residencyprogram_model');
+
+				$data['residencyProgram'] = $this->residencyprogram_model->getProgramObject($_POST['selectResProgram']); 
+
+				//this is to load the state dropdown with the necessary state selected
+
+				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
+				
+				$this->load->view('admin/updateProgramCheck_view', $data);
+			}
+		}
+		else
+		{
+			$this->load->view("error/error");
+		}
+	}
+
+	/*
+	*Checks to see if user submitted any changes to update residency program
+	*/
+	function updateProgram()
+	{
+		$this->load->model('residencyprogram_model'); 
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			$required = array('login', 'password', 'confirm', 'name', 'phone', 'email');
+
+			//PROGRAM NAME IS EMPTY - fix that with hidden field
+			//if no entry in db, they should be a "No entry", so check for !empty on all of them
+			if(!empty($_POST['program_name']) && !empty($_POST['total_residents']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['telephone'])
+				&& !empty($_POST['fax']) && !empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_phone']) && !empty($_POST['tsm_name']) && !empty($_POST['tsm_email'])
+				&& !empty($_POST['rep_name']) && !empty($_POST['rep_email']) && !empty($_POST['director']) && !empty($_POST['director_email']) && !empty($_POST['meded_consultant']))
+			{
+				$programToUpdate = $this->residencyprogram_model->getProgramObject($_POST['program_name']);
+
+				//see if user changed any values and update them if so
+				if ($programToUpdate->total_residents != $_POST['total_residents'])
+				{
+					$programToUpdate->total_residents = $_POST['total_residents']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->address != $_POST['address'])
+				{
+					$programToUpdate->address = $_POST['address']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->city != $_POST['city'])
+				{
+					$programToUpdate->city = $_POST['city']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->state != $_POST['state'])
+				{
+					$programToUpdate->state = $_POST['state']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->telephone != $_POST['telephone'])
+				{
+					$programToUpdate->telephone = $_POST['telephone']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->fax != $_POST['fax'])
+				{
+					$programToUpdate->fax = $_POST['fax']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->contact_name != $_POST['contact_name'])
+				{
+					$programToUpdate->contact_name = $_POST['contact_name']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->contact_email != $_POST['contact_email'])
+				{
+					$programToUpdate->contact_email = $_POST['contact_email']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->contact_phone != $_POST['contact_phone'])
+				{
+					$programToUpdate->contact_phone = $_POST['contact_phone']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->tsm_name != $_POST['tsm_name'])
+				{
+					$programToUpdate->tsm_name = $_POST['tsm_name']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->tsm_email != $_POST['tsm_email'])
+				{
+					$programToUpdate->tsm_email = $_POST['tsm_email']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->rep_name != $_POST['rep_name'])
+				{
+					$programToUpdate->rep_name = $_POST['rep_name']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->rep_email != $_POST['rep_email'])
+				{
+					$programToUpdate->rep_email = $_POST['rep_email']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->director != $_POST['director'])
+				{
+					$programToUpdate->director = $_POST['director']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->director_email != $_POST['director_email'])
+				{
+					$programToUpdate->director_email = $_POST['director_email']; 
+					$changes = True; 
+				}
+
+				if ($programToUpdate->meded_consultant != $_POST['meded_consultant'])
+				{
+					$programToUpdate->meded_consultant = $_POST['meded_consultant']; 
+					$changes = True; 
+				}
+
+				if($programToUpdate->update())
+				{
+					$data['successHeading'] = "Program Updated"; 
+					$data['successMessage'] = $_POST['program_name'] . " was successfully updated"; 
+				}
+				else
+				{
+					if($changes)
+					{
+						$data['errorHeading'] = "Sorry!";
+						$data['errorMessage'] = "Program could not be updated. Please try again or contact support."; 
+					}
+					else
+					{
+						$data['errorHeading'] = "No changes.";
+						$data['errorMessage'] = "You did not make any changes. Please try again.";
+					}
+				} 
+
+				$this->load->view("admin/adminform_success", $data); 
+ 
+			}
+			else
+			{
+				print_r($_POST);
+				exit; 
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "Please make sure all fields were filled out."; 
+				$this->load->view("admin/adminform_success", $data); 
 			}
 		}
 	}
