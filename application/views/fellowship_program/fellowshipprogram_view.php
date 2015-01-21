@@ -45,7 +45,6 @@
 	               
 	                <ul class="nav hidden-xs" id="lg-menu">
 	                    <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-	                    <li class="active"><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView"><i class="glyphicon glyphicon-map-marker"></i> Fellowship Programs</a></li>
                 		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
                 		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
 	                </ul>
@@ -135,7 +134,7 @@
 	                        	<div class = "col-sm-12 hidden-xs">
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body">
-		                                	<p class="lead no-bottom">Residency Locator</p>
+		                                	<p class="lead no-bottom">Fellowship Locator</p>
 		                                </div>
 	                              	</div>
 	                        	</div>
@@ -144,7 +143,7 @@
 	                        	<div class = "col-sm-12 visible-xs">
 	                        		<div class="panel panel-default big-top-spacer">
 		                                <div class="panel-body">
-		                                	<p class="lead no-bottom">Residency Locator</p>
+		                                	<p class="lead no-bottom">Fellowship Locator</p>
 		                                </div>
 	                              	</div>
 	                        	</div>
@@ -220,32 +219,24 @@
 	                              	</div>
 	                        	</div>
 
-	                        	<!-- Residency Program content -->
-	                        	<div class = "col-sm-12 col-sm-offset-5">
-	                        		<p class="lead"> Residency Programs</p>
+	                        	<!-- Fellowship Program content -->
+	                        	<div class = "col-sm-12 text-center">
+	                        		<p class="lead"> Fellowships</p>
 	                        	</div>
 	                        	
 
-	                        	<!-- RESIDENCY PROGRAM INFO GOES HERE -->
+	                        	<!-- FELLOWSHIP INFO GOES HERE -->
 	                        	<div class = "col-sm-12">
-	                        		<div class="row" id="residencyinfo">
-	                        			<?php
-		                        			if(isset($residencyProgram))
-												{
-												foreach($residencyProgram as $program):?>
-												<!-- Uses col-sm so that on mobile devices, these should stack so the user can scroll down.  on bigger screens - display 3xn table -->
-												
-												<div class="col-sm-4">
-													<div class = "panel panel-default" style="height: 200px;">
-														<div class="panel-body top-spacer">
-															<a href='<?php echo site_url();?>residencyprogram/getProgram/<?php echo $program->program_name ?>' class="bottom-spacer"><b> <?php echo $program->program_name ?></b> </a>
-															<p class="top-spacer"><b> State: </b><?php echo $program->state ?></p>
-															<p><b> Director: </b> <?php echo $program->director ?> </p>
-														</div>
-													</div>
-												</div>
-
-										<?php 	endforeach; } ?>
+	                        		<div class="row text-center" id="fellowshipinfo">
+	                        			<!-- will be ajax --> 
+	                        			<label for="fellowshipType">Fellowship Type </label>
+	                        			<div>
+		                        			<select id="fellowshipType">
+		                        					<option value="hand">Hand</option>
+		                        					<option value="trauma">Trauma</option>
+		                        					<option value="FA">Foot and Ankle</option>
+		                        			</select>
+	                        			</div>
 	                              	</div><!-- row -->
 	                        	</div>
 	                       </div><!--/row-->
@@ -303,7 +294,6 @@
 	<script>
 		$(document).ready(function() {
 			$('#stateDropdown').on('change', function() {
-				console.log($("#stateDropdown").val());
 				var state = $("#stateDropdown").val(); 
 				getPrograms(state); 
 			});

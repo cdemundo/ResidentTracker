@@ -27,7 +27,7 @@
 		        	</div> <!-- navbar header -->
 			        <div id="navbar" class="navbar-collapse collapse">
 				        <ul class="nav navbar-nav">
-					         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
+					         <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
 					         <li><a href="#about">About</a></li>
 					         <li><a href="#contact">Contact</a></li>
 					         <li class="dropdown">
@@ -44,7 +44,7 @@
 				          	</li>
 				        </ul>
 				        <ul class="nav navbar-nav navbar-right">
-				        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
+				        	<li><a href="<?php echo base_url()?>login/logout/" class="btn btn-primary">Logout</a></li>
 				        </ul>
 			        </div><!--/.nav-collapse -->
 	      		</div><!--container -->

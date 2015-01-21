@@ -9,6 +9,12 @@ class Residencyprogram extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('login_model');
+
+		if(!$this->login_model->isLoggedIn())
+		{
+			redirect('login');
+		}
 	}
 
 	/* Gets $_POST['state'], which is a state abbreviation, from the main_view

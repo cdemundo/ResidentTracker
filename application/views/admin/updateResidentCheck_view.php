@@ -27,7 +27,7 @@
 		        	</div> <!-- navbar header -->
 			        <div id="navbar" class="navbar-collapse collapse">
 				        <ul class="nav navbar-nav">
-					         <li class="active"><a href="<?php echo base_url()?>main">Home</a></li>
+					         <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
 					         <li><a href="#about">About</a></li>
 					         <li><a href="#contact">Contact</a></li>
 					         <li class="dropdown">
@@ -44,7 +44,7 @@
 				          	</li>
 				        </ul>
 				        <ul class="nav navbar-nav navbar-right">
-				        	<li><a href="<?php echo base_url()?>main/logout/" class="btn btn-primary">Logout</a></li>
+				        	<li><a href="<?php echo base_url()?>login/logout/" class="btn btn-primary">Logout</a></li>
 				        </ul>
 			        </div><!--/.nav-collapse -->
 	      		</div><!--container -->
@@ -58,7 +58,7 @@
 		            	</ul>
 		               
 		                <ul class="nav hidden-xs" id="lg-menu">
-		                    <li class="active"><a href="<?php echo base_url()?>main"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
+		                    <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
                     		<li><a href=""><i class="glyphicon glyphicon-user"></i> Residents</a></li>
                     		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
 		                </ul>
