@@ -39,7 +39,7 @@
 			                        </div>
 			                        <div class="form-group">
 			                        	<?php if(!empty($error))
-				                    		echo '<p class="error"> Username or password was incorrect. Please try again. </p>';
+				                    		echo '<p class="error">' . $error . ' </p>';
 				                    	?>
 			                        </div>
 			                        <div class="form-group last">
@@ -64,25 +64,6 @@
 			$('#loginForm').bootstrapValidator(); 
 		</script>
 
-		<script>
-			$( document ).ready(function() {
-				$("#panel").center(true);
-			});
-		</script>
-		<script>
-			jQuery.fn.center = function(parent) {
-		    if (parent) {
-		        parent = this.parent();
-		    } else {
-		        parent = window;
-		    }
-		    this.css({
-		        "position": "absolute",
-		        "top": ((($(parent).height() - this.outerHeight()) / 2) + $(parent).scrollTop() + "px"),
-		        "left": ((($(parent).width() - this.outerWidth()) / 2) + $(parent).scrollLeft() + "px")
-		    });
-		return this;
-		}
-		</script>
+
 	</body>
 </html>

@@ -354,7 +354,7 @@ class Adldap {
             throw new adLDAPException('No LDAP support for PHP.  See: http://www.php.net/ldap');
         }
 
-        return $this->connect();
+        //return $this->connect();
     }
 
     /**
@@ -394,9 +394,11 @@ class Adldap {
             if (!$this->_bind){
                 if ($this->_use_ssl && !$this->_use_tls){
                     // If you have problems troubleshooting, remove the @ character from the ldap_bind command above to get the actual error message
-                    throw new adLDAPException('Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $this->get_last_error());
+                    //throw new adLDAPException('Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $this->get_last_error());
+                    return false; 
                 } else {
-                    throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->get_last_error());
+                    //throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->get_last_error());
+                    return false; 
                 }
             }
         }

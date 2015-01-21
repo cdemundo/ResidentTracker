@@ -9,10 +9,15 @@ class Login_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('adldap');
 
-		//bind to LDAP server
-		$this->adldap->connect(); 
+		$this->load->library('adldap');
+		$connected = $this->adldap->connect();
+
+		if(!$connected)
+		{
+			redirect('login/notConnectedToStryker');
+		}
+
 	}
 
 	function login($username, $password)

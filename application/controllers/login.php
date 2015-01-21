@@ -33,13 +33,13 @@ class Login extends CI_Controller
 
 	function authenticate()
 	{
+		$this->load->model('login_model');
+
 		//comes from login_view.php
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
 			if(!empty($_POST['username']) && !empty($_POST['password']))
 			{
-				$this->load->model('login_model');
-
 				if($this->login_model->login($_POST['username'], $_POST['password']))
 				{
 					//initialize a list of all residency programs below the map
@@ -52,7 +52,7 @@ class Login extends CI_Controller
 				}
 				else
 				{
-					$data['error'] = true; 
+					$data['error'] = "Username or password was incorrect. Please try again."; 
 					$this->load->view('login_view', $data);
 				}
 			}
@@ -62,6 +62,15 @@ class Login extends CI_Controller
 			//user landed directly on page without coming from login_view
 			$this->load->view('login_view');
 		}
+	}
+
+	/**
+	*Redirects from login_model if ldap connection cannot be made to Stryker LDAP server
+	**/
+	function notConnectedToStryker()
+	{	
+		$data['error'] = "Could not connect to Stryker servers to authenticate."; 
+		$this->load->view('login_view', $data);
 	}
 
 	function logout()
