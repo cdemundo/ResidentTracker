@@ -80,24 +80,13 @@ class Admin extends CI_Controller
 	*Checks if a resident exists in the database and loads a confirmation page where user can double check if they want to remove or update
 	*Displays info in a modal
 	*/
-	function checkExistResident()
+	function checkExistResident($lastName="noLastName")
 	{
 		$this->load->model('resident_model');
-		$this->load->model('residentall_model'); 
 
-		if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
-			if(!empty($_POST['resLastName']))
-			{
-				//search for all residents with last name
-				$data['allResidents'] = $this->residentall_model->allByLastName($_POST['resLastName']);
-				$this->load->view('admin/multResFound_view', $data);
-			}
-			else
-			{
-				echo "<h4>Please enter a resident to search for.</h4>";
-			}
-		}
+		//search for all residents with last name
+		$data['allResidents'] = $this->resident_model->allByLastName($lastName);
+		$this->load->view('admin/multResFound_view', $data);
 	}
 
 	/**
@@ -110,7 +99,7 @@ class Admin extends CI_Controller
 		if($id > 0)
 		{
 			$data['resident'] = $this->resident_model->loadByID($id); 
-			$this->load->view('admin/removeResidentModalContent_view.php', $data);
+			$this->load->view('admin/modal/removeResidentModalContent_view.php', $data);
 		}
 
 	}
@@ -125,7 +114,7 @@ class Admin extends CI_Controller
 		if($id > 0)
 		{
 			$data['resident'] = $this->resident_model->loadByID($id); 
-			$this->load->view('admin/updateResidentModalContent_view.php', $data);
+			$this->load->view('admin/modal/updateResidentModalContent_view.php', $data);
 		}
 	}
 
@@ -134,7 +123,6 @@ class Admin extends CI_Controller
 	*/
 	function removeResident()
 	{
-
 		$this->load->model('resident_model');
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -289,7 +277,7 @@ class Admin extends CI_Controller
 
 				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
 				
-				$this->load->view('admin/updateProgramCheck_view', $data);
+				$this->load->view('admin/modal/updateProgramModalContent_view', $data);
 			}
 		}
 		else

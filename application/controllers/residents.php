@@ -25,9 +25,9 @@ class Residents extends CI_Controller
 
 	function lastNameSearch($lastName)
 	{
-		$this->load->model('residentall_model');
+		$this->load->model('resident_model');
 
-		$data['allResidents'] = $this->residentall_model->allByLastName($lastName); 
+		$data['allResidents'] = $this->resident_model->allByLastName($lastName); 
 
 		$this->load->view('residents/residentSearchResults_view', $data); 
 
@@ -54,7 +54,7 @@ class Residents extends CI_Controller
 		$data['resident'] = $theResident; 
 
 		//check if user is an admin to show admin only buttons
-		$data['admin'] = $this->tank_auth->is_admin(); 
+		$data['admin'] = $this->session->userdata('is_admin'); //returns false if empty
 
 		$this->load->view('resident_view.php', $data);
 	}
