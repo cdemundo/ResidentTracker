@@ -8,58 +8,161 @@
 
 		<!-- PAGE SPECIFIC CSS -->
 		<link rel="stylesheet" href="/residentTracker/assets/css/validate/bootstrapValidator.min.css"/>
-		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
+		<link href="/residentTracker/assets/css/main_styles.css" rel="stylesheet">
 	</head>
-	<body>
-		<div class="wrapper">
-    		<div class="box">
-				<!-- top nav -->
-				<nav class="navbar navbar-blue navbar-fixed-top" role="navigation">
-		    		<div class="container">
-			        	<div class="navbar-header">
-				        	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-						        <span class="sr-only">Toggle navigation</span>
-						        <span class="icon-bar"></span>
-						        <span class="icon-bar"></span>
-						        <span class="icon-bar"></span>
-				        	</button>
-				        	<a class="navbar-brand" href="http://stryker.com/en-us/products/Trauma/index.htm">Stryker Trauma & Extremities</a>
-			        	</div> <!-- navbar header -->
-				        <div id="navbar" class="navbar-collapse collapse">
-					        <ul class="nav navbar-nav">
-						        <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
-						        <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
-					         	<li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
-					        </ul>
-					        <ul class="nav navbar-nav navbar-right">
-					        	<li><a href="<?php echo base_url()?>login/logout/" class="btn btn-primary">Logout</a></li>
-					        </ul>
-				        </div><!--/.nav-collapse -->
-				    </div><!--container-->
-		    	</nav>
-		        <!-- sidebar -->
-	    		<div class="row row-offcanvas row-offcanvas-left">
-		            <div class="column col-sm-1 col-xs-1 sidebar-offcanvas" id="sidebar">
-		              	<ul class="nav">
-		          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-		            	</ul>
-		               
-		                <ul class="nav hidden-xs" id="lg-menu">
-		                    <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
-	                		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
-		                </ul>
-		                		              
-		              	<!-- tiny only nav-->
-		            	<ul class="nav visible-xs" id="xs-menu">
-		                	<li><a href="<?php echo base_url()?>login" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-	                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-	                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-		              	</ul>	              
-		            </div><!--col-sm-2-->
-		            <!-- /sidebar -->
+<body>
+	<div class="wrapper">
+		<div class="box">
+	        <div class="row row-offcanvas row-offcanvas-left">
+	                      
+	          
+	            <!-- sidebar -->
+	            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+	              
+	              	<ul class="nav">
+	          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+	            	</ul>
+	               
+	               <ul class="nav hidden-xs" id="lg-menu">
+	                      <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
+	                      <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView"><i class="glyphicon glyphicon-user"></i> Fellowship Programs</a></li>
+	                    <li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+	                    <li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
+	                  </ul>
+	                                    
+	                  <!-- tiny only nav-->
+	                <ul class="nav visible-xs" id="xs-menu">
+	                    <li><a href="<?php echo base_url()?>login" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+	                    <li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+	                    <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+	                    <li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+	                  </ul> 
+	              
+	            </div>
+	            <!-- /sidebar -->
+	          
+	            <!-- main right col -->
+	            <div class="column col-sm-10 col-xs-11" id="main">
+	                
+	                <!-- top nav -->
+	              	<div class="navbar navbar-blue navbar-static-top">  
+	                    <div class="navbar-header">
+	                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+	                        <span class="sr-only">Toggle</span>
+	                        <span class="icon-bar"></span>
+	          				<span class="icon-bar"></span>
+	          				<span class="icon-bar"></span>
+	                      </button>
+	                      <a href="<?php echo base_url()?>login" class="navbar-brand logo"><img src="<?php echo base_url()?>assets/images/stryker_web_logo.png" /></a>
+	                  	</div>
+	                  	<nav class="collapse navbar-collapse" role="navigation">
+	                    <ul class="nav navbar-nav">
+	                       <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
+	                       <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+	                       <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
+	                    </ul>
+	                    <ul class="nav navbar-nav navbar-right">
+	                    <li><a href="<?php echo base_url()?>login/logout/" class="btn-sm btn-primary right-spacer">Logout</a></li>
+	                    </ul>
+	                  	</nav>
+	                </div>
+	                <!-- /top nav -->
+	                <!-- main content -->
+	                <div class="padding">
+	                    <div class="full col-med-10">
+	                        <!-- content -->                      
+	                      	<div class="row">
+	                      		<!-- Header in top of content section -->
+	                        	<div class = "col-med-12 hidden-xs">
+	                        		<div class="panel panel-default">
+		                                <div class="panel-body">
+		                                	<p class="lead no-bottom">
+		                                		<?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy;?>
+		                                		<!-- This is a link to the Program page for the residents Residency program -->
+		                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
+		                                	</p>
+		                                </div>
+	                              	</div>
+	                        	</div>
 
-		            <div id="aboutModal" class="modal fade">
+	                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
+	                        	<div class = "col-sm-12 visible-xs">
+	                        		<div class="panel panel-default big-top-spacer">
+		                                <div class="panel-body">
+		                                	<p class="lead no-bottom"><?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy; ?>
+		                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
+		                                	</p>
+		                                </div>
+	                              	</div>
+	                        	</div>
+
+	                        	<!-- LEFT COLUMN -->
+
+	                        	<div class ="col-sm-6">
+
+		                        	<!-- CONTACT INFO HERE -->
+	                        		<div class="panel panel-default">
+		                                <div class="panel-body">
+		                                <p class="lead"> Contact Information  </p>	
+		                                <p class="top-spacer"> <b> Email: </b> <?php echo $resident->email ?> </p>
+		                                <p> <b> Telephone: </b> <?php echo $resident->telephone ?> </p>
+		                                </div>
+	                              	</div>
+
+		                        	<!-- NOTES GOES HERE -->
+	                        		<div class="panel panel-default">
+		                        		<div class="panel-body">
+		                        			<p class="lead"> Notes: <span class="pull-right"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#notesModal">Add a Note</a></span></p>
+		                        			<?php
+		                        				foreach($resident->notes as $key => $value)
+		                        				{
+		                        					echo '<p><b>' . $value . "</b>:<br/>  " .  $key . '</p>'; 
+		                        				}
+		                        			?> 
+		                              	</div>
+	                              	</div>
+		                       </div> <!--col-sm-6 left col-->
+
+		                       <!-- RIGHT COLUMN --> 
+		                       <div class="col-sm-6">
+		                       		<!-- Courses Attended -->
+	                        		<div class="panel panel-default">
+		                        		<div class="panel-body">
+		                        			<?php 
+				                        		echo '<p class="lead"> Courses Attended';
+				                        		if($admin)
+				                        		{
+				                        			echo '<span class="pull-right"><a href="' . site_url() . 'residents/loadAddResidentCourseView/' . $resident->getID() . '" class="btn btn-primary">Add a Course</a></span>';
+				                        		}
+				                        		echo '</p>'; 
+			                        		?>
+			                        		<div id="listdiv">
+				                        		<?php 
+				                        			//resident may not have gone to any courses or had any recorded
+				                        			if(!empty($coursesAttended))
+				                        			{
+				                        				//key is name, value is date
+					                        			foreach($coursesAttended as $key => $value)
+					                        			{
+					                        				echo "<p><b>" . $value . "</b>: " . $key . "</p>"; 
+					                        			}
+				                        			}
+				                        			else
+				                        			{
+				                        				echo "<p> No courses recorded. </p>";  
+				                        			} 
+				                        		?>
+			                        		</div><!--list div -->
+		                        		</div><!-- panel body -->
+	                        		</div><!-- panel -->
+		                       </div><!--col-sm-6 right col -->
+	                       </div><!--/row-->
+	                    </div><!-- full col-sm-10 -->
+	                </div><!-- /padding -->
+	            </div><!-- column col-sm-10 col-xs-11-->
+            </div><!-- /row row-offcanvas row-offcanvas-left -->
+
+		         <div id="aboutModal" class="modal fade">
 					    <div class="modal-dialog">
 					        <div class="modal-content">
 					            <div class="modal-header">
@@ -153,111 +256,6 @@
 					        </div><!--modal content-->
 					    </div><!--modal dialog-->
 					</div><!--notes modal-->
-
-		            <!-- main content -->
-		            <div class="column col-sm-11 col-xs-11" id="main">
-		            	<div class = "inner-wrapper">
-			                <div class="padding">
-			                    <div class="full col-sm-10">
-			                        <!-- content -->                      
-			                      	<div class="row">
-			                      		<!-- Header in top of content section -->
-			                        	<div class = "col-sm-12 hidden-xs">
-			                        		<div class="panel panel-default">
-				                                <div class="panel-body">
-				                                	<p class="lead no-bottom">
-				                                		<?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy;?>
-				                                		<!-- This is a link to the Program page for the residents Residency program -->
-				                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
-				                                	</p>
-				                                </div>
-			                              	</div>
-			                        	</div>
-
-			                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
-			                        	<div class = "col-sm-12 visible-xs">
-			                        		<div class="panel panel-default big-top-spacer">
-				                                <div class="panel-body">
-				                                	<p class="lead no-bottom"><?php echo $resident->firstName . " " . $resident->lastName . " - PGY" . $resident->pgy; ?>
-				                                		<span class="pull-right"><a href='<?php echo base_url() . "residencyProgram/getProgram/" . $resident->program_name?>'><?php echo $resident->programName ?></a></span>
-				                                	</p>
-				                                </div>
-			                              	</div>
-			                        	</div>
-
-			                        	<!-- LEFT COLUMN -->
-
-			                        	<div class ="col-sm-6">
-
-				                        	<!-- CONTACT INFO HERE -->
-			                        		<div class="panel panel-default">
-				                                <div class="panel-body">
-				                                <p class="lead"> Contact Information  </p>	
-				                                <p class="top-spacer"> <b> Email: </b> <?php echo $resident->email ?> </p>
-				                                <p> <b> Telephone: </b> <?php echo $resident->telephone ?> </p>
-				                                </div>
-			                              	</div>
-
-				                        	<!-- NOTES GOES HERE -->
-			                        		<div class="panel panel-default">
-				                        		<div class="panel-body">
-				                        			<p class="lead"> Notes: <span class="pull-right"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#notesModal">Add a Note</a></span></p>
-				                        			<?php
-				                        				foreach($resident->notes as $key => $value)
-				                        				{
-				                        					echo '<p><b>' . $value . "</b>:<br/>  " .  $key . '</p>'; 
-				                        				}
-				                        			?> 
-				                              	</div>
-			                              	</div>
-				                       </div> <!--col-sm-6 left col-->
-
-				                       <!-- RIGHT COLUMN --> 
-				                       <div class="col-sm-6">
-				                       		<!-- Courses Attended -->
-			                        		<div class="panel panel-default">
-				                        		<div class="panel-body">
-				                        			<?php 
-						                        		echo '<p class="lead"> Courses Attended';
-						                        		if($admin)
-						                        		{
-						                        			echo '<span class="pull-right"><a href="' . site_url() . 'residents/loadAddResidentCourseView/' . $resident->getID() . '" class="btn btn-primary">Add a Course</a></span>';
-						                        		}
-						                        		echo '</p>'; 
-					                        		?>
-					                        		<div id="listdiv">
-						                        		<?php 
-						                        			//resident may not have gone to any courses or had any recorded
-						                        			if(!empty($coursesAttended))
-						                        			{
-						                        				//key is name, value is date
-							                        			foreach($coursesAttended as $key => $value)
-							                        			{
-							                        				echo "<p><b>" . $value . "</b>: " . $key . "</p>"; 
-							                        			}
-						                        			}
-						                        			else
-						                        			{
-						                        				echo "<p> No courses recorded. </p>";  
-						                        			} 
-						                        		?>
-					                        		</div><!--list div -->
-				                        		</div><!-- panel body -->
-			                        		</div><!-- panel -->
-				                       </div><!--col-sm-6 right col -->
-			                       </div><!--/row-->
-			                    </div><!-- full col-sm-10 -->
-			                </div><!-- /padding -->
-		                </div><!-- inner wrapper-->
-		                <div class="row footer" id="footer">    
-	                    	<hr>
-                            	<h4 class="text-center">
-		                      		<p>This website courtesy of Stryker Medical Education</p>
-		                        </h4>
-	                        	<hr>
-                		</div>
-		            </div><!-- /main -->
-		        </div><!--row row-offcanvas row-offcanvas-left-->
 		    </div><!--box-->
 		</div><!--wrapper-->
 

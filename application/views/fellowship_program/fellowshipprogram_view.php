@@ -7,141 +7,73 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- PAGE SPECIFIC CSS -->
-		<link href="/residentTracker/assets/css/main_view.css" rel="stylesheet">
+		<link href="/residentTracker/assets/css/main_styles.css" rel="stylesheet">
 	</head>
-	<body>
+<body>
 	<div class="wrapper">
     	<div class="box">
-			<!-- top nav -->
-			<nav class="navbar navbar-blue navbar-fixed-top" role="navigation">
-	    		<div class="container">
-		        	<div class="navbar-header">
-			        	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					        <span class="sr-only">Toggle navigation</span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-			        	</button>
-			        	<a class="navbar-brand" href="http://stryker.com/en-us/products/Trauma/index.htm">Stryker Trauma & Extremities</a>
-		        	</div> <!-- navbar header -->
-			        <div id="navbar" class="navbar-collapse collapse">
-				        <ul class="nav navbar-nav">
-					         <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
-					         <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
-					         <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
-				        </ul>
-				        <ul class="nav navbar-nav navbar-right">
-				        	<li><a href="<?php echo base_url()?>login/logout/" class="btn btn-primary">Logout</a></li>
-				        </ul>
-			        </div><!--/.nav-collapse -->
-			    </div><!--container-->
-	    	</nav>
-	    	<!-- sidebar -->
-    		<div class="row row-offcanvas row-offcanvas-left">
-	            <div class="column col-sm-1 col-xs-1 sidebar-offcanvas" id="sidebar">
-	              	<ul class="nav">
-	          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-	            	</ul>
-	               
-	                <ul class="nav hidden-xs" id="lg-menu">
-	                    <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-                		<li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
-                		<li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
-	                </ul>
-	                		              
-	              	<!-- tiny only nav-->
-	            	<ul class="nav visible-xs" id="xs-menu">
-	                	<li><a href="<?php echo base_url()?>login" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                		<li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-                		<li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-	              	</ul>	              
-	            </div><!--col-sm-2-->
-	            <!-- /sidebar -->
-
-	            <div id="aboutModal" class="modal fade">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title text-center">About</h4>
-					            </div>
-						            <div class="modal-body col-xs-10 col-xs-offset-1">
-						            	<div class = "panel panel-default top-spacer">
-											<div class="panel-body text-center">
-								            	<div id="websiteAbout">
-								                	<p class="text-left">
-								                		This website was created by the Stryker Trauma & Extremities Medical Education team to facilitate engagement
-								                		with residents across the country.  It provides a record of residents our education team and sales force have interacted with
-								                		and notes on courses that residents have attended with Stryker.  
-								                	</p>
-								                	<p class="text-left">
-								                		On this website you can: 
-								                	</p>
-								                	<ul class="text-left">
-								                		<li> Look at individual pages for each residency program in the country.  These pages contain contact information, information about the
-								                			 residency program, and a list of the residents currently at each program that Stryker has interacted with </li>
-								                		<li> Look at each individual residents profile - see what courses they have attended and contact information available. </li>
-								                	</ul>
-								                </div>
-								            </div>
-								        </div>
-						            </div>
-						            <div class="modal-footer">
-						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
-						            </div>
-					        </div><!--modal content-->
-					    </div><!--modal dialog-->
-					</div><!--about modal-->
-
-					<div id="contactModal" class="modal fade">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					                <h4 class="modal-title text-center">Contact Us</h4>
-					            </div>
-						            <div class="modal-body col-xs-10 col-xs-offset-1">
-						            	<div class = "panel panel-default top-spacer">
-											<div class="panel-body text-center">
-								            	<div id="websiteAbout">
-								                	<p class="text-left">
-								                		Stryker Trauma & Extremities has a team of dedicated resident education experts.  By region they are:   
-								                	</p>
-								                	<ul class="text-left">
-								                		<li> <b>East Coast:</b> Matt Murphy </li>
-								                		<li> <b>Central:</b> Cindy Immel </li>
-								                		<li> <b>Mid-South:</b> Brent Benham </li>
-								                		<li> <b>West Coast:</b> Fred Habel </li>
-								                	</ul>
-								                </div>
-								            </div>
-								        </div>
-						            </div>
-						            <div class="modal-footer">
-						                <button type="button" id = "modalOK" class="btn btn-primary" data-dismiss="modal">OK</button>
-						            </div>
-					        </div><!--modal content-->
-					    </div><!--modal dialog-->
-					</div><!--contact modal-->
+			<div class="row row-offcanvas row-offcanvas-left">
+          
+            <!-- sidebar -->
+            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+              
+              	<ul class="nav">
+          			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+            	</ul>
+               
+               <ul class="nav hidden-xs" id="lg-menu">
+                      <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
+                      <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView"><i class="glyphicon glyphicon-user"></i> Fellowship Programs</a></li>
+                    <li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
+                    <li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
+                  </ul>
+                                    
+                  <!-- tiny only nav-->
+                <ul class="nav visible-xs" id="xs-menu">
+                    <li><a href="<?php echo base_url()?>login" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                    <li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+                    <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+                    <li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+                  </ul> 
+              
+            </div>
+            <!-- /sidebar -->
+          
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+                
+                <!-- top nav -->
+              	<div class="navbar navbar-blue navbar-static-top">  
+                    <div class="navbar-header">
+                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+          				<span class="icon-bar"></span>
+          				<span class="icon-bar"></span>
+                      </button>
+                      <a href="<?php echo base_url()?>login" class="navbar-brand logo"><img src="<?php echo base_url()?>assets/images/stryker_web_logo.png" /></a>
+                  	</div>
+                  	<nav class="collapse navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                       <li class="active"><a href="<?php echo base_url()?>login">Home</a></li>
+                       <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+                       <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?php echo base_url()?>login/logout/" class="btn-sm btn-primary right-spacer">Logout</a></li>
+                    </ul>
+                  	</nav>
+                </div>
+                <!-- /top nav -->     
 	          
-	            <!-- main content -->
-	            <div class="column col-sm-11 col-xs-11" id="main">
+                <!-- main content -->
 	                <div class="padding">
-	                    <div class="full col-sm-11">
+	                    <div class="full col-sm-9">
 	                        <!-- content -->                      
 	                      	<div class="row">
 	                      		<!-- Header in top of content section -->
-	                        	<div class = "col-sm-12 hidden-xs">
+	                        	<div class = "col-sm-12">
 	                        		<div class="panel panel-default">
-		                                <div class="panel-body">
-		                                	<p class="lead no-bottom">Fellowship Locator</p>
-		                                </div>
-	                              	</div>
-	                        	</div>
-
-	                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
-	                        	<div class = "col-sm-12 visible-xs">
-	                        		<div class="panel panel-default big-top-spacer">
 		                                <div class="panel-body">
 		                                	<p class="lead no-bottom">Fellowship Locator</p>
 		                                </div>
@@ -150,7 +82,7 @@
 
 	                        	<!-- US MAP DIV -->
 	                        	<!-- MAP FOR SCREENS BIGGER THAN XS -->
-	                        	<div class = "col-sm-12 hidden-xs">
+	                        	<div class = "col-sm-12 hidden-xs hidden-sm">
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body text-center" id = "map" style="width: 768px; height: 500px;">
 		                                	<!-- map goes here -->
@@ -159,7 +91,7 @@
 	                        	</div>
 
 	                        	<!--VISIBLE ON PHONES -->
-	                        	<div class = "col-sm-12 visible-xs">
+	                        	<div class = "col-sm-12 visible-xs visible-sm">
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body" id = "map">
 		                                	<select class="form-control" id = "stateDropdown">
@@ -232,28 +164,26 @@
 	                        			<label for="fellowshipType">Fellowship Type </label>
 	                        			<div>
 		                        			<select id="fellowshipType">
-		                        					<option value="hand">Hand</option>
-		                        					<option value="trauma">Trauma</option>
+		                        					<option value="Trauma">Trauma</option>
+		                        					<option value="Hand">Hand</option>
 		                        					<option value="FA">Foot and Ankle</option>
 		                        			</select>
+		                        			<div class="top-spacer visible-xs visible-sm">
+		                        				<button type="submit" class="btn btn-primary" id="fellowBtn">Get Fellowships</button>
+		                        			</div>
+	                        			</div>
+	                        			<div id = "ajaxGoesHere" class="big-top-spacer">
+
 	                        			</div>
 	                              	</div><!-- row -->
 	                        	</div>
 	                       </div><!--/row-->
-	                      
-		                        <div class="row footer" id="footer">    
-			                    	<hr>
-		                            	<h4 class="text-center">
-				                      		<p>This website courtesy of Stryker Medical Education</p>
-				                        </h4>
-	 	                        	<hr>
-                        		</div>
-		                    </div><!-- /col-9 -->
-		                </div><!-- /padding -->
-		            </div><!-- /main -->
-		        </div><!--row row-offcanvas row-offcanvas-left-->
-	        </div><!-- box-->
-		</div><!-- wrapper -->
+	                    </div><!-- /col-9 -->
+	                </div><!-- /padding -->
+	            </div><!-- /main -->
+	        </div><!--row row-offcanvas row-offcanvas-left-->
+        </div><!-- box-->
+	</div><!-- wrapper -->
 
 	<!--CORE JS BOOTSTRAP AND JQUERY -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	
@@ -284,7 +214,8 @@
     		$('#map').usmap({
     			showLabels: true,
     				click: function(event, data) {
-						getPrograms(data.name);
+    					var type = $("#fellowshipType").val();
+						getPrograms(data.name, type);
 					}
     		});
   		});
@@ -293,9 +224,10 @@
 	<!-- SCRIPT FOR STATE DROPDOWN LIST.. SHOWS UP ON PHONES INSTEAD OF MAP -->
 	<script>
 		$(document).ready(function() {
-			$('#stateDropdown').on('change', function() {
+			$('#fellowBtn').on('click', function() {
 				var state = $("#stateDropdown").val(); 
-				getPrograms(state); 
+				var type = $("#fellowshipType").val();
+				getPrograms(state, type); 
 			});
 		});
 	</script>
@@ -303,16 +235,15 @@
 	<!-- Jquery function, ajax to get residency program info - takes state abbreviation as input 
 		 ajax request to residencyprogram/getStateInfo                                      	-->
 	<script>
-		function getPrograms(state) {
+		function getPrograms(state, type) {
 			var base_url = '<?php echo site_url();?>'; 
-
+			$("#ajaxGoesHere").html('<img src="<?php echo base_url()?>assets/images/load.png" />')
 			$.ajax({
 			  type: "POST",
-			  url: base_url + 'residencyprogram' + '/getStateInfo',
+			  url: base_url + 'fellowshipprogram' + '/getProgramsByState/' + state + '/' + type,
 			  dataType: "html",
-			  data: { 'state' : state },
 			  success: function(data) {
-					$('#residencyinfo').html(data);
+					$('#ajaxGoesHere').html(data);
 					}
 				})
 		}
