@@ -263,17 +263,13 @@ class Resident_model extends CI_Model
 	*/
 	function addNote($id, $note)
 	{
-		//get user email to mark who posted
-		$this->load->library('tank_auth');
-		$this->db->select('email'); 
-		$query = $this->db->get_where('users', array('id' => $this->tank_auth->get_user_id())); 
-		$email = $query->row()->email;
+		$posted_by = $this->session->userdata('username');
 
 
 		$data = array(
     			'resident_id' => $id, 
     			'note' => $note, 
-    			'posted_by' => $email . "(" . date("Y-m-d") . ")"
+    			'posted_by' => $posted_by . "(" . date("Y-m-d") . ")"
     		);
 
     	$this->db->insert('resident_notes', $data); 
@@ -313,4 +309,19 @@ class Resident_model extends CI_Model
 
     	return $programStartYear; 
     }
+
+    /**
+    *Get all residents with the same last name
+    *@return array 
+    **/
+    function allByLastName($lastName)
+	{
+		$this->db->like('lastname', $lastName); 
+		$query = $this->db->get('resident'); 
+
+		if($query->num_rows() > 0)
+    	{
+    		return $query->result();
+    	}
+	}
 }
