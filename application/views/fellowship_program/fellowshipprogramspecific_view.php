@@ -36,7 +36,7 @@
                     <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView" class="text-center"><i class="fa fa-user-md"></i></a></li>
                     <li><a href="<?php echo base_url()?>residents/loadSearchView" class="text-center"><i class="fa fa-search"></i></a></li>
                     <li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-                </ul>
+                </ul>  
               
             </div>
             <!-- /sidebar -->
@@ -78,16 +78,7 @@
 	                        	<div class = "col-sm-12 hidden-xs">
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body">
-		                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
-		                                </div>
-	                              	</div>
-	                        	</div>
-
-	                        	<!-- FIXES BUG WHERE NAVBAR OVERLAPS ON SMALLER BROWSERS, USES BIG-TOP-SPACER CLASS -->
-	                        	<div class = "col-sm-12 visible-xs">
-	                        		<div class="panel panel-default big-top-spacer">
-		                                <div class="panel-body">
-		                                	<p class="lead no-bottom"><?php echo $residencyProgram[0]->program_name ?></p>
+		                                	<p class="lead no-bottom"><?php echo $fellowshipProgram->program_name . " - " . $fellowshipProgram->type . " Fellowship" ?></p>
 		                                </div>
 	                              	</div>
 	                        	</div>
@@ -99,13 +90,13 @@
 		                        	<!-- CONTACT INFO HERE -->
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body">
-		                                <p class="lead"> Contact Information  </p>	
-		                                <p class="top-spacer"> <b> Address: </b> <?php echo $residencyProgram[0]->address ?> </p>
-		                                <p> <b> City + State: </b> <?php echo $residencyProgram[0]->city . "," . $residencyProgram[0]->state ?></p>
-		                                <p> <b> Telephone: </b> <?php echo $residencyProgram[0]->telephone ?> </p>
-		                                <p> <b> Fax: </b> <?php echo $residencyProgram[0]->fax ?> </p>
-		                                <p> <b> Contact: </b> <?php echo $residencyProgram[0]->contact_name ?> </p>
-		                                <p> <b> Contact Email: </b> <?php echo $residencyProgram[0]->contact_email ?> </p>
+			                                <p class="lead"> Contact Information  </p>	
+			                                <p class="top-spacer"> <b> City + State: </b> <?php echo $fellowshipProgram->city . "," . $fellowshipProgram->state ?></p>
+			                                <p> <b> Telephone: </b> <?php echo $fellowshipProgram->contact_phone ?> </p>
+			                                <p> <b> Contact: </b> <?php echo $fellowshipProgram->contact ?> </p>
+			                                <p> <b> Contact Email: </b> <?php echo $fellowshipProgram->contact_email ?> </p>
+			                                <p> <b> Start Date: </b> <?php echo $fellowshipProgram->start ?> </p>
+			                                <p> <b> Number of Fellows: </b> <?php echo $fellowshipProgram->total_number ?> </p>
 		                                </div>
 	                              	</div>
 
@@ -113,9 +104,8 @@
 		                        	<!-- DIRECTOR INFO GOES HERE -->
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body">
-		                                <p class="lead"> Director and Faculty </p>
-		                                <p class="top-spacer"> <b> Director: </b> <?php echo $residencyProgram[0]->director ?> </p>	
-		                                <p> <b> Email: </b> <?php echo $residencyProgram[0]->director_email ?> </p>
+			                                <p class="lead"> Director and Faculty </p>
+			                                <p class="top-spacer"> <b> Director: </b> <?php echo $fellowshipProgram->director ?> </p>	
 		                                </div>
 	                              	</div>
 
@@ -123,10 +113,6 @@
 	                        		<div class="panel panel-default">
 		                                <div class="panel-body">
 			                                <p class="lead"> Stryker Contacts  </p>	
-			                                <p class="top-spacer"> <b> TSM: </b> <?php echo $residencyProgram[0]->tsm_name ?> </p>
-			                                <p> <b> TSM Email: </b> <?php echo $residencyProgram[0]->tsm_email ?></p>
-			                                <p> <b> Sales Rep: </b> <?php echo $residencyProgram[0]->rep_name ?> </p>
-			                                <p> <b> Sales Rep Email: </b> <?php echo $residencyProgram[0]->rep_email ?> </p>
 		                                </div>
 	                              	</div>
 		                       </div> <!--col-sm-6 left col-->
@@ -136,30 +122,9 @@
 		                       		<!-- Alumni content -->
 	                        		<div class="panel panel-default">
 		                        		<div class="panel-body">
-			                        		<p class="lead"> Current Residents </p>
+			                        		<p class="lead"> Alumni </p>
 			                        		<div id="listdiv">
-				                        		<?php for ($i = 1; $i <= 5; $i++)
-				                        		{ 
-				                        			//residents[$i] is an array of all PGY $i at a residency program
-				                        			echo '<h4> PGY ' . ($i) . ' - Started in '  . (date('Y') - $i) . '</h4>';
-				                        			echo '<ul>';
-				                        			//if there are any residents in a given year
-				                        			if(!empty($residents[$i]))
-				                        			{
-				                        				//print out each one of those residents, key is resident name, value is resident id
-				                        				foreach($residents[$i] as $key => $value)
-				                        				{
-				                        					//url link is to the specific residents page, based on ID
-				                        					//display is the residents name
-				                          					echo '<p><a href="' . base_url() . 'residents/getResident/' . $value .'">' . $key . '</a></p>';
-				                        				}
-				                        			}
-				                        			else
-				                        			{
-				                        				echo '<p> No residents found in this year </p>';
-				                        			}
-				                        			echo '</ul>';
-				                        		}?>
+
 			                        		</div><!--list div -->
 		                        		</div><!-- panel body -->
 	                        		</div><!-- panel -->

@@ -9,7 +9,7 @@
   <div class="col-md-4">
     <div class = "panel panel-default" style="height: 200px;">
       <div class="panel-body top-spacer">
-        <a href='<?php echo site_url();?>fellowshipprogram/getProgram/<?php echo $program->program_name ?>' class="bottom-spacer"><b> <?php echo $program->program_name ?></b> </a>
+        <a href='<?php echo site_url();?>fellowshipprogram/getProgram/<?php echo urldecode($program->program_name)?>/<?php echo $type ?>' class="bottom-spacer"><b> <?php echo $program->program_name ?></b> </a>
         <p class="top-spacer"><b> State: </b><?php echo $program->state ?></p>
         <p><b> Director: </b> <?php echo $program->director ?> </p>
       </div>

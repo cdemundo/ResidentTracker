@@ -18,9 +18,9 @@ class Residents extends CI_Controller
 		}
 	}
 
-	function loadResidentsView()
+	function loadSearchView()
 	{
-		$this->load->view('residents/residents_view');
+		$this->load->view('search_view');
 	}
 
 	function lastNameSearch($lastName)
@@ -56,7 +56,7 @@ class Residents extends CI_Controller
 		//check if user is an admin to show admin only buttons
 		$data['admin'] = $this->session->userdata('is_admin'); //returns false if empty
 
-		$this->load->view('resident_view.php', $data);
+		$this->load->view('residents/resident_view.php', $data);
 	}
 
 	/*******************************************

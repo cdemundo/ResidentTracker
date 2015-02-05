@@ -22,18 +22,30 @@ class Fellowshipprogram_model extends CI_Model
 		parent::__construct();
 	}
 
-	function getSpecificProgram($programName)
+	/**
+	*Returns an object with properties representing a row in db for fellowship program
+	*@return fellowshipprogram_model object
+	**/ 
+	function getSpecificProgram($programName, $type)
 	{
 		//select residency program by name
-		$query = $this->db->get_where('fellowship_program', array('program_name' => $programName));
+		$query = $this->db->get_where('fellowship_program', array('program_name' => $programName, 'type' => $type));
 
 		if($query->num_rows() > 0)
 		{
-			$program = $query->result();
+			$program = $query->row();
 
-			$this->program_name = $program->program_name; 
+			$this->program_name = $program->program_name; //there should always be a program name
+			$this->city = (!empty($program->city)) ? $program->city : "No entry";
+			$this->state = (!empty($program->state)) ? $program->state : "No entry"; 
+			$this->director = (!empty($program->director)) ? $program->director : "No entry";
+			$this->type = (!empty($program->type)) ? $program->type : "No entry";
+			$this->start = (!empty($program->start)) ? $program->start : "No entry";
+			$this->total_number = (!empty($program->total_number)) ? $program->total_number : "No entry";
+			$this->contact = (!empty($program->contact)) ? $program->contact : "No entry";
+			$this->contact_phone = (!empty($program->contact_phone)) ? $program->contact_phone : "No entry";
+			$this->contact_email = (!empty($program->contact_email)) ? $program->contact_email : "No entry";
 		}
-
 		return $this; 
 	}
 
@@ -52,5 +64,17 @@ class Fellowshipprogram_model extends CI_Model
 	function getProgramsByType($type)
 	{
 
+	}
+
+	/**
+	*Returns program name when given ID
+	*@return string
+	**/
+	function getProgramByID($id)
+	{
+		$this->db->select('program_name');
+		$query = $this->db->get_where('fellowship_program', array('id' => $id)); 
+
+		return $query->row()->program_name; 
 	}
 }

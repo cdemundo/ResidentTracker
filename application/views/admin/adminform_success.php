@@ -5,6 +5,7 @@
 
     	<!-- CORE BOOTSTRAP --> 
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 		<!-- PAGE SPECIFIC CSS -->
 		<link href="/residentTracker/assets/css/errorstyle.css" rel="stylesheet">
@@ -23,19 +24,19 @@
 	            	</ul>
 	               
 	               <ul class="nav hidden-xs" id="lg-menu">
-	                      <li class="active"><a href="<?php echo base_url()?>login"><i class="glyphicon glyphicon-map-marker"></i> Residency Programs</a></li>
-	                      <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView"><i class="glyphicon glyphicon-user"></i> Fellowship Programs</a></li>
-	                    <li><a href="<?php echo base_url()?>residents/loadResidentsView"><i class="glyphicon glyphicon-user"></i> Residents</a></li>
-	                    <li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
-	                  </ul>
-	                                    
-	                  <!-- tiny only nav-->
-	                <ul class="nav visible-xs" id="xs-menu">
-	                    <li><a href="<?php echo base_url()?>login" class="text-center"><i class="glyphicon glyphicon-map-marker"></i></a></li>
-	                    <li><a href="<?php echo base_url()?>residents/loadResidentsView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-	                    <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
-	                    <li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
-	                  </ul> 
+                      <li class="active"><a href="<?php echo base_url()?>login"><i class="fa fa-hospital-o"></i> Residency Programs</a></li>
+                      <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView"><i class="fa fa-user-md"></i> Fellowship Programs</a></li>
+                    <li><a href="<?php echo base_url()?>residents/loadSearchView"><i class="fa fa-search"></i> Search</a></li>
+                    <li><a href="<?php echo base_url()?>admin/loadAdminView"><i class="glyphicon glyphicon-file"></i> Admin</a></li>
+                  </ul>
+                                    
+                  <!-- tiny only nav-->
+                <ul class="nav visible-xs" id="xs-menu">
+                    <li><a href="<?php echo base_url()?>login" class="text-center"><i class="fa fa-hospital-o"></i></a></li>
+                    <li><a href="<?php echo base_url()?>fellowshipprogram/loadFellowshipView" class="text-center"><i class="fa fa-user-md"></i></a></li>
+                    <li><a href="<?php echo base_url()?>residents/loadSearchView" class="text-center"><i class="fa fa-search"></i></a></li>
+                    <li><a href="<?php echo base_url()?>admin/loadAdminView" class="text-center"><i class="glyphicon glyphicon-file"></i></a></li>
+                </ul>
 	              
 	            </div>
 	            <!-- /sidebar -->

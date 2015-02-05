@@ -189,7 +189,7 @@ class Resident_model extends CI_Model
 
     }
 
-    	/**
+    /**
 	*Search for all residents by partial last name
 	*/
 	function searchByLastName()

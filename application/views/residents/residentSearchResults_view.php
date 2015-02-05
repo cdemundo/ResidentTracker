@@ -1,5 +1,5 @@
 <div class="col-sm-6 col-sm-offset-3 text-center">
-	<form id = 'selectResForm' action = "<?php echo site_url();?>residents/getResident" method = "post">
+	<form id = 'selectForm' action = "<?php echo site_url();?>residents/getResident" method = "post">
 		<h4 class = "text-center">Residents Found</h4>
 		<div class = "form-group">
 		<select class="form-control" id="selectRes" name="selectRes">
@@ -12,6 +12,6 @@
 		</select>
 		</div>
 
-		<button type="submit" class="btn btn-primary text-center" id="selectResBtn">Go</button>
+		<button type="submit" class="btn btn-primary text-center" id="selectBtn">Go</button>
 	</form>
 </div>

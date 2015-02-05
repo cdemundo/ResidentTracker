@@ -31,7 +31,8 @@ class Fellowshipprogram extends CI_Controller
 	{
 		$this->load->model('fellowshipprogram_model');
 
-		$data['fellowshipPrograms'] = $this->fellowshipprogram_model->fellowshipProgramsByState($state, $type); 
+		$data['fellowshipPrograms'] = $this->fellowshipprogram_model->fellowshipProgramsByState($state, $type);
+		$data['type'] = $type;  
 
 		$this->load->view('fellowship_program/fellowshipsByState_view', $data); 
 	}
@@ -39,14 +40,16 @@ class Fellowshipprogram extends CI_Controller
 	/*****
 	*Loads a page that represents a specific residency program
 	*****/
-	function getProgram($programName)
+	function getProgram($programName, $type="")
 	{
 		//pass data to model
 		$this->load->model('fellowshipprogram_model');
 
 		//each index in data is a row of address, city+state, telephone, fax, contact, contact-email
 		//director, director email and alumni
-		$data['fellowshipProgram'] = $this->fellowshipprogram_model->getSpecificProgram(urldecode($programName));
+		$data['fellowshipProgram'] = $this->fellowshipprogram_model->getSpecificProgram(urldecode($programName), $type);
+
+		$this->load->view('fellowship_program/fellowshipprogramspecific_view', $data);
 
 		/*this is to get alumni data
 		$residents = $this->residencyprogram_model->getAlumni(urldecode($programName));
@@ -110,7 +113,5 @@ class Fellowshipprogram extends CI_Controller
 		}
 
 		$data['residents'] = $years;*/
-
-		$this->load->view('fellowship_program/fellowshipprogram_view', $data);
 	}
 }
