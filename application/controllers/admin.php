@@ -24,11 +24,16 @@ class Admin extends CI_Controller
 
 		$data['residencyProgram'] = $this->residencyprogram_model->getAllResidencyPrograms(); 
 
+		//load list of fellowship programs
+		$this->load->model('fellowshipprogram_model');
+
+		$data['fellowshipProgram'] = $this->fellowshipprogram_model->getAllFellowshipPrograms(); 
+
 		$this->load->view('admin/admin_view', $data);
 	}
 
 	/***
-	**Create a resident_model object and calls addResident method after filling properties
+	*Create a resident_model object and calls addResident method after filling properties
 	* pulls info from 'resident' table
 	**/
 	function addResident()
@@ -434,6 +439,53 @@ class Admin extends CI_Controller
 			}
 		}
 	}
+
+	//FELLOW FUNCTIONS BELOW HERE
+	function addFellow()
+	{
+		$this->load->model('fellow_model'); 
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName'])&& !empty($_POST['startYear']) && !empty($_POST['selectResProgram']))
+			{
+				//all forms were filled out
+				//create a new resident object with only lastName property filled
+				$newFellow = $this->fellow_model->byLastName($_POST['lastName']);
+
+				$newFellow->firstname = $_POST['firstName'];
+				if(!empty($_POST['felEmail']))
+				{
+					$newFellow->email = $_POST['resEmail'];
+				}
+				if(!empty($_POST['resPhone']))
+				{
+					$newFellow->telephone = $_POST['resPhone'];
+				}
+				$newFellow->year_attended = $_POST['startYear'];
+				$newResident->programName = $_POST['selectFelProgram'];
+
+				if($newResident->addResident())
+				{ 
+					$data['successHeading'] = "Resident Added"; 
+					$data['successMessage'] = $newResident->firstName . " " . $newResident->LastName . " was added as a PGY " . $newResident->pgy . " to " . $newResident->programName; 
+				}
+				else
+				{
+					$data['errorHeading'] = "Resident Not Added"; 
+					$data['errorMessage'] = "Resident could not be added, please try again."; 
+				}
+			}
+			else
+			{
+				$data['errorHeading'] = "Form not filled out"; 
+				$data['errorMessage'] = "All fields were not filled out, resident could not be created."; 
+			}
+
+			$this->load->view("admin/adminform_success", $data); 
+		}
+	}
+
 
 	
 

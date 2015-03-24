@@ -49,6 +49,25 @@ class Fellowshipprogram_model extends CI_Model
 		return $this; 
 	}
 
+	/**
+	* Used to filled dropdown list on Admin tools 
+	* @return array
+	**/
+	function getAllFellowshipPrograms()
+	{
+		$this->db->select('program_name, type, id');
+		$query = $this->db->get('fellowship_program'); 
+
+		if ($query->num_rows() > 0)
+		{
+			return $query->result(); 
+		}
+	}
+
+	/**
+	*Used from the main Fellowship Programs page when JS map is clicked on
+	*@return array
+	**/
 	function fellowshipProgramsByState($state, $type)
 	{
 		//select all residency programs in $state

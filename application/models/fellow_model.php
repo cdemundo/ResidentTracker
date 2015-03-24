@@ -28,6 +28,20 @@ class Fellow_model extends CI_Model
         return $this->_id;
     }
 
+    public function setID($id){
+    	$this->_id = $id; 
+    }
+
+    /***
+	*Create a new fellow object with only last name populated
+	***/ 
+
+	public function byLastName($lastname) 
+	{
+    	$this->lastame = $lastame;
+    	return $this; 
+    }
+
 	function loadByID($id)
 	{
 		$this->load->model('fellowshipprogram_model'); //used to get programname

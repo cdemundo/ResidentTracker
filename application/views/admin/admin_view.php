@@ -79,13 +79,24 @@
                         		<div class="col-sm-8 col-sm-offset-2">
                         		<div class="panel panel-default">
 	                                <div class="panel-body">
-	                                  <h4 class = "text-center bottom-spacer"> Admin Controls </h4>
+	                                  <h3 class = "text-center bottom-spacer"> Admin Controls </h4>
 		                                  <div class="text-center">
+		                                  	  <h4>Resident Tools</h3>
 		                                  	  <ul class="list-group list-inline">
 			                                  	  <li> <a href="#" id="addResLink">Add Resident</a></li>
 			                                  	  <li> <a href="#" id="chooseResLink">Remove/Update Resident</a></li>
-			                                  	  <li> <a href="#" id="updateProgramLink">Update Programs</a></li>
-			                                  	  <li> <a href="#" id="addCourseLink">Add Courses</a></li>
+			                                  	  <li> <a href="#" id="updateProgramLink">Update Residency Program</a></li>
+			                                  	  <li> <a href="#" id="addCourseLink">Add Resident Courses</a></li>
+		                                  	  </ul>
+		                                  </div>
+		                                  <div class="text-center">
+		                                  	  <h4>Fellow Tools</h3>
+		                                  	  <ul class="list-group list-inline">
+			                                  	  <li> <a href="#" id="addFelLink">Add Fellow</a></li>
+			                                  	  <li> <a href="#" id="chooseFelLink">Remove/Update Fellow</a></li>
+			                                  	  <li> <a href="#" id="updateFelProgram">Update Fellowship</a></li>
+			                                  	  <li> <a href="#" id="updateFelProgram">Convert Resident to Fellow</a></li>
+			                                  	  <li> <a href="#" id="addCourseLink">Add Fellow Courses</a></li>
 		                                  	  </ul>
 		                                  </div>
 	                                </div>
@@ -97,125 +108,178 @@
 												<div class = "col-sm-4 col-sm-offset-4 text-center">
 
 													<p id = "defaultP"> Choose an action from above </p>
+													<!-- THIS SECTION FOR RESIDENT FORMS-->
+														<!-- Add Resident Form -->
+														<form id="addResidentForm" action="<?php echo base_url()?>admin/addResident" method="post"
+															data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+										                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+										                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 
-													<!-- Add Resident Form -->
-													<form id="addResidentForm" action="<?php echo base_url()?>admin/addResident" method="post"
-														data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-									                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-									                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+															<h4 class="bottom-spacer"> Add A Resident </h4>
+														    <div class="form-group">
+														        <label for="resName">First Name</label>
+														        <input type="text" class="form-control" name="firstName" placeholder="First Name"
+														        	data-bv-notempty = "true"
+														        	data-bv-notempty-message="First name is required and cannot be empty"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="resName">Last Name</label>
+														        <input type="text" class="form-control" name="lastName" placeholder="Last Name"
+														        	data-bv-notempty = "true"
+														        	data-bv-notempty-message="Last name is required and cannot be empty"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="resEmail">Email</label>
+														        <input type="text" class="form-control" name="resEmail" placeholder="Email"
+														        	
+									                                data-bv-emailaddress="true"
+									                                data-bv-emailaddress-message="The email address is not a valid"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="startYear">Post-Graduate Year</label>
+														        <select class="form-control text-center" name="startYear">
+														        	<?php 
+														        		for ($i = 1; $i<6; $i++)
+														        		{
+														        			echo '<option value ="' . $i . '">' . $i . '</option>';
+														        		}
+														        	?>
+														        </select>
+														    </div>
+														    <div class="form-group">
+														        <label for="resPhone">Phone</label>
+														        <input type="text" class="form-control" name="resPhone" placeholder="Format: 201-831-5555"
+														        	data-bv-phone="true"
+														        	data-bv-phone-country="US"
+														        	data-bv-phone-message="The value is not a valid phone number."/>
+														    </div>
+														    <div class="form-group" id="programSelect" name="program">
+														        <label for="selectRes">Residency Program</label>
+																<select class="form-control" id="selectResProgram" name="selectResProgram">
+																<?php
+																	foreach($residencyProgram as $program)
+																	{	
+																		echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
+																	} 
+																?>
+																</select>
+														    </div>
 
-														<h4 class="bottom-spacer"> Add A Resident </h4>
-													    <div class="form-group">
-													        <label for="resName">First Name</label>
-													        <input type="text" class="form-control" name="firstName" placeholder="First Name"
-													        	data-bv-notempty = "true"
-													        	data-bv-notempty-message="First name is required and cannot be empty"/>
-													    </div>
-													    <div class="form-group">
-													        <label for="resName">Last Name</label>
-													        <input type="text" class="form-control" name="lastName" placeholder="Last Name"
-													        	data-bv-notempty = "true"
-													        	data-bv-notempty-message="Last name is required and cannot be empty"/>
-													    </div>
-													    <div class="form-group">
-													        <label for="resEmail">Email</label>
-													        <input type="text" class="form-control" name="resEmail" placeholder="Email"
-													        	
-								                                data-bv-emailaddress="true"
-								                                data-bv-emailaddress-message="The email address is not a valid"/>
-													    </div>
-													    <div class="form-group">
-													        <label for="startYear">Post-Graduate Year</label>
-													        <select class="form-control text-center" name="startYear">
-													        	<?php 
-													        		for ($i = 1; $i<6; $i++)
-													        		{
-													        			echo '<option value ="' . $i . '">' . $i . '</option>';
-													        		}
-													        	?>
-													        </select>
-													    </div>
-													    <div class="form-group">
-													        <label for="resPhone">Phone</label>
-													        <input type="text" class="form-control" name="resPhone" placeholder="Format: 201-831-5555"
-													        	data-bv-phone="true"
-													        	data-bv-phone-country="US"
-													        	data-bv-phone-message="The value is not a valid phone number."/>
-													    </div>
-													    <div class="form-group" id="programSelect" name="program">
-													        <label for="selectRes">Residency Program</label>
-															<select class="form-control" id="selectResProgram" name="selectResProgram">
-															<?php
-																foreach($residencyProgram as $program)
-																{	
-																	echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
-																} 
-															?>
-															</select>
-													    </div>
+														    <button type="submit" class="btn btn-primary" id="addResBtn">Add Resident</button>
+														</form>
 
-													    <button type="submit" class="btn btn-primary" id="addResBtn">Add Resident</button>
-													</form>
+														<!-- Remove Resident Form -->
+														<form id="chooseResidentForm">
+															<h4 class="bottom-spacer"> Remove or Update a Resident </h4>
+														    <div class="form-group">
+														        <label for="resName">Last Name</label>
+														        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name"
+														        data-bv-notempty="true"
+														        data-bv-notempty-message="Last name is required and cannot be empty"/>
+														    </div>
 
-													<!-- Remove Resident Form -->
-													<form id="chooseResidentForm">
-														<h4 class="bottom-spacer"> Remove or Update a Resident </h4>
-													    <div class="form-group">
-													        <label for="resName">Last Name</label>
-													        <input type="text" class="form-control" id = "resLastName" name="resLastName" placeholder="Last Name"
-													        data-bv-notempty="true"
-													        data-bv-notempty-message="Last name is required and cannot be empty"/>
-													    </div>
+														    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Search</button>
+														</form>
 
-													    <button type="submit" id = "removeResidentBtn" class="btn btn-primary">Search</button>
-													</form>
+														<!-- submits via jquery and ajax, no action or method -->
+														<!-- Update Program Form -->
+														<form id="updateProgramForm">
+															<h4 class="bottom-spacer"> Update a Residency Program </h4>
 
-													<!-- submits via jquery and ajax, no action or method -->
-													<!-- Update Program Form -->
-													<form id="updateProgramForm">
-														<h4 class="bottom-spacer"> Update a Residency Program </h4>
+														    <div class="form-group" id="programSelect2">
+														        <label for="selectRes">Residency Program</label>
+																<select class="form-control" id="selectResProgram2" name="selectResProgram2">
+																<?php
+																	foreach($residencyProgram as $program)
+																	{	
+																		echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
+																	} 
+																?>
+																</select>
+														    </div>
+														    
+														    <button type="submit" class="btn btn-primary">Select Program</button>
+														</form>
+														<form id="addCourseForm" action ="<?php echo base_url()?>admin/addCourse" method="post">
+															<h4 class="bottom-spacer"> Add a Course </h4>
 
-													    <div class="form-group" id="programSelect2">
-													        <label for="selectRes">Residency Program</label>
-															<select class="form-control" id="selectResProgram2" name="selectResProgram2">
-															<?php
-																foreach($residencyProgram as $program)
-																{	
-																	echo '<option value ="' . $program->program_name . '">' . $program->program_name . '</option>';
-																} 
-															?>
-															</select>
-													    </div>
-													    
-													    <button type="submit" class="btn btn-primary">Select Program</button>
-													</form>
-													<form id="addCourseForm" action ="<?php echo base_url()?>admin/addCourse" method="post">
-														<h4 class="bottom-spacer"> Add a Course </h4>
+														    <div class="form-group">
+														        <label for="courseName">Course Name</label>
+														        <input type="text" class="form-control" name="courseName" placeholder="Course Name"
+														        	data-bv-notempty = "true"
+														        	data-bv-notempty-message="Course name is required and cannot be empty"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="courseDesc">Course Description (max. 1000 char)</label>
+														        <textarea type="text" cols="40" rows="4" maxlength="1000" name="courseDesc"
+											                		data-bv-notempty="true"
+			                               							data-bv-notempty-message="This field cannot be empty"></textarea>
+														    </div>
+														    <div class="form-group">
+														        <label for="startDate">Course Start Date (YYYY-MM-DD)</label>
+														        <input type="text" class="form-control" name="startDate" placeholder="YYYY-MM-DD"
+														        	data-bv-notempty = "true"
+														        	data-bv-date="true"
+													                data-bv-date-format="YYYY-MM-DD"
+													                data-bv-date-message="The value is not a valid date"
+													                data-bv-notempty-message="Start date is required and cannot be empty"/>
+														    </div>
+														    
+														    <button type="submit" class="btn btn-primary">Add Course</button>
+														</form>
+													<!-- END SECTION OF RESIDENT FORMS --> 
+													<!-- THIS SECTION FOR FELLOW FORMS -->
+														<form id="addFellowForm" action="<?php echo base_url()?>admin/addFellow" method="post"
+															data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+										                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+										                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 
-													    <div class="form-group">
-													        <label for="courseName">Course Name</label>
-													        <input type="text" class="form-control" name="courseName" placeholder="Course Name"
-													        	data-bv-notempty = "true"
-													        	data-bv-notempty-message="Course name is required and cannot be empty"/>
-													    </div>
-													    <div class="form-group">
-													        <label for="courseDesc">Course Description (max. 1000 char)</label>
-													        <textarea type="text" cols="40" rows="4" maxlength="1000" name="courseDesc"
-										                		data-bv-notempty="true"
-		                               							data-bv-notempty-message="This field cannot be empty"></textarea>
-													    </div>
-													    <div class="form-group">
-													        <label for="startDate">Course Start Date (YYYY-MM-DD)</label>
-													        <input type="text" class="form-control" name="startDate" placeholder="YYYY-MM-DD"
-													        	data-bv-notempty = "true"
-													        	data-bv-date="true"
-												                data-bv-date-format="YYYY-MM-DD"
-												                data-bv-date-message="The value is not a valid date"
-												                data-bv-notempty-message="Start date is required and cannot be empty"/>
-													    </div>
-													    
-													    <button type="submit" class="btn btn-primary">Add Course</button>
-													</form>
+															<h4 class="bottom-spacer"> Add A Fellow </h4>
+														    <div class="form-group">
+														        <label for="felName">First Name</label>
+														        <input type="text" class="form-control" name="firstName" placeholder="First Name"
+														        	data-bv-notempty = "true"
+														        	data-bv-notempty-message="First name is required and cannot be empty"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="felName">Last Name</label>
+														        <input type="text" class="form-control" name="lastName" placeholder="Last Name"
+														        	data-bv-notempty = "true"
+														        	data-bv-notempty-message="Last name is required and cannot be empty"/>
+														    </div>
+														    <div class="form-group">
+														        <label for="felEmail">Email</label>
+														        <input type="text" class="form-control" name="felEmail" placeholder="Email"
+									                                data-bv-emailaddress="true"
+									                                data-bv-emailaddress-message="The email address is not valid."/>
+														    </div>
+														    <div class="form-group">
+														        <label for="startYear">Year Started</label>
+														        <select class="form-control text-center" name="startYear">
+														        	<?php 
+														        		for ($i = 0; $i<10; $i++)
+														        		{
+														        			echo '<option value ="' . date("Y", strtotime("-$i years")) . '">' . date("Y", strtotime("-$i years")) . '</option>';
+														        		}
+														        	?>
+														        </select>
+														    </div>
+														    <div class="form-group" id="programSelect" name="program">
+														        <label for="selectFelProgram">Fellowship Program</label>
+																<select class="form-control" id="selectFelProgram" name="selectFelProgram">
+																<?php
+																	foreach($fellowshipProgram as $program)
+																	{	
+																		echo '<option value ="' . $program->id . '">' . $program->program_name . ' - ' . $program->type . '</option>';
+																	} 
+																?>
+																</select>
+														    </div>
+
+														    <button type="submit" class="btn btn-primary" id="addFelBtn">Add Fellow</button>
+														</form>
+
+													<!-- END SECTION FELLOW FORMS-->
 												</div><!--col-sm-4 col-sm-offset-4 text-center-->
 											</div><!--panel-body-->
 										</div><!--panel panel-default -->
@@ -352,6 +416,11 @@
 			$("form").hide(); //hide form on page load
 
 			//these are for the links under "admin controls"
+
+			/**
+			* RESIDENT LINKS
+			**/
+
 			//Add resident click
   			$('#addResLink').click(function() {
   				//hide all other forms open 
@@ -387,6 +456,18 @@
   				//show resident form
   				$('#addCourseForm').show(); 
   			})
+
+  			/**
+  			* FELLOW LINKS
+  			**/
+  			//Add resident click
+  			$('#addFelLink').click(function() {
+  				//hide all other forms open 
+  				$("form").hide(); 
+  				$('#defaultP').hide(); 
+  				//show resident form
+  				$('#addFellowForm').show(); 
+  			})
   			//******* end of links ********************
 
   			//form validation initalizations
@@ -399,6 +480,10 @@
 	</script>
 
 	<script> 
+		/**
+		* Handle submission of the form to update a residency program's info
+		* Loads a form in confirmModal and submits via ajax
+		*/
 		$('#updateProgramForm').submit(function( event ) {
 			event.preventDefault(); 
 
@@ -419,6 +504,10 @@
 	</script>
 
 	<script>
+		/**
+		* For Remove/Update Resident
+		* Checks if resident exists and loads their info into confirmModal for updating or deleting
+		*/
 		$('#chooseResidentForm').submit(function( event ) {
 			event.preventDefault(); 
 			
@@ -437,6 +526,9 @@
 	</script>
 
 	<script> 
+		/**
+		* Handles deleting of resident
+		*/
 		$(document).on("click","#deleteResBtn",function(){
 
 			if($('#resID').val() != 0)
@@ -463,6 +555,9 @@
 	</script>
 
 	<script>
+		/**
+		* For updating of resident
+		**/
 		$(document).on("click","#updateResBtn",function(){
 			if($('#resID').val() != 0)
 			{
