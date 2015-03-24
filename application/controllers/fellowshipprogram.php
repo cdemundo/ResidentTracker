@@ -38,7 +38,7 @@ class Fellowshipprogram extends CI_Controller
 	}
 
 	/*****
-	*Loads a page that represents a specific residency program
+	*Loads a page that represents a specific fellowship program
 	*****/
 	function getProgram($programName, $type="")
 	{

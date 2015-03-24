@@ -287,6 +287,41 @@ class Admin extends CI_Controller
 	}
 
 	/*
+	*Load data into a modal via an ajax call to represent a fellowship program in the database
+	*/
+	function checkFellowProgram($type)
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['selectFelProgram']))
+			{
+				$this->load->model('fellowshipprogram_model');
+
+				$data['residencyProgram'] = $this->fellowshipprogram_model->getSpecificProgram($_POST['selectFelProgram'], $type); 
+
+				//this is to load the state dropdown with the necessary state selected
+
+				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
+				
+				$this->load->view('admin/modal/updateFellowProgramModal_view', $data);
+			}
+		}
+		else
+		{
+			$this->load->view("error/error");
+		}
+	}
+
+	function getFellowshipPrograms($type)
+	{
+		$this->load->model('fellowshipprogram_model'); 
+
+		$data['fellowshipPrograms'] = $this->fellowshipprogram_model->fellowshipProgramsByType($type); 
+
+		$this->load->view('fellowship_program/fellowshipprogram_bytype_view', $data); 
+	}
+
+	/*
 	*Checks to see if user submitted any changes to update residency program
 	*/
 	function updateProgram()

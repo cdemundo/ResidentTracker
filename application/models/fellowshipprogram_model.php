@@ -28,7 +28,6 @@ class Fellowshipprogram_model extends CI_Model
 	**/ 
 	function getSpecificProgram($programName, $type)
 	{
-		//select residency program by name
 		$query = $this->db->get_where('fellowship_program', array('program_name' => $programName, 'type' => $type));
 
 		if($query->num_rows() > 0)
@@ -49,12 +48,23 @@ class Fellowshipprogram_model extends CI_Model
 		return $this; 
 	}
 
+	function fellowshipProgramsByType($type)
+	{
+		//select all residency programs in $state
+		$this->db->select('program_name');
+		$query = $this->db->get_where('fellowship_program', array('type' => $type));
+
+		if($query->num_rows() > 0)
+		{
+			return $query->result(); 
+		}
+	}
+
 	function fellowshipProgramsByState($state, $type)
 	{
 		//select all residency programs in $state
 		$this->db->select('program_name, state, director');
 		$query = $this->db->get_where('fellowship_program', array('state' => $state, 'type' => $type));
-
 		if($query->num_rows() > 0)
 		{
 			return $query->result(); 
@@ -64,6 +74,17 @@ class Fellowshipprogram_model extends CI_Model
 	function getProgramsByType($type)
 	{
 
+	}
+
+	function getAllFellowshipPrograms()
+	{
+		$this->db->select('program_name, type');
+		$query = $this->db->get('residency_program'); 
+
+		if ($query->num_rows() > 0)
+		{
+			return $query->result(); 
+		}
 	}
 
 	/**

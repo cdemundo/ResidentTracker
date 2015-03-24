@@ -1,0 +1,59 @@
+<form id="modalForm" action="<?php echo base_url()?>admin/updateProgram" method="post">
+	<h4 class="bottom-spacer"> Update A Program </h4>
+    <div class="form-group">
+        <label for="program_name">Program Name (Cannot be changed)</label>
+        <input type="text" class="form-control" placeholder="Program Name" value = "<?php echo $residencyProgram->program_name ?>" disabled>
+        <input type="hidden" name="program_name" value = "<?php echo $residencyProgram->program_name ?>">
+    </div>
+    <div class="form-group">
+        <label for="total_residents">Number of Fellows</label>
+        <input type="text" class="form-control" name="total_number" placeholder="Number of Fellows" value = "<?php echo $fellowshipProgram->total_number ?>">
+    </div>
+    
+    <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" name="city" placeholder="City" value = "<?php echo $residencyProgram->city ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="state">State</label>
+        <select name="state" id = "state" class="form-control">
+        <?php foreach($states as $key => $value)
+        { 
+            if ($key == $fellowshipProgram->state)
+            {
+                echo '<option selected value="' . $key . '">' . $value . '</option>';
+            }
+            else
+            {
+                echo '<option value="' . $key . '">' . $value . '</option>';
+            }
+        } ?>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="contact_name">Contact Name</label>
+        <input type="text" class="form-control" name="contact_name" placeholder="Contact Name" value = "<?php echo $fellowshipProgram->contact ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="telephone">Telephone</label>
+        <input type="text" class="form-control" name="telephone" placeholder="Format: 201-831-5555" value = "<?php echo $fellowshipProgram->contact_phone ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="contact_email">Contact Email</label>
+        <input type="text" class="form-control" name="contact_email" placeholder="Contact Email" value = "<?php echo $fellowshipProgram->contact_email ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="contact_phone">Contact Phone</label>
+        <input type="text" class="form-control" name="contact_phone" placeholder="Format: 201-831-5555" value = "<?php echo $fellowshipProgram->contact_phone ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="director">Director</label>
+        <input type="text" class="form-control" name="director" placeholder="Director" value = "<?php echo $fellowshipProgram->director ?>">
+    </div>
+</form>

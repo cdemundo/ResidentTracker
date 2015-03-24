@@ -84,7 +84,8 @@
 		                                  	  <ul class="list-group list-inline">
 			                                  	  <li> <a href="#" id="addResLink">Add Resident</a></li>
 			                                  	  <li> <a href="#" id="chooseResLink">Remove/Update Resident</a></li>
-			                                  	  <li> <a href="#" id="updateProgramLink">Update Programs</a></li>
+			                                  	  <li> <a href="#" id="updateResProgramLink">Residency Programs</a></li>
+			                                  	  <li> <a href="#" id="updateFelProgramLink">Fellowship Programs</a></li>
 			                                  	  <li> <a href="#" id="addCourseLink">Add Courses</a></li>
 		                                  	  </ul>
 		                                  </div>
@@ -185,6 +186,27 @@
 																} 
 															?>
 															</select>
+													    </div>
+													    
+													    <button type="submit" class="btn btn-primary">Select Program</button>
+													</form>
+
+													<!-- submits via jquery and ajax, no action or method -->
+													<!-- Update Fellowship Program Form -->
+													<form id="updateFellowshipProgramForm">
+														<h4 class="bottom-spacer"> Update a Fellowship Program </h4>
+
+													    <div class="form-group" id="fellowProgramSelect">
+													        <label for="felProgramType">Choose Type</label>
+															<select class="form-control" id="felProgramType" name="felProgramType">
+																<option value="Trauma">Trauma</option>
+																<option value = "Hand">Hand</option>
+																<option value="FA">Foot & Ankle</option>
+																<option value="Shoulder">Shoulder</option>
+															</select>
+															<div id="felProgramSelectDiv" class="top-spacer">
+																<!-- ajax goes here -->
+															</div>
 													    </div>
 													    
 													    <button type="submit" class="btn btn-primary">Select Program</button>
@@ -370,13 +392,38 @@
   				$('#chooseResidentForm').show(); 
   			})
 
-  			//Update program click
-  			$('#updateProgramLink').click(function() {
+  			//Update residency program click
+  			$('#updateResProgramLink').click(function() {
   				//hide all other forms open
   				$("form").hide(); 
   				$('#defaultP').hide(); 
   				//show resident form
   				$('#updateProgramForm').show(); 
+  			})
+
+  			//Update fellowship program click
+  			$('#updateFelProgramLink').click(function() {
+  				//hide all other forms open
+  				$("form").hide(); 
+  				$('#defaultP').hide(); 
+  				//show resident form
+  				$('#updateFellowshipProgramForm').show(); 
+  				//trigger change event to load programs 
+  				$('#selectFelProgram').trigger('change');
+  			})
+
+  			//Update fellowship program click
+  			$('#felProgramType').on('change', function() {
+  				var base_url = '<?php echo site_url();?>'; 
+			
+				$.ajax({
+				  type: "POST",
+				  url: base_url + 'admin' + '/getFellowshipPrograms/' + this.value,
+				  dataType: "html",
+				  success: function(data) {
+						$('#felProgramSelectDiv').html(data);
+						}
+					})
   			})
 
   			//Update courses click
@@ -387,6 +434,7 @@
   				//show resident form
   				$('#addCourseForm').show(); 
   			})
+
   			//******* end of links ********************
 
   			//form validation initalizations
@@ -395,7 +443,7 @@
 			$('#chooseResidentForm').bootstrapValidator(); 
 
 			$('#addCourseForm').bootstrapValidator(); 
-  		});
+ 		});
 	</script>
 
 	<script> 
@@ -416,6 +464,26 @@
 					}
 				})
 		})
+	</script>
+
+	<script>
+	$('#updateFellowshipProgramForm').submit(function(event){
+		event.preventDefault(); 
+
+		$("#confirmModal").modal('show');
+
+		var base_url = '<?php echo site_url();?>';  
+
+		$.ajax({
+			  type: "POST",
+			  url: base_url + 'admin' + '/checkFellowProgram/' + $('#felProgramType').val(),
+			  data: {selectFelProgram : $('#selectFelProgram').val()},
+			  dataType: "html",
+			  success: function(data) {
+					$('#ajaxModal').html(data);
+					}
+				})
+	})
 	</script>
 
 	<script>
