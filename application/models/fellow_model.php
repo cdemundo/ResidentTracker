@@ -22,51 +22,93 @@ class Fellow_model extends CI_Model
 	}
 
 	/*
-	*Getter for $_id
+	*Getter/setter for $_id
 	*/
 	public function getID() {
         return $this->_id;
     }
 
-	function loadByID($id)
-	{
-		$this->load->model('fellowshipprogram_model'); //used to get programname
+    public function setID($id){
+    	$this->_id = $id; 
+    }
 
-		$query = $this->db->get_where('fellow', array('id' => $id));
+    /**
+    *Commit a fellow object to the database
+    *@return boolean
+    **/
+    public function addFellow()
+    {
+    	if (empty($this->email))
+    	{
+    		$this->email = "No Entry";
+    	}
+    	if(empty($this->telephone))
+    	{
+    		$this->telephone = "No Entry";
+    	}
 
-		$this->_id = $id; 		
-		$this->firstname = $query->row()->firstname; 
-		$this->lastname = $query->row()->lastname; 
-		$this->program_name = $this->fellowshipprogram_model->getProgramByID($query->row()->program_name); //program_name is foreign key to fellowship_program ID
-		$this->year_attended = $query->row()->year_attended; 
-		$this->email = $query->row()->email; 
-		$this->telephone = $query->row()->telephone; 
+    	$data = array(
+    			'firstname' => $this->firstname, 
+    			'lastname' => $this->lastname, 
+    			'program_name' => $this->program_name, 
+    			'year_attended' => $this->year_attended, 
+    			'email' => $this->email, 
+    			'telephone' => $this->telephone
+    		);
 
-		return $this; 
-	}
+    	$this->db->insert('fellow', $data); 
 
-	/**
-    *Get all residents with the same last name
+    	return $this->db->affected_rows() > 0;
+    }
+
+    /**
+    *Get all Fellows with the same last name
     *@return array 
     **/
-    function allByLastName($lastName)
+    public function allByLastName($lastName)
 	{
-		$returnArray = array(); 
-
 		$this->db->like('lastname', $lastName); 
 		$query = $this->db->get('fellow'); 
 
 		if($query->num_rows() > 0)
     	{
-    		foreach ($query->result() as $row)
-    		{
-    			$returnArray[] = $row->id; 
-    		}
-    		return $returnArray; 
+    		return $query->result();
     	}
 	}
 
-	/*******
+    /***
+	*Create a new fellow object with only last name populated
+	***/ 
+
+	public function byLastName($lastname) 
+	{
+    	$this->lastname = $lastname;
+    	return $this; 
+    }
+
+    /**
+    *Check if resident exists in database
+    *Return list of residents if same last name+ program is found
+    *@return boolean or array 
+    **/
+    public function doIExist()
+    {
+    	$this->db->like('lastname', $this->lastname); 
+    	$this->db->like('program_name', $this->program_name); 
+    	
+    	$query = $this->db->get('fellow'); 
+
+		if($query->num_rows() == 0)
+		{
+			return false; 
+		} 
+		else
+		{
+			return $query->result(); 
+		}
+    }
+
+    /*******
 	*Gets all courses a resident has attended
 	*	SELECT course_id FROM courses_attended
 	*	INNER JOIN resident
@@ -74,7 +116,7 @@ class Fellow_model extends CI_Model
 	*	WHERE resident.id = ?
 	********/
 
-	function getCourses()
+	public function getCourses()
 	{
 		$returnArray = array(); 
 
@@ -104,4 +146,40 @@ class Fellow_model extends CI_Model
 			return $returnArray; 
 		}
 	}
+
+    /**
+    *Take a fellow's id and create a fellow_model object populated with the info in the db for that fellow
+    *@return fellow_model Object
+    */
+	public function loadByID($id)
+	{
+		$this->load->model('fellowshipprogram_model'); //used to get programname
+
+		$query = $this->db->get_where('fellow', array('id' => $id));
+
+		$this->_id = $id; 		
+		$this->firstname = $query->row()->firstname; 
+		$this->lastname = $query->row()->lastname; 
+		$this->program_name = $this->fellowshipprogram_model->getProgramByID($query->row()->program_name); //program_name is foreign key to fellowship_program ID
+		$this->year_attended = $query->row()->year_attended; 
+		$this->email = $query->row()->email; 
+		$this->telephone = $query->row()->telephone; 
+
+		return $this; 
+	}
+
+	/**
+    *Remove a fellow from the database
+    *@return boolean
+    **/
+
+    public function remove()
+    {
+    	//foreign key between the two, have to delete any courses first
+    	$this->db->delete('courses_attended', array('fellow_id' => $this->_id));
+
+    	$this->db->delete('fellow', array('id' => $this->_id));
+
+    	return $this->db->affected_rows() > 0; 
+    }
 }

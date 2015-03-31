@@ -15,11 +15,6 @@
 		?>
 		</select>
 		</div>
-		<?php 
-			if(isset($remove))
-			{
-				echo '<input type="hidden" value="' . $remove . '" name="remove" id="remove"/>';  
-			} ?>
 
 		<button type="button" class="btn btn-danger text-center" id="deleteResBtn">Delete</button>
 		<button type="button" class="btn btn-primary text-center" id="updateResBtn">Update</button>

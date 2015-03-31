@@ -17,6 +17,9 @@ class Admin extends CI_Controller
 		}
 	}
 
+	/**
+	*Index function with more descriptive name
+	*/
 	function loadAdminView()
 	{
 		//load list of residency programs first, to populate select
@@ -24,11 +27,47 @@ class Admin extends CI_Controller
 
 		$data['residencyProgram'] = $this->residencyprogram_model->getAllResidencyPrograms(); 
 
+		//load list of fellowship programs
+		$this->load->model('fellowshipprogram_model');
+
+		$data['fellowshipProgram'] = $this->fellowshipprogram_model->getAllFellowshipPrograms(); 
+
 		$this->load->view('admin/admin_view', $data);
 	}
 
+	function addCourse()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['courseName']) && !empty($_POST['courseDesc']) && !empty($_POST['startDate']))
+			{
+				$this->load->model('course_model'); 
+				$newCourse = $this->course_model->newCourse($_POST['courseName'], $_POST['courseDesc'], $_POST['startDate']); 
+
+				if($newCourse->add())
+				{
+					$data['successHeading'] = "Course Added"; 
+					$data['successMessage'] = $newCourse->name . " on " . $newCourse->startDate . " was added to the database.";
+				}
+				else
+				{
+					$data['errorHeading'] = "Sorry!";
+					$data['errorMessage'] = "There was an error, please try again!."; 
+				}
+
+				$this->load->view("admin/adminform_success", $data); 
+			}
+			else
+			{
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "All fields were not filled out."; 
+				$this->load->view("admin/adminform_success", $data);
+			}
+		}
+	}
+
 	/***
-	**Create a resident_model object and calls addResident method after filling properties
+	*Create a resident_model object and calls addResident method after filling properties
 	* pulls info from 'resident' table
 	**/
 	function addResident()
@@ -118,6 +157,32 @@ class Admin extends CI_Controller
 		}
 	}
 
+	/*
+	*Load data into a modal via an ajax call to represent a residency program in the database
+	*/
+	function checkUpdateProgram()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['selectResProgram']))
+			{
+				$this->load->model('residencyprogram_model');
+
+				$data['residencyProgram'] = $this->residencyprogram_model->getProgramObject($_POST['selectResProgram']); 
+
+				//this is to load the state dropdown with the necessary state selected
+
+				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
+				
+				$this->load->view('admin/modal/updateProgramModalContent_view', $data);
+			}
+		}
+		else
+		{
+			$this->load->view("error/error");
+		}
+	}
+
 	/**
 	*Removes a resident from the database and loads a confirmation page
 	*/
@@ -145,180 +210,6 @@ class Admin extends CI_Controller
 				$this->load->view("admin/adminform_success", $data); 
 			}
 		}
-	}
-
-	function updateResident()
-	{
-		$this->load->model('resident_model'); 
-
-		if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
-			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
-			{
-				if(empty($_POST['startYear']))
-				{
-					$start = " (Archived)"; 
-				}
-				else
-				{
-					$start = $_POST['startYear'];
-				}
-
-				$residentToUpdate = $this->resident_model->loadByID($_POST['residentID']); 
-
-				//see if user changed any values and update them if so
-
-				if ($residentToUpdate->firstName != $_POST['firstName'])
-				{
-					$residentToUpdate->firstName = $_POST['firstName']; 
-					$changes = True; 
-				}
-
-				if ($residentToUpdate->lastName != $_POST['lastName'])
-				{
-					$residentToUpdate->lastName = $_POST['lastName']; 
-					$changes = True; 
-				}
-
-				if ($residentToUpdate->email != $_POST['resEmail'])
-				{
-					$residentToUpdate->email = $_POST['resEmail'];
-					$changes = True;  
-				}
-
-				if ($residentToUpdate->telephone != $_POST['resPhone'])
-				{
-					$residentToUpdate->telephone = $_POST['resPhone']; 
-					$changes = True; 
-				}
-
-				if ($residentToUpdate->pgy != $start)
-				{
-					$residentToUpdate->pgy = $start; 
-					$changes = True; 
-				}
-
-				if($residentToUpdate->update())
-				{
-					$data['successHeading'] = "Resident Updated"; 
-					$data['successMessage'] = $residentToUpdate->firstName . " " . $residentToUpdate->lastName . " was successfully updated"; 
-				}
-				else
-				{
-					if($changes)
-					{
-						$data['errorHeading'] = "Sorry!";
-						$data['errorMessage'] = "Resident could not be updated. Please try again or contact support."; 
-					}
-					else
-					{
-						$data['errorHeading'] = "No changes.";
-						$data['errorMessage'] = "You did not make any changes. Please try again.";
-					}
-				} 
-
-				$this->load->view("admin/adminform_success", $data); 
-			}
-			else
-			{
-				$data['errorHeading'] = "Sorry!";
-				$data['errorMessage'] = "Please make sure all fields were filled out."; 
-				$this->load->view("admin/adminform_success", $data); 
-			}
-		}
-
-	}
-
-	function addCourse()
-	{
-		if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
-			if(!empty($_POST['courseName']) && !empty($_POST['courseDesc']) && !empty($_POST['startDate']))
-			{
-				$this->load->model('course_model'); 
-				$newCourse = $this->course_model->newCourse($_POST['courseName'], $_POST['courseDesc'], $_POST['startDate']); 
-
-				if($newCourse->add())
-				{
-					$data['successHeading'] = "Course Added"; 
-					$data['successMessage'] = $newCourse->name . " on " . $newCourse->startDate . " was added to the database.";
-				}
-				else
-				{
-					$data['errorHeading'] = "Sorry!";
-					$data['errorMessage'] = "There was an error, please try again!."; 
-				}
-
-				$this->load->view("admin/adminform_success", $data); 
-			}
-			else
-			{
-				$data['errorHeading'] = "Sorry!";
-				$data['errorMessage'] = "All fields were not filled out."; 
-				$this->load->view("admin/adminform_success", $data);
-			}
-		}
-	}
-
-	/*
-	*Load data into a modal via an ajax call to represent a residency program in the database
-	*/
-	function checkUpdateProgram()
-	{
-		if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
-			if(!empty($_POST['selectResProgram']))
-			{
-				$this->load->model('residencyprogram_model');
-
-				$data['residencyProgram'] = $this->residencyprogram_model->getProgramObject($_POST['selectResProgram']); 
-
-				//this is to load the state dropdown with the necessary state selected
-
-				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
-				
-				$this->load->view('admin/modal/updateProgramModalContent_view', $data);
-			}
-		}
-		else
-		{
-			$this->load->view("error/error");
-		}
-	}
-
-	/*
-	*Load data into a modal via an ajax call to represent a fellowship program in the database
-	*/
-	function checkFellowProgram($type)
-	{
-		if ($_SERVER['REQUEST_METHOD'] === 'POST')
-		{
-			if(!empty($_POST['selectFelProgram']))
-			{
-				$this->load->model('fellowshipprogram_model');
-
-				$data['residencyProgram'] = $this->fellowshipprogram_model->getSpecificProgram($_POST['selectFelProgram'], $type); 
-
-				//this is to load the state dropdown with the necessary state selected
-
-				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
-				
-				$this->load->view('admin/modal/updateFellowProgramModal_view', $data);
-			}
-		}
-		else
-		{
-			$this->load->view("error/error");
-		}
-	}
-
-	function getFellowshipPrograms($type)
-	{
-		$this->load->model('fellowshipprogram_model'); 
-
-		$data['fellowshipPrograms'] = $this->fellowshipprogram_model->fellowshipProgramsByType($type); 
-
-		$this->load->view('fellowship_program/fellowshipprogram_bytype_view', $data); 
 	}
 
 	/*
@@ -470,6 +361,401 @@ class Admin extends CI_Controller
 		}
 	}
 
-	
+	function updateResident()
+	{
+		$this->load->model('resident_model'); 
 
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
+			{
+				if(empty($_POST['startYear']))
+				{
+					$start = " (Archived)"; 
+				}
+				else
+				{
+					$start = $_POST['startYear'];
+				}
+
+				$residentToUpdate = $this->resident_model->loadByID($_POST['residentID']); 
+
+				//see if user changed any values and update them if so
+
+				if ($residentToUpdate->firstName != $_POST['firstName'])
+				{
+					$residentToUpdate->firstName = $_POST['firstName']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->lastName != $_POST['lastName'])
+				{
+					$residentToUpdate->lastName = $_POST['lastName']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->email != $_POST['resEmail'])
+				{
+					$residentToUpdate->email = $_POST['resEmail'];
+					$changes = True;  
+				}
+
+				if ($residentToUpdate->telephone != $_POST['resPhone'])
+				{
+					$residentToUpdate->telephone = $_POST['resPhone']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->pgy != $start)
+				{
+					$residentToUpdate->pgy = $start; 
+					$changes = True; 
+				}
+
+				if($residentToUpdate->update())
+				{
+					$data['successHeading'] = "Resident Updated"; 
+					$data['successMessage'] = $residentToUpdate->firstName . " " . $residentToUpdate->lastName . " was successfully updated"; 
+				}
+				else
+				{
+					if($changes)
+					{
+						$data['errorHeading'] = "Sorry!";
+						$data['errorMessage'] = "Resident could not be updated. Please try again or contact support."; 
+					}
+					else
+					{
+						$data['errorHeading'] = "No changes.";
+						$data['errorMessage'] = "You did not make any changes. Please try again.";
+					}
+				} 
+
+				$this->load->view("admin/adminform_success", $data); 
+			}
+			else
+			{
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "Please make sure all fields were filled out."; 
+				$this->load->view("admin/adminform_success", $data); 
+			}
+		}
+
+	}
+
+	//FELLOW FUNCTIONS BELOW HERE
+
+	/**
+	*Checks to see if fellow with the same lastname and program_name exists already.  Opens a confirm model if so and displays 
+	*the fellows found with the same last name.  If user confirms they still want to add, tries to add to database
+	*
+	*If no fellow exists with same last name/program_name on initial call, tries to add fellow to db
+	*/
+	function addFellow()
+	{
+		$this->load->model('fellow_model'); 
+		$this->load->model('fellowshipprogram_model'); 
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['firstname']) && !empty($_POST['lastname'])&& !empty($_POST['year_attended']) && !empty($_POST['selectFelProgram']))
+			{
+				//if a fellow with the same last name existed the first time user tried to add, a confirm modal opens up. if users
+				//confirms they still want to add, resubmits with POST['confirmAddFel'] as TRUE
+				if(!empty($_POST['confirmAddFel']))
+				{	
+					//create a new fellow object and add
+					$newFellow = $this->fellow_model->byLastName($_POST['lastname']);
+
+					$newFellow->firstname = $_POST['firstname'];
+					if(!empty($_POST['felEmail']))
+					{
+						$newFellow->email = $_POST['felEmail'];
+					}
+					if(!empty($_POST['felPhone']))
+					{
+						$newFellow->telephone = $_POST['felPhone'];
+					}
+
+					$newFellow->year_attended = $_POST['year_attended'];
+					
+					$newFellow->program_name = $_POST['selectFelProgram'];
+
+					if($newFellow->addFellow())
+					{ 
+						$data['successHeading'] = "Fellow Added"; 
+						$data['successMessage'] = $newFellow->firstname . " " . $newFellow->lastname . " was added."; 
+						$this->load->view("admin/adminform_success", $data); 
+					}
+					else
+					{
+						$data['errorHeading'] = "Fellow Not Added"; 
+						$data['errorMessage'] = "Fellow could not be added, please try again."; 
+					}
+
+				}
+				else //lets do a check to see if the fellow exists already
+				{
+					//all forms were filled out
+					//create a new fellow object with only lastName property filled
+					$newFellow = $this->fellow_model->byLastName($_POST['lastname']);
+
+					$newFellow->firstname = $_POST['firstname'];
+					if(!empty($_POST['felEmail']))
+					{
+						$newFellow->email = $_POST['felEmail'];
+					}
+					if(!empty($_POST['felPhone']))
+					{
+						$newFellow->telephone = $_POST['felPhone'];
+					}
+
+					$newFellow->year_attended = $_POST['year_attended'] . "-07-01";
+					
+					$newFellow->program_name = $_POST['selectFelProgram'];
+
+					//check if fellow exists in DB. Returns False if does not exist - returns array of fellows if something found
+					//Searches based on lastname and program_name
+					$existingFellows = $newFellow->doIExist();
+
+					if($existingFellows == false)
+					{
+						if($newFellow->addFellow())
+						{ 
+							$data['successHeading'] = "Fellow Added"; 
+							$data['successMessage'] = $newFellow->firstname . " " . $newFellow->lastname . " was added."; 
+							$this->load->view("admin/modal/successModal_view", $data); 
+						}
+						else
+						{
+							$data['errorHeading'] = "Fellow Not Added"; 
+							$data['errorMessage'] = "Fellow could not be added, please try again."; 
+							$this->load->view("admin/modal/successModal_view", $data); 
+						}
+					}
+					else
+					{
+						$data['newFellow'] = $newFellow;
+
+						foreach ($existingFellows as $fellow)
+						{
+							$fellow->program_name = $this->fellowshipprogram_model->getProgramByID($fellow->program_name); 
+						}
+
+						$data['existingFellows'] = $existingFellows;
+						$this->load->view('admin/multFellowsFound_view', $data); 
+					}
+				}
+			}
+			else
+			{
+				$data['errorHeading'] = "Form not filled out"; 
+				$data['errorMessage'] = "All fields were not filled out, fellow could not be created."; 
+				$this->load->view("admin/modal/successModal_view", $data); 
+
+			}
+		}
+	}
+
+	/**
+	*Checks if a resident exists in the database and loads a confirmation page where user can double check if they want to remove or update
+	*Displays info in a modal
+	*/
+	function checkExistFellow($lastName="noLastName")
+	{
+		$this->load->model('fellow_model');
+		$this->load->model('fellowshipprogram_model');
+
+		//search for all fellows with last name
+		$data['allFellows'] = $this->fellow_model->allByLastName($lastName);
+
+		if(!empty($data['allFellows']))
+		{
+			foreach ($data['allFellows'] as $fellow)
+			{
+				$fellow->program_name = $this->fellowshipprogram_model->getProgramByID($fellow->program_name); 
+			}
+		}
+
+		$this->load->view('admin/multFelFound_view', $data);
+	}
+
+	/**
+	*Checks if user wants to delete the resident that was selected after checkExistFellow
+	*/
+	function checkRemoveFellow($id)
+	{
+		$this->load->model('fellow_model'); 
+
+		if($id > 0)
+		{
+			$data['fellow'] = $this->fellow_model->loadByID($id); 
+			$this->load->view('admin/modal/removeFellowModalContent_view.php', $data);
+		}
+
+	}
+
+	/**
+	*If user confirmed after checkRemoveFellow, delete fellow from db
+	*/
+	function removeFellow()
+	{
+		$this->load->model('fellow_model');
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['fellowID']))
+			{
+				$fellowToRemove = $this->fellow_model->loadByID($_POST['fellowID']); 
+
+				if($fellowToRemove->remove())
+				{
+					$data['successHeading'] = "Fellow Removed"; 
+					$data['successMessage'] = $fellowToRemove->firstname . " " . $fellowToRemove->lastname . " was successfully removed"; 
+				}
+				else
+				{
+					$data['errorHeading'] = "Fellow not removed.";
+					$data['errorMessage'] = "Fellow could not be removed. Please try again or contact support."; 
+				} 
+
+				$this->load->view("admin/adminform_success", $data); 
+			}
+		}
+	}
+
+	/**
+	*Load a page with user's info and allow it to be edited/updated to database
+	*/
+	function checkUpdateFellow($id)
+	{
+		$this->load->model('fellow_model'); 
+
+		if($id > 0)
+		{
+			$data['fellow'] = $this->fellow_model->loadByID($id); 
+        
+			$this->load->view('admin/modal/updateFellowModalContent_view.php', $data);
+		}
+	}
+
+	function updateFellow()
+	{
+		$this->load->model('fellow_model'); 
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['resEmail']) && !empty($_POST['resPhone']) && !empty($_POST['residentID']))
+			{
+				if(empty($_POST['startYear']))
+				{
+					$start = " (Archived)"; 
+				}
+				else
+				{
+					$start = $_POST['startYear'];
+				}
+
+				$residentToUpdate = $this->resident_model->loadByID($_POST['residentID']); 
+
+				//see if user changed any values and update them if so
+
+				if ($residentToUpdate->firstName != $_POST['firstName'])
+				{
+					$residentToUpdate->firstName = $_POST['firstName']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->lastName != $_POST['lastName'])
+				{
+					$residentToUpdate->lastName = $_POST['lastName']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->email != $_POST['resEmail'])
+				{
+					$residentToUpdate->email = $_POST['resEmail'];
+					$changes = True;  
+				}
+
+				if ($residentToUpdate->telephone != $_POST['resPhone'])
+				{
+					$residentToUpdate->telephone = $_POST['resPhone']; 
+					$changes = True; 
+				}
+
+				if ($residentToUpdate->pgy != $start)
+				{
+					$residentToUpdate->pgy = $start; 
+					$changes = True; 
+				}
+
+				if($residentToUpdate->update())
+				{
+					$data['successHeading'] = "Resident Updated"; 
+					$data['successMessage'] = $residentToUpdate->firstName . " " . $residentToUpdate->lastName . " was successfully updated"; 
+				}
+				else
+				{
+					if($changes)
+					{
+						$data['errorHeading'] = "Sorry!";
+						$data['errorMessage'] = "Resident could not be updated. Please try again or contact support."; 
+					}
+					else
+					{
+						$data['errorHeading'] = "No changes.";
+						$data['errorMessage'] = "You did not make any changes. Please try again.";
+					}
+				} 
+
+				$this->load->view("admin/adminform_success", $data); 
+			}
+			else
+			{
+				$data['errorHeading'] = "Sorry!";
+				$data['errorMessage'] = "Please make sure all fields were filled out."; 
+				$this->load->view("admin/adminform_success", $data); 
+			}
+		}
+
+	}
+
+	/*
+	*Load data into a modal via an ajax call to represent a fellowship program in the database
+	*/
+	function checkFellowProgram($type)
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+		{
+			if(!empty($_POST['selectFelProgram']))
+			{
+				$this->load->model('fellowshipprogram_model');
+
+				$data['residencyProgram'] = $this->fellowshipprogram_model->getSpecificProgram($_POST['selectFelProgram'], $type); 
+
+				//this is to load the state dropdown with the necessary state selected
+
+				$data['states'] = array('AL'=>"Alabama",'AK'=>"Alaska",'AZ'=>"Arizona",'AR'=>"Arkansas",'CA'=>"California",'CO'=>"Colorado",'CT'=>"Connecticut",'DE'=>"Delaware",'DC'=>"District Of Columbia",'FL'=>"Florida",'GA'=>"Georgia",'HI'=>"Hawaii",'ID'=>"Idaho",'IL'=>"Illinois", 'IN'=>"Indiana", 'IA'=>"Iowa",  'KS'=>"Kansas",'KY'=>"Kentucky",'LA'=>"Louisiana",'ME'=>"Maine",'MD'=>"Maryland", 'MA'=>"Massachusetts",'MI'=>"Michigan",'MN'=>"Minnesota",'MS'=>"Mississippi",'MO'=>"Missouri",'MT'=>"Montana",'NE'=>"Nebraska",'NV'=>"Nevada",'NH'=>"New Hampshire",'NJ'=>"New Jersey",'NM'=>"New Mexico",'NY'=>"New York",'NC'=>"North Carolina",'ND'=>"North Dakota",'OH'=>"Ohio",'OK'=>"Oklahoma", 'OR'=>"Oregon",'PA'=>"Pennsylvania",'RI'=>"Rhode Island",'SC'=>"South Carolina",'SD'=>"South Dakota",'TN'=>"Tennessee",'TX'=>"Texas",'UT'=>"Utah",'VT'=>"Vermont",'VA'=>"Virginia",'WA'=>"Washington",'WV'=>"West Virginia",'WI'=>"Wisconsin",'WY'=>"Wyoming");
+				
+				$this->load->view('admin/modal/updateFellowProgramModal_view', $data);
+			}
+		}
+		else
+		{
+			$this->load->view("error/error");
+		}
+	}
+
+	/**
+	*Returns a list of fellowship programs in a html select in a view
+	*/
+	function getFellowshipPrograms($type)
+	{
+		$this->load->model('fellowshipprogram_model'); 
+
+		$data['fellowshipPrograms'] = $this->fellowshipprogram_model->fellowshipProgramsByType($type); 
+
+		$this->load->view('fellowship_program/fellowshipprogram_bytype_view', $data); 
+	}
 }
