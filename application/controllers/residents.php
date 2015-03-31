@@ -103,7 +103,9 @@ class Residents extends CI_Controller
 
 		if(!empty($_POST['selectCourse']) && !empty($residentID))
 		{
-			if($this->course_model->addResident($_POST['selectCourse'], $residentID))
+			//get the start date of the course
+			$course = $this->course_model->loadCourseByID($_POST['selectCourse']); 
+			if($this->course_model->addResident($_POST['selectCourse'], $residentID, $course->startDate))
 			{
 				//load the resident's page, which should now have the courses added
 				$this->getResident($residentID);

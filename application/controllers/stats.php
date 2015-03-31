@@ -23,13 +23,28 @@ class Stats extends CI_Controller
 	**/
 	function index()
 	{
-		$tempArray["name"] = "Mayo Clinic"; 
-		$tempArray["data"] = [4, 5, 7, 2, 3, 4];
-
-		$jsonArray = json_encode($tempArray); 
-
-		$data['json'] = $jsonArray; 
+		
 		$this->load->view('stats/stats_view', $data); 
+	}
+
+	function testFunction()
+	{
+		$tempArray['name'] = 'Mayo Clinic'; 
+		$tempArray['data'] = [4, 5, 7, 2, 3, 4];
+
+		$realTemp[] = $tempArray; 
+
+		unset($tempArray); 
+
+		$tempArray['name'] = 'The Test'; 
+		$tempArray['data'] = [3, 5, 7, 2, 3, 4];
+
+		$realTemp[] = $tempArray; 
+
+		$jsonArray = json_encode($realTemp);
+
+
+		print_r($jsonArray); 
 	}
 
 }
