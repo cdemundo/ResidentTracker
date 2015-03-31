@@ -95,6 +95,7 @@
 
 				                            	<div class="bottom-spacer">
 				                            		<button class="btn btn-primary" id="selectBtn">Select</button>
+				                            		<button class="btn btn-primary" id="testBtn">Test</button>
 				                            	</div>
 				                            </div>
 			                            </div><!--panel panel-default-->
@@ -238,65 +239,71 @@
 	</script>
 
 	<script>
-		$('#selectBtn').click(function(){
-			$('#chart').highcharts({
-		        chart: {
-		            type: 'column'
-		        },
-		        title: {
-		            text: 'Residents At Courses by Year'
-		        },
-		        xAxis: {
-		            categories: [
-		                '2010',
-		                '2011',
-		                '2012',
-		                '2013',
-		                '2014',
-		                '2015'		            ]
-		        },
-		        yAxis: {
-		            min: 0,
-		            title: {
-		                text: 'Total Number'
-		            }
-		        },
-		        tooltip: {
-		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-		                '<td style="padding:0"><b>{point.y}</b></td></tr>',
-		            footerFormat: '</table>',
-		            shared: true,
-		            useHTML: true
-		        },
-		        plotOptions: {
+		var options = {
+		    chart: {
+		        renderTo: 'chart',
+		        type: 'column'
+		    },
+		    title: {
+	            text: 'Residents At Courses by Year'
+	        },
+		    xAxis: {
+	            categories: [
+	                '2010',
+	                '2011',
+	                '2012',
+	                '2013',
+	                '2014',
+	                '2015'	
+	            ]
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'Total Number'
+	            }
+	        },
+	        tooltip: {
+	            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+	            footerFormat: '</table>',
+	            shared: true,
+	            useHTML: true
+		    },
+		    plotOptions: {
 		            column: {
 		                pointPadding: 0.2,
 		                borderWidth: 0
 		            }
-		        },
-		        series: [{
-		            name: 'Mayo Clinic',
-		            data: [4, 5, 7, 2, 3, 4]
+		    },
+		    series: []
+		};
 
-		        }, {
-		            name: 'Albany Medical',
-		            data: [1, 3, 1, 2, 5, 2]
+		$('#testBtn').click(function(){
+			event.preventDefault(); 
 
-		        }, {
-		            name: 'Baylor College of Medicine',
-		            data: [8, 2, 4, 4, 5, 1]
-
-		        }, {
-		            name: 'U. of Texas at Houston',
-		            data: [0, 0, 2, 4, 1, 5]
-
-		        }]
-		    });
+			var base_url = '<?php echo site_url();?>'; 
 			
-			//bootstrapselect initialization
-			$('.selectpicker').selectpicker();
+			$.ajax({
+			  type: "POST",
+			  url: base_url + 'stats/testFunction',
+			  dataType: "json",
+			  success: function(data) {
+			  		 options.series = [];
+			  		 $.each(data, function(key, value) {
+			  		 	var series = {}; 
+			  		 	series.name = value.name; 
+			  		 	series.data = value.data; 
+ 			
+			  		 	options.series.push(series);
+			  		 });
+
+					var chart = new Highcharts.Chart(options); 
+					}
+				})
 		});
+
 	</script>
 
 	</body>

@@ -28,6 +28,24 @@ class Course_model extends CI_Model
 		return $this; 
 	}
 
+    /** Creates and returns a course_model object, taking ID as parameter
+    *@parameter id
+    *@return object
+    **/
+    function loadCourseByID($id)
+    {
+        $query = $this->db->get_where('course', array('id' => $id));
+
+        if($query->num_rows > 0)
+        {
+            $this->name = $query->row()->name; 
+            $this->description = $query->row()->description;
+            $this->startDate = $query->row()->date; 
+        }
+
+        return $this; 
+    }
+
 	/**
     *Commit a course object to the database
     *@return boolean
@@ -56,11 +74,12 @@ class Course_model extends CI_Model
     	}
     }
 
-    public function addResident($courseID, $residentID)
+    public function addResident($courseID, $residentID, $date)
     {
     	$data = array(
     			'resident_id' => $residentID, 
     			'course_id' => $courseID, 
+                'year_attended' => $date,
     		);
 
     	$this->db->insert('courses_attended', $data);
